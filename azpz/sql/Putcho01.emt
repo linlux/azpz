@@ -1,0 +1,25 @@
+[General]
+TemplateVersion=306
+ExtractCompletely=0
+ExtractMetadata=1
+ExtractData=1
+ExtractAll=1
+ExtractServerAll=0
+ExtractDataTables=All
+ScriptOptions=1
+FileName=C:\Users\Putcho\Documents\GitHub\azpz\azpz\sql\AZPZ_home.sql
+AbortOnError=1
+[Options]
+GenerateCreateDB=1
+GenerateUseDB=1
+GenerateDropStatements=0
+GenerateDropDBStatements=0
+GenerateSetNames=1
+CommitAfter=500
+InsertCommit=1
+DataAfterDefinition=0
+LoadToEditor=1
+DisableForeignChecks=1
+DependentObjects=1
+ExtractForVersionIndex=0
+FileCharset=Database default
