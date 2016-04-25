@@ -1,0 +1,40 @@
+
+Erstes Java Projekt 
+  APZ-JAVA
+Eine Arbeits- und Projektzeiterfassung.
+
+            
+PROJEKTBESCHREIBUNG
+Erfassung der Arbeitszeit der Mitarbeiter. eines Projektes.
+Erfassung der Projekt(Zeilprojekt-)arbeitszeit.
+Erstellung von Berichten, primär monatliche Rechnungen für die jeweiligen Kunden, sekundär die monatlichen Arbeitszeit der Mitarbeiter.
+
+PROJEKTTEAM
+Martin Labsch   ?? eventuell eigenes Projekt mit gleichem Thema, eventuell unabhängiger Start der Entwicklung.
+Matthias Lüthke
+
+IDEE
+Zusammenarbeit mit Herrn Labsch auch um Zusammenarbeit mit Objektorientierung zu Üben und einen Partner für das Softwaredesign zu haben.
+
+DESIGN
+Datenbankdesign:
+Bisher 4 Tabellen + login 
+
+MASKEN-DIALOG DESIGN
+
+1.  LOGINDIALOG
+Erfassung von User und Passwort
+
+2. Haupt-Übersichtsmaske
+   Reports AZ der MB'S.
+   Geleistete und geplante(genehmigte Stunden) der Projekte
+   
+2.  Haupt-Eingabemaske  
+    Erfassung der Arbeitszeit und Zuordung zu den Projekten.
+   
+ZUSAMMNEARBEIT
+
+Speicherung des Codes über FTP auf Homepage?                
+
+Vieleicht Eingabe der AZ über das Internet (PHP, Webseite vorhanden (one Com)
+https://www.one.com/de/produkt/mysql

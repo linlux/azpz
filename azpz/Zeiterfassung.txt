@@ -1,0 +1,23 @@
+Zeiterfassung
+
+Ziel ist es eine einfache Möglichkeit zu schaffen Zeiten für unterschiedliche Projekte zu erfassen (Datenbank), um diese bspw. für Abrechnungen verwenden zu können.
+
+Es ist eine Zusammenarbeit mit Matthias Lüthke angedacht, um einerseits Softwareentwicklung im Team zu proben und andererseits dieses Zeiterfassungs-Tool auch nach Projektabschluss bei alfatraining gemeinsam weiter zu entwickeln.
+
+1)
+Über eine GUI sollen "Projekte" angelegt werden, auf welche dann Zeiten gebucht werden können.
+
+2)
+Eine "Auswertungs-Anzeige" zeigt die Summe der gebuchten Zeiten für ein ausgewähltes Projekt.
+Geplant ist, solche Auswertungen drucken oder in anderer geeigneter Form für die weitere Verwendung ausgeben zu können.
+
+3)
+Die erfassten Daten können bspw. im csv-Format exportiert/importiert werden.
+
+4)
+Es soll möglich sein Personen via GUI anlegen zu können um dann Zeiten auch personenspezifisch Projekten zuordnen zu können.
+
+5)
+Sämtliche erfasste Daten lassen sich im nachhinein bearbeiten/verändern/anpassen.
+
+...
