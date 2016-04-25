@@ -6,7 +6,7 @@ Eine Arbeits- und Projektzeiterfassung.
             
 PROJEKTBESCHREIBUNG
 Erfassung der Arbeitszeit der Mitarbeiter. eines Projektes.
-Erfassung der Projekt(Zeilprojekt-)arbeitszeit.
+Erfassung der Projekt(Zeitprojekt-)arbeitszeit.
 Erstellung von Berichten, primär monatliche Rechnungen für die jeweiligen Kunden, sekundär die monatlichen Arbeitszeit der Mitarbeiter.
 
 PROJEKTTEAM
