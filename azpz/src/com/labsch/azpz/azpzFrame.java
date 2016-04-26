@@ -16,6 +16,11 @@ import javax.swing.JMenuItem;
 public class azpzFrame extends JFrame implements ActionListener
 {
 
+	/**
+	 * 26.04.2016
+	 * 
+	 * @author Martin Labsch
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
@@ -27,7 +32,7 @@ public class azpzFrame extends JFrame implements ActionListener
 		{
 			JMenuItem mi = (JMenuItem) obj;
 
-			if (mi.getName() != null &&  mi.getName().equals("menuItemClose"))
+			if (mi.getName() != null && mi.getName().equals("menuItemClose"))
 			{
 				System.out.println(mi.getName());
 			}
@@ -37,8 +42,6 @@ public class azpzFrame extends JFrame implements ActionListener
 			}
 
 		}
-
-
 
 	}
 

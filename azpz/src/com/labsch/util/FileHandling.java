@@ -50,7 +50,7 @@ public class FileHandling
 		Properties prop = new Properties();
 
 		prop.setProperty("MAIN_FRAME_WIDTH", "800");
-		prop.setProperty("MAIN_FRAM_HEIGHT", "600");
+		prop.setProperty("MAIN_FRAME_HEIGHT", "600");
 		prop.setProperty("language", "de");
 
 		try
@@ -65,6 +65,13 @@ public class FileHandling
 
 	}
 
+	/**
+	 * 26.04.2016
+	 * 
+	 * @author Martin Labsch
+	 * @param propFile
+	 * @return
+	 */
 	public static Properties getProperties(File propFile)
 	{
 		Properties prop = new Properties();
@@ -75,7 +82,7 @@ public class FileHandling
 			if (inStream != null)
 			{
 				prop.load(inStream);
-//				prop.list(System.out);
+				// prop.list(System.out);
 			}
 		}
 		catch (FileNotFoundException e)

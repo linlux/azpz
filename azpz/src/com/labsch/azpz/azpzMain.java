@@ -64,17 +64,22 @@ public class azpzMain
 
 	}
 
+	/**
+	 * 26.04.2016
+	 * 
+	 * @author Martin Labsch
+	 */
 	private static void initializeComponents()
 	{
 		azpzFrame mainFrame = new azpzFrame();
 
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menuFile = new JMenu();
-		JMenuItem menuItemOpen = new JMenuItem();
-		JMenuItem menuItemClose = new JMenuItem();
+		JMenuItem menuItemOpen;
+		JMenuItem menuItemClose;
 
-//		ComponentListener menuBarListener = new actionper;
-		
+		// ComponentListener menuBarListener = new actionper;
+
 		// Titel
 		mainFrame.setTitle(titleMainFrame);
 		// Icon
@@ -91,17 +96,9 @@ public class azpzMain
 		// settings for menu
 		// TODO Mehrsprachigkeit: Bezeichner aus Datei holen (./lang)
 		menuFile.setText("Datei");
-		
-		menuItemOpen.setText("Öffnen");
-		
-		menuItemClose.setText("Beenden");
-		menuItemClose.setName("menuItemClose");
-		
-		menuItemOpen.addActionListener(mainFrame);
-		menuItemClose.addActionListener(mainFrame);
 
-		menuFile.add(menuItemOpen);
-		menuFile.add(menuItemClose);
+		menuItemOpen = createMenuItemAndAddToMenu("Öffnen", "menuItemOpen", mainFrame, menuFile);
+		menuItemClose = createMenuItemAndAddToMenu("Beenden", "menuItemClose", mainFrame, menuFile);
 
 		// adding the menus to menuBar
 		menuBar.add(menuFile);
@@ -113,6 +110,31 @@ public class azpzMain
 
 	}
 
+	/**
+	 * 26.04.2016
+	 * 
+	 * @author Martin Labsch
+	 * @param text
+	 * @param name
+	 * @param actionListener
+	 * @param addHere
+	 * @return
+	 */
+	private static JMenuItem createMenuItemAndAddToMenu(String text, String name, azpzFrame actionListener, JMenu addHere)
+	{
+		JMenuItem mi = new JMenuItem(text);
+		mi.setName(name);
+		mi.addActionListener(actionListener);
+		addHere.add(mi);
+
+		return mi;
+	}
+
+	/**
+	 * 26.04.2016
+	 * 
+	 * @author Martin Labsch
+	 */
 	private static void loadOrCreateSettingsFile()
 	{
 		// test if file exists
@@ -133,7 +155,7 @@ public class azpzMain
 
 			if (prop.size() > 0)
 			{
-				azpzMain.MAIN_FRAME_HEIGHT = new Integer(prop.getProperty("MAIN_FRAM_HEIGHT"));
+				azpzMain.MAIN_FRAME_HEIGHT = new Integer(prop.getProperty("MAIN_FRAME_HEIGHT"));
 				azpzMain.MAIN_FRAME_WIDTH = new Integer(prop.getProperty("MAIN_FRAME_WIDTH"));
 				azpzMain.APP_LANG = prop.getProperty("APP_LANG");
 
