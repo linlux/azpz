@@ -2,10 +2,13 @@ package com.labsch.azpz;
 
 import java.awt.BorderLayout;
 import java.io.File;
+import java.util.Properties;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 import com.labsch.util.FileHandling;
 
@@ -24,8 +27,9 @@ public class azpzMain
 		NORMAL, MAXIMIZED
 	}
 
-	private static final int MAIN_FRAME_WIDTH = 800;
-	private static final int MAIN_FRAM_HEIGHT = 600;
+	private static int MAIN_FRAME_WIDTH;
+	private static int MAIN_FRAME_HEIGHT;
+	private static String APP_LANG;
 
 	private static String appRootDir = FileHandling.getAppPath();
 
@@ -66,8 +70,11 @@ public class azpzMain
 
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menuFile = new JMenu();
-		JMenu menuClose = new JMenu();
+		JMenuItem menuItemOpen = new JMenuItem();
+		JMenuItem menuItemClose = new JMenuItem();
 
+//		ComponentListener menuBarListener = new actionper;
+		
 		// Titel
 		mainFrame.setTitle(titleMainFrame);
 		// Icon
@@ -78,21 +85,27 @@ public class azpzMain
 		// settings for mainFrame
 		// TODO Nachfragen, ob wirklich beendet werden soll
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainFrame.setJMenuBar(menuBar);
-		mainFrame.setSize(MAIN_FRAME_WIDTH, MAIN_FRAM_HEIGHT);
+		mainFrame.setSize(MAIN_FRAME_WIDTH, MAIN_FRAME_HEIGHT);
 		mainFrame.setLocationRelativeTo(null);
-		
+
 		// settings for menu
 		// TODO Mehrsprachigkeit: Bezeichner aus Datei holen (./lang)
 		menuFile.setText("Datei");
-		menuClose.setText("Beenden");
 		
-		menuFile.add(menuClose);
+		menuItemOpen.setText("Öffnen");
 		
-		//adding the menus to menuBar
+		menuItemClose.setText("Beenden");
+		menuItemClose.setName("menuItemClose");
+		
+		menuItemOpen.addActionListener(mainFrame);
+		menuItemClose.addActionListener(mainFrame);
+
+		menuFile.add(menuItemOpen);
+		menuFile.add(menuItemClose);
+
+		// adding the menus to menuBar
 		menuBar.add(menuFile);
-		
-		
+
 		// adding the components to the mainFrame
 		mainFrame.add(menuBar, BorderLayout.PAGE_START);
 
@@ -107,15 +120,31 @@ public class azpzMain
 
 		File settingsFile = new File(settingsFilePath);
 
-		// load or create settings-property-file
-		if (settingsFile.isFile())
-		{
-
-		}
-		else
+		// create settingsFile if doesnt exists
+		if (!settingsFile.isFile())
 		{
 			FileHandling.createFile(settingsFile);
-			FileHandling.setInitialProperties(settingsFile);
+			FileHandling.setInitialPropertiesFile(settingsFile);
+		}
+
+		if (settingsFile.isFile())
+		{
+			Properties prop = FileHandling.getProperties(settingsFile);
+
+			if (prop.size() > 0)
+			{
+				azpzMain.MAIN_FRAME_HEIGHT = new Integer(prop.getProperty("MAIN_FRAM_HEIGHT"));
+				azpzMain.MAIN_FRAME_WIDTH = new Integer(prop.getProperty("MAIN_FRAME_WIDTH"));
+				azpzMain.APP_LANG = prop.getProperty("APP_LANG");
+
+			}
+			else
+			{
+				System.out.println("Keine Einstellungen vorhanden.");
+				// Status 1 because "a nonzero status code indicates abnormal termination"
+				System.exit(1);
+			}
+
 		}
 
 		// System.out.println(FileSystems.getDefault());
@@ -127,5 +156,4 @@ public class azpzMain
 		// DemoPropertiesLesen(propertiesFile);
 
 	}
-
 }
