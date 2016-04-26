@@ -13,7 +13,6 @@ CREATE DATABASE IF NOT EXISTS azpz
 
 USE `azpz`;
 
-
 #
 #  Prozeduren:
 #  Erste Prozedure auch als Beispiel
