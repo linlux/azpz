@@ -1,17 +1,111 @@
---
--- Datenbank: `azpz`
---
 
--- --------------------------------------------------------
+# Database : AZPZ
+# Überarbeitet von Matthias Lüthke am 26.04.2016
+# Überarbeitet von Matthias Lüthke am 26.04.2016
+# Bitte Datenbankname an 2 Stellen anpassen (Zeile 10 und 14) wenn geändert
 
---
--- Tabellenstruktur fÃ¼r Tabelle `address`
---
--- Erstellt am: 25. Apr 2016 um 10:06
---
 
-CREATE TABLE `address` (
-  `address_ID` bigint(20) NOT NULL,
+SET FOREIGN_KEY_CHECKS=0;   
+
+CREATE DATABASE IF NOT EXISTS azpz
+    CHARACTER SET 'latin1'
+    COLLATE 'latin1_general_ci';
+
+USE `azpz`;
+
+
+#
+#  Prozeduren:
+#  Erste Prozedure auch als Beispiel
+
+CREATE   PROCEDURE IF NOT EXITS `table_exits`(IN `ptable_name` VARCHAR(30), OUT `count_table` INT)
+        DETERMINISTIC
+    SELECT COUNT(*) INTO count_table   
+    FROM `information_schema`.`TABLES` WHERE 
+    `information_schema`.`TABLES`.`TABLE_NAME` = ptable_name; 
+
+#
+# Struktur für die Tabelle `persons`:
+# 
+     CREATE TABLE IF NOT EXISTS `persons` (
+    `persons_ID` bigint (20) NOT  NULL AUTO_INCREMENT,
+    `name` VARCHAR(30)  NOT NULL,
+    `firstName` VARCHAR(30)  DEFAULT NULL,
+    `text` varchar(30)  NOT NULL,
+    `insert_MB` varchar(30)  DEFAULT NULL,
+    `update_MB` varchar(30)  DEFAULT NULL,
+    `insert_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
+    `update_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
+    `timestamp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`persons_ID`) USING BTREE,
+    UNIQUE KEY `persons_ID` (`persons_ID`) USING BTREE
+  ) ENGINE=InnoDB    AUTO_INCREMENT=1; 
+
+
+#
+# Struktur für die Tabelle `projects`:  
+#
+
+CREATE TABLE IF NOT EXISTS `projects` (
+  `projects_ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `start` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `end` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `text` varchar(30)  DEFAULT NULL,
+  `insert_MB` varchar(30)  DEFAULT NULL,
+  `update_MB` varchar(30)  DEFAULT NULL,
+  `insert_Date` timestamp(6) NULL DEFAULT NULL,
+  `update_Date` timestamp(6) NULL DEFAULT NULL,
+  `timestamp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`projects_ID`) USING BTREE,
+  UNIQUE KEY `projects_ID` (`projects_ID`) USING BTREE
+) ENGINE=InnoDB
+AUTO_INCREMENT=1  
+;
+
+#
+# Struktur für die Tabelle `user`:
+#
+
+CREATE TABLE IF NOT EXISTS `user` (
+  `user_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `pw_clear` VARCHAR(30)  NOT NULL,
+  `pw_hash` VARCHAR(30)  NOT NULL,
+  `fk_persons_ID` BIGINT(20) NOT NULL,
+  `text` varchar(30) CHARACTER SET latin1   NULL,
+  `insert_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
+  `update_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
+  `insert_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `update_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `timestamp` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   PRIMARY KEY (`user_ID`) USING BTREE,
+  UNIQUE KEY `user_ID` (`user_ID`) USING BTREE
+) ENGINE=InnoDB
+AUTO_INCREMENT=1  
+;
+
+#
+# Struktur für die Tabelle `worktime`:
+#
+
+CREATE TABLE IF NOT EXISTS `worktime` (
+  `worktime_ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `start` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `end` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `text` varchar(30) CHARACTER SET latin1   NULL,
+  `insert_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
+  `update_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
+  `insert_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `update_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `timestamp` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fk_persons_ID` BIGINT(20) DEFAULT NULL,
+  PRIMARY KEY (`worktime_ID`) USING BTREE,
+  UNIQUE KEY `worktime_ID` (`worktime_ID`) USING BTREE
+) ENGINE=InnoDB
+AUTO_INCREMENT=1  
+;
+
+CREATE TABLE IF NOT EXISTS `address` (
+  `address_ID` bigint(20)  NOT NULL AUTO_INCREMENT,
   `address1` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
   `address2` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
   `address3` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
@@ -20,136 +114,29 @@ CREATE TABLE `address` (
   `Country_short` varchar(2) COLLATE latin1_general_ci DEFAULT NULL,
   `Country` varchar(30) COLLATE latin1_general_ci NOT NULL,
   `fk_persons_ID` bigint(20) NOT NULL,
-  `text` varchar(30) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
-  `insert_MB` varchar(30) CHARACTER SET latin1 COLLATE latin1_german1_ci DEFAULT NULL,
-  `update_MB` varchar(30) CHARACTER SET latin1 COLLATE latin1_german1_ci DEFAULT NULL,
+  `text` varchar(30) CHARACTER SET latin1   NULL,
+  `insert_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
+  `update_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
   `insert_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
   `update_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `timestamp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ;
+  `timestamp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`address_ID`) USING BTREE,
+  UNIQUE KEY `address_ID` (`address_ID`) USING BTREE
+)  ENGINE=InnoDB
+AUTO_INCREMENT=1  ;
 
--- --------------------------------------------------------
 
---
--- Tabellenstruktur fÃ¼r Tabelle `login`
---
--- Erstellt am: 25. Apr 2016 um 09:34
---
-
-CREATE TABLE `login` (
+CREATE TABLE IF NOT EXISTS `login` (
   `login_ID` bigint(20) NOT NULL,
   `fk_user_ID` bigint(20) NOT NULL,
-  `text` varchar(30) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
-  `timestamp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `text` varchar(30) CHARACTER SET latin1   NULL,
+  `timestamp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+  PRIMARY KEY (`login_ID`) USING BTREE,
+  UNIQUE KEY `login_ID` (`login_ID`) USING BTREE
 ) ;
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur fÃ¼r Tabelle `persons`
---
--- Erstellt am: 25. Apr 2016 um 09:06
---
-
-CREATE TABLE `persons` (
-  `persons_ID` bigint(20) NOT NULL,
-  `name` varchar(30) COLLATE latin1_german1_ci NOT NULL,
-  `firstName` varchar(30) COLLATE latin1_german1_ci DEFAULT NULL,
-  `text` varchar(30) COLLATE latin1_german1_ci NOT NULL,
-  `insert_MB` varchar(30) COLLATE latin1_german1_ci DEFAULT NULL,
-  `update_MB` varchar(30) COLLATE latin1_german1_ci DEFAULT NULL,
-  `insert_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `update_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `timestamp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur fÃ¼r Tabelle `projects`
---
--- Erstellt am: 25. Apr 2016 um 09:09
---
-
-CREATE TABLE `projects` (
-  `projects_ID` bigint(20) NOT NULL,
-  `name` varchar(30) COLLATE latin1_german1_ci NOT NULL,
-  `text` varchar(30) COLLATE latin1_german1_ci DEFAULT NULL,
-  `insert_MB` varchar(30) COLLATE latin1_german1_ci DEFAULT NULL,
-  `update_MB` varchar(30) COLLATE latin1_german1_ci DEFAULT NULL,
-  `insert_Date` timestamp(6) NULL DEFAULT NULL,
-  `update_Date` timestamp(6) NULL DEFAULT NULL,
-  `timestamp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur fÃ¼r Tabelle `user`
---
--- Erstellt am: 25. Apr 2016 um 09:36
---
-
-CREATE TABLE `user` (
-  `user_id` bigint(20) NOT NULL,
-  `pw_clear` varchar(30) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
-  `pw_hash` varchar(30) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
-  `fk_persons_ID` bigint(20) NOT NULL,
-  `insert_MB` varchar(30) CHARACTER SET latin1 COLLATE latin1_german1_ci DEFAULT NULL,
-  `update_MB` varchar(30) CHARACTER SET latin1 COLLATE latin1_german1_ci DEFAULT NULL,
-  `insert_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `update_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `timestamp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur fÃ¼r Tabelle `worktime`
---
--- Erstellt am: 25. Apr 2016 um 09:10
---
-
-CREATE TABLE `worktime` (
-  `worktime_ID` bigint(20) NOT NULL,
-  `start` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `end` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `Insert_MB` varchar(30) CHARACTER SET latin1 COLLATE latin1_german1_ci DEFAULT NULL,
-  `update_MB` varchar(30) CHARACTER SET latin1 COLLATE latin1_german1_ci DEFAULT NULL,
-  `insert_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `update_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `timestamp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ;
-
---
--- AUTO_INCREMENT fÃ¼r exportierte Tabellen
---
-
---
--- AUTO_INCREMENT fÃ¼r Tabelle `address`
---
-ALTER TABLE `address`
-  MODIFY `address_ID` bigint(20) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT fÃ¼r Tabelle `login`
---
-ALTER TABLE `login`
-  MODIFY `login_ID` bigint(20) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT fÃ¼r Tabelle `projects`
---
-ALTER TABLE `projects`
-  MODIFY `projects_ID` bigint(20) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT fÃ¼r Tabelle `user`
---
-ALTER TABLE `user`
-  MODIFY `user_id` bigint(20) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT fÃ¼r Tabelle `worktime`
---
-ALTER TABLE `worktime`
-  MODIFY `worktime_ID` bigint(20) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+    
+
