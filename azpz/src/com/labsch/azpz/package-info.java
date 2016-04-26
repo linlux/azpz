@@ -6,4 +6,4 @@
  * 2016.04.25
  *
  */
-package com.labsch;
+package com.labsch.azpz;
