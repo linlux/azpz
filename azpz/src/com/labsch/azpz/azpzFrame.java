@@ -104,7 +104,7 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener
 		if(debug)
 		{
 			System.out.println("windowOpened");
-		}		}		
+		}				
 	}
 
 }
