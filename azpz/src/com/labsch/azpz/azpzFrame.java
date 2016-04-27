@@ -42,6 +42,10 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener
 
 			if (mi.getName() != null && mi.getName().equals("menuItemClose"))
 			{
+				if (DialogHandling.queryExit((Component) e.getSource()))
+				{
+					System.exit(0);
+				}
 				System.out.println(mi.getName());
 			}
 			else
@@ -74,7 +78,7 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener
 	@Override
 	public void windowClosing(WindowEvent e)
 	{
-		
+
 		if (DialogHandling.queryExit((Component) e.getSource()))
 		{
 			System.exit(0);
