@@ -1,4 +1,7 @@
 Passwörter
 - Passwortgenerator für initiales Passwort für Benutzer
 - Benutzer kann initial vergebenes Passwort ändern, allerdings muss das neue Passwort den noch festzulegeneden Vorgaben entsprechen.
-	Hierzu wird eine Überprüfung benötigt, welche das neue Passwort testet und dem Benutzer Hinweise liefert, was ggf. zu ändern ist.  
+	Hierzu wird eine Überprüfung benötigt, welche das neue Passwort testet und dem Benutzer Hinweise liefert, was ggf. zu ändern ist.
+	
+Mehrsprachigkeit
+- Bezeichner kommen aus Sprachdateien
