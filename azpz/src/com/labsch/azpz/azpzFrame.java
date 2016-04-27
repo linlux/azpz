@@ -40,34 +40,33 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener
         {
             JMenuItem mi = (JMenuItem) obj;
 
-			
             if (mi.getName() != null && mi.getName().equals("menuItemClose"))
             {
                 if (DialogHandling.queryExit((Component) e.getSource()))
                 {
                     System.exit(0);
                 }
-			//     @author Matthias Lüthke, 27.04.2016
-			else 	if (mi.getName() != null && mi.getName().equals("menuItemLogin"))		
-			{
-			       System.out.println(mi.getName()); 
-			       final JFrame frame = new JFrame("JDialog Test");
-			       
-			       final JButton btnLogin = new JButton("Click to login");		             
-				
-				
-			       frame.setLocationRelativeTo(this);						
-			   
-			       
-			       loginDialog loginDlg = new loginDialog(frame);
-			       frame.setLocationRelativeTo(this);	
-	                       loginDlg.setVisible(true);
-	                        // if logon successfully
-	                        if(loginDlg.isSucceeded())                        
-	                            btnLogin.setText("Hi alles OK " + loginDlg.getUsername() + "!");   
-			       
-			}
-			else 			
+            }
+            // @author Matthias Lüthke, 27.04.2016
+            else if (mi.getName() != null && mi.getName().equals("menuItemLogin"))
+            {
+                System.out.println(mi.getName());
+                final JFrame frame = new JFrame("JDialog Test");
+
+                final JButton btnLogin = new JButton("Click to login");
+
+                frame.setLocationRelativeTo(this);
+
+                loginDialog loginDlg = new loginDialog(frame);
+                frame.setLocationRelativeTo(this);
+                loginDlg.setVisible(true);
+                // if logon successfully
+                if (loginDlg.isSucceeded())
+                    btnLogin.setText("Hi alles OK " + loginDlg.getUsername() + "!");
+
+            }
+
+            if (debug)
             {
                 System.out.println(mi.getName());
             }
@@ -144,7 +143,7 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener
         if (debug)
         {
             System.out.println("windowOpened");
-		}
+        }
     }
 
 }
