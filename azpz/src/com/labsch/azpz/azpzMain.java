@@ -72,7 +72,7 @@ public class azpzMain
 		}
 		// settings for mainFrame
 		// TODO Nachfragen, ob wirklich beendet werden soll
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		mainFrame.setSize(MAIN_FRAME_WIDTH, MAIN_FRAME_HEIGHT);
 		mainFrame.setLocationRelativeTo(null);
 
