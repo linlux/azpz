@@ -9,7 +9,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-public class LoginDialog extends JDialog  
+public class loginDialog extends JDialog  
 { 
     private boolean debug = false;
     private JTextField tfUsername;
@@ -84,7 +84,7 @@ public class LoginDialog extends JDialog
 
   }
 
-    public LoginDialog(Frame parent) 
+    public loginDialog(Frame parent) 
     {
         super(parent, "Login", true);
         //
@@ -98,7 +98,7 @@ public class LoginDialog extends JDialog
              {
                 if (login.authenticate(getUsername(), getPassword()))
                  {
-                    JOptionPane.showMessageDialog(LoginDialog.this,
+                    JOptionPane.showMessageDialog(loginDialog.this,
                             "Moin, Moin " + getUsername() + "! Sie sind erfolgreich eingeloggt.",
                             "Login",
                             JOptionPane.INFORMATION_MESSAGE);
@@ -106,7 +106,7 @@ public class LoginDialog extends JDialog
                     dispose();
                 } else 
                 {
-                    JOptionPane.showMessageDialog(LoginDialog.this,
+                    JOptionPane.showMessageDialog(loginDialog.this,
                             "falscher username der falsches password",
                             "Login",
                             JOptionPane.ERROR_MESSAGE);

@@ -22,7 +22,7 @@ public class test_Login
                     @Override
 		    public void actionPerformed(ActionEvent e) 
                     {
-                        LoginDialog loginDlg = new LoginDialog(frame);
+                        loginDialog loginDlg = new loginDialog(frame);
                         loginDlg.setVisible(true);
                         // if logon successfully
                         if(loginDlg.isSucceeded())                        
