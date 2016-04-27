@@ -1,6 +1,12 @@
 package com.labsch.dlg_login;
 import java.awt.event.*;
 import javax.swing.*;
+
+/**
+ * 
+ * @author Matthias Lüthke,   27.04.2016
+ *
+ */
 public class test_Login
 {
 

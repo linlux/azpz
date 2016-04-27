@@ -1,5 +1,9 @@
 package com.labsch.dlg_login;
-
+/**
+ * 
+ * @author Matthias Lüthke,   27.04.2016
+ *
+ */
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -16,6 +20,8 @@ public class LoginDialog extends JDialog
     private JButton btnCancel;
     private boolean succeeded;
     private Frame parentFrame; 
+    
+   
     
     private void initDialog ()
 	{
