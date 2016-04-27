@@ -75,7 +75,10 @@ public class FileHandling
 
         for (String p : props.keySet())
         {
-            System.out.println(p + " " + props.get(p));
+            if (debug)
+            {
+                System.out.println(p + " " + props.get(p));
+            }
             prop.setProperty(p, props.get(p));
         }
 
