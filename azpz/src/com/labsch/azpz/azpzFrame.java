@@ -50,7 +50,6 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener
             // @author Matthias Lüthke, 27.04.2016
             else if (mi.getName() != null && mi.getName().equals("menuItemLogin"))
             {
-                System.out.println(mi.getName());
                 final JFrame frame = new JFrame("JDialog Test");
 
                 final JButton btnLogin = new JButton("Click to login");
