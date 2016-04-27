@@ -38,42 +38,33 @@ public class loginDialog extends JDialog
 	 parentFrame = parent;
         JPanel panel = new JPanel(new GridBagLayout());
         
-        this.setSize(200, 400);
-        
+        this.setSize(300, 400);
+            
      // Layout Manager ausschalten
-     	this.setLayout(null);
-     		
-     		// Keine Grössenänderung des Dialogs
-     	
-  //   	this.setResizable(false);
-        
-        
-  //      GridBagConstraints cs = new GridBagConstraints();
+     		this.setLayout(null);
+      // GridBagConstraints cs = new GridBagConstraints();
 
-  //      cs.fill = GridBagConstraints.HORIZONTAL;
+      /// cs.fill = GridBagConstraints.HORIZONTAL;
 
         lbUsername = new JLabel("Username: ");
 //        cs.gridx = 0;
 //        cs.gridy = 0;
 //        cs.gridwidth = 1;
+        
+        lbUsername.setBounds(10, 10, 100, 100);
         panel.add(lbUsername);
 
-        tfUsername = new JTextField(20);
-//        cs.gridx = 1;
-//        cs.gridy = 0;
-//        cs.gridwidth = 2;
-        panel.add(tfUsername);
+       tfUsername = new JTextField(20);
+       tfUsername.setBounds(10, 110, 100, 100);
+       panel.add(tfUsername);
 
         lbPassword = new JLabel("Password: ");     
-//        cs.gridx = 0;
-//        cs.gridy = 1;
-//        cs.gridwidth = 1;
+        lbPassword.setBounds(60, 10, 100, 100);
         panel.add(lbPassword);
 
         pfPassword = new JPasswordField(20);
-//        cs.gridx = 1;
-//        cs.gridy = 1;
-//        cs.gridwidth = 2;
+
+        lbPassword.setBounds(60, 110, 100, 100);
         panel.add(pfPassword);
         panel.setBorder(new LineBorder(Color.GRAY));
 
