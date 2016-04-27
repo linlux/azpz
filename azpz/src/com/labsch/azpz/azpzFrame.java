@@ -2,24 +2,23 @@ package com.labsch.azpz;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 
 /**
- * 
- * 26.04.2016
- * 
- * @author Martin Labsch
- *
+ @author Martin Labsch, 26.04.2016
  */
 @SuppressWarnings("serial")
-public class azpzFrame extends JFrame implements ActionListener
+public class azpzFrame extends JFrame implements ActionListener, WindowListener
 {
 
+	private static final boolean debug = true;
+
 	/**
-	 * 26.04.2016
-	 * 
-	 * @author Martin Labsch
+	 * @author Martin Labsch, 26.04.2016
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
@@ -43,6 +42,69 @@ public class azpzFrame extends JFrame implements ActionListener
 
 		}
 
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e)
+	{
+		if(debug)
+		{
+			System.out.println("windowActivated");
+		}		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e)
+	{
+		if(debug)
+		{
+			System.out.println("windowClosed");
+		}		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e)
+	{
+		if(debug)
+		{
+			System.out.println("windowClosing");
+		}		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e)
+	{
+		if(debug)
+		{
+			System.out.println("windowDeactivated");
+		}		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e)
+	{
+		if(debug)
+		{
+			System.out.println("windowDeiconified");
+		}		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e)
+	{
+		if(debug)
+		{
+			System.out.println("windowIconified");
+		}		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e)
+	{
+		if(debug)
+		{
+			System.out.println("windowOpened");
+		}		}		
 	}
 
 }

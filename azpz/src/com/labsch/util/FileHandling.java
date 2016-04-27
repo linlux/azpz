@@ -11,7 +11,7 @@ import java.util.Properties;
  * 
  * 26.04.2016
  * 
- * @author Martin Labsch
+ * @author Martin Labsch, 26.04.2016
  *
  */
 public class FileHandling
@@ -20,7 +20,7 @@ public class FileHandling
 	 * 
 	 * Creates a File in the Filesystem.
 	 * 
-	 * @author Martin Labsch<br>
+	 * @author Martin Labsch, 26.04.2016<br>
 	 *         26.04.2016
 	 * @param file
 	 *            full path including filename.
@@ -40,7 +40,7 @@ public class FileHandling
 	}
 
 	/**
-	 * @author Martin Labsch<br>
+	 * @author Martin Labsch, 26.04.2016<br>
 	 *         26.04.2016
 	 * @param settingsFile
 	 */
@@ -66,9 +66,8 @@ public class FileHandling
 	}
 
 	/**
-	 * 26.04.2016
-	 * 
-	 * @author Martin Labsch
+
+	 * @author Martin Labsch, 26.04.2016
 	 * @param propFile
 	 * @return
 	 */
@@ -101,7 +100,7 @@ public class FileHandling
 
 	/**
 	 * 
-	 * @author Martin Labsch<br>
+	 * @author Martin Labsch, 26.04.2016<br>
 	 *         26.04.2016
 	 * @return null or the actual app-path
 	 */
