@@ -16,11 +16,7 @@ public class azpzMain
 {
 
 	/**
-	 * 
-	 * 26.04.2016
-	 * 
-	 * @author Martin Labsch
-	 *
+	 * @author Martin Labsch, 26.04.2016
 	 */
 	private enum StartupMode
 	{
@@ -39,46 +35,33 @@ public class azpzMain
 
 	private static int mainFrameX, mainFrameY;
 	private static String titleMainFrame = "AzPz";
-	// private static String mainFrameIcon = "\\pic\\Hourglass-icon-48pxl.png";
 
 	/**
-	 * 26.04.2016
-	 * 
-	 * @author Martin Labsch
+	 * @author Martin Labsch, 26.04.2016
 	 * @param args
 	 */
 	public static void main(String[] args)
 	{
-
 		loadOrCreateSettingsFile();
 		initializeComponents();
-
-		try
-		{
-
-		}
-		catch (Exception e)
-		{
-			// TODO: handle exception
-		}
-
 	}
 
 	/**
-	 * 26.04.2016
-	 * 
-	 * @author Martin Labsch
+	 * @author Martin Labsch, 26.04.2016
 	 */
 	private static void initializeComponents()
 	{
 		azpzFrame mainFrame = new azpzFrame();
+		mainFrame.addWindowListener(mainFrame);
 
 		JMenuBar menuBar = new JMenuBar();
-		JMenu menuFile = new JMenu();
-		JMenuItem menuItemOpen;
-		JMenuItem menuItemClose;
 
-		// ComponentListener menuBarListener = new actionper;
+		JMenu menuFile = createMenuAndAddToMenuBar("Datei", "menuFile", 'D', menuBar);
+
+		// TODO Mehrsprachigkeit: Bezeichner aus Datei holen (./lang)
+		// menu-entries
+		createMenuItemAndAddToMenu("Öffnen", "menuItemOpen", 'F', mainFrame, menuFile);
+		createMenuItemAndAddToMenu("Beenden", "menuItemClose", 'E', mainFrame, menuFile);
 
 		// Titel
 		mainFrame.setTitle(titleMainFrame);
@@ -93,16 +76,6 @@ public class azpzMain
 		mainFrame.setSize(MAIN_FRAME_WIDTH, MAIN_FRAME_HEIGHT);
 		mainFrame.setLocationRelativeTo(null);
 
-		// settings for menu
-		// TODO Mehrsprachigkeit: Bezeichner aus Datei holen (./lang)
-		menuFile.setText("Datei");
-
-		menuItemOpen = createMenuItemAndAddToMenu("Öffnen", "menuItemOpen", mainFrame, menuFile);
-		menuItemClose = createMenuItemAndAddToMenu("Beenden", "menuItemClose", mainFrame, menuFile);
-
-		// adding the menus to menuBar
-		menuBar.add(menuFile);
-
 		// adding the components to the mainFrame
 		mainFrame.add(menuBar, BorderLayout.PAGE_START);
 
@@ -111,29 +84,65 @@ public class azpzMain
 	}
 
 	/**
-	 * 26.04.2016
+	 * creates an JMenu and added it to an JMenuBar.
 	 * 
-	 * @author Martin Labsch
+	 * @author Martin Labsch, 26.04.2016
 	 * @param text
+	 *            - will be displayed
 	 * @param name
-	 * @param actionListener
-	 * @param addHere
+	 *            - for later identification e.g. listeners
+	 * @param mnemonic
+	 *            - the key to navigation via keyboard
+	 * @param menuBar
+	 *            - where the menu will be added
 	 * @return
 	 */
-	private static JMenuItem createMenuItemAndAddToMenu(String text, String name, azpzFrame actionListener, JMenu addHere)
+	private static JMenu createMenuAndAddToMenuBar(String text, String name, char mnemonic, JMenuBar menuBar)
+	{
+		JMenu menu = new JMenu();
+
+		menu.setText(text);
+		menu.setName(name);
+		menu.setMnemonic('D');
+
+		menuBar.add(menu);
+
+		return menu;
+	}
+
+	/**
+	 * creates an JMenuItem and added it to an JMenu.
+	 * 
+	 * @author Martin Labsch, 26.04.2016
+	 * @param text
+	 *            - will be displayed
+	 * @param name
+	 *            - for later identification e.g. listeners
+	 * @param mnemonic
+	 *            - the key to navigation via keyboard
+	 * @param actionListener
+	 *            - will be added to the item
+	 * @param menu
+	 *            - where the menu-item will be added
+	 * @return
+	 */
+	private static JMenuItem createMenuItemAndAddToMenu(String text, String name, char mnemonic, azpzFrame actionListener, JMenu menu)
 	{
 		JMenuItem mi = new JMenuItem(text);
 		mi.setName(name);
+		mi.setMnemonic(mnemonic);
 		mi.addActionListener(actionListener);
-		addHere.add(mi);
+
+		menu.add(mi);
 
 		return mi;
 	}
 
 	/**
-	 * 26.04.2016
+	 * loads the settings from file or creates a settings-file with initial values<br>
+	 * if the file doesnt exists.
 	 * 
-	 * @author Martin Labsch
+	 * @author Martin Labsch, 26.04.2016
 	 */
 	private static void loadOrCreateSettingsFile()
 	{
