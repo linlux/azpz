@@ -1,4 +1,4 @@
-package dlg_login;
+package com.labsch.dlg_login;
 
 import java.awt.*;
 import java.awt.event.*;

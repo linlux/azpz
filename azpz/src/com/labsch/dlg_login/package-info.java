@@ -5,4 +5,4 @@
  * @author Alfa
  *
  */
-package dlg_login;
+package com.labsch.dlg_login;

@@ -1,4 +1,4 @@
-package dlg_login;
+package com.labsch.dlg_login;
 import java.awt.event.*;
 import javax.swing.*;
 public class test_Login
