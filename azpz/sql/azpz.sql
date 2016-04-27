@@ -3,7 +3,7 @@
 # Überarbeitet von Matthias Lüthke am 26.04.2016
 # Überarbeitet von Matthias Lüthke am 26.04.2016
 # Bitte Datenbankname an 2 Stellen anpassen (Zeile 10 und 14) wenn geändert
-
+# Test git
 
 SET FOREIGN_KEY_CHECKS=0;   
 
