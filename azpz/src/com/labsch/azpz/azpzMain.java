@@ -45,7 +45,9 @@ public class azpzMain
 		loadOrCreateSettingsFile();
 		initializeComponents();
 	}
-
+	
+	
+	
 	/**
 	 * @author Martin Labsch, 26.04.2016
 	 */
@@ -57,11 +59,19 @@ public class azpzMain
 		JMenuBar menuBar = new JMenuBar();
 
 		JMenu menuFile = createMenuAndAddToMenuBar("Datei", "menuFile", 'D', menuBar);
+		/**
+		 *    @author Matthias Lüthke, 27.04.2016
+		 */
+		JMenu menuLogin = createMenuAndAddToMenuBar("Login", "menuLogin", 'L', menuBar);
 
 		// TODO Mehrsprachigkeit: Bezeichner aus Datei holen (./lang)
 		// menu-entries
 		createMenuItemAndAddToMenu("Öffnen", "menuItemOpen", 'F', mainFrame, menuFile);
 		createMenuItemAndAddToMenu("Beenden", "menuItemClose", 'E', mainFrame, menuFile);
+		/**
+		 *    @author Matthias Lüthke, 27.04.2016
+		 */
+		createMenuItemAndAddToMenu("LogIn", "menuItemLogin", 'L', mainFrame, menuLogin);
 
 		// Titel
 		mainFrame.setTitle(titleMainFrame);
