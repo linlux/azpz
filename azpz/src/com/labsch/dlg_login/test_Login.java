@@ -15,6 +15,8 @@ public class test_Login
 
         final JFrame frame = new JFrame("JDialog Test");
         final JButton btnLogin = new JButton("Click to login");
+        
+        
  
         btnLogin.addActionListener    (
                 new ActionListener()

@@ -5,6 +5,8 @@ package com.labsch.dlg_login;
  *
  */
 import java.awt.*;
+
+
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -12,7 +14,7 @@ import javax.swing.border.*;
 @SuppressWarnings("serial")
 public class loginDialog extends JDialog  
 { 
-    private boolean debug = false;
+    private static final boolean debug = true;  
     private JTextField tfUsername;
     private JPasswordField pfPassword;
     private JLabel lbUsername;
@@ -20,8 +22,7 @@ public class loginDialog extends JDialog
     private JButton btnLogin;
     private JButton btnCancel;
     private boolean succeeded;
-    private Frame parentFrame; 
-    
+    private Frame parentFrame;     
    
     
     private void initDialog ()
@@ -35,34 +36,36 @@ public class loginDialog extends JDialog
 	{
 	   
 	 parentFrame = parent;
-         JPanel panel = new JPanel(new GridBagLayout());
-        GridBagConstraints cs = new GridBagConstraints();
+        JPanel panel = new JPanel(new GridBagLayout());
+        
+        this.setSize(300, 400);
+            
+     // Layout Manager ausschalten
+     		this.setLayout(null);
+      // GridBagConstraints cs = new GridBagConstraints();
 
-        cs.fill = GridBagConstraints.HORIZONTAL;
+      /// cs.fill = GridBagConstraints.HORIZONTAL;
 
         lbUsername = new JLabel("Username: ");
-        cs.gridx = 0;
-        cs.gridy = 0;
-        cs.gridwidth = 1;
-        panel.add(lbUsername, cs);
+//        cs.gridx = 0;
+//        cs.gridy = 0;
+//        cs.gridwidth = 1;
+        
+        lbUsername.setBounds(10, 10, 100, 100);
+        panel.add(lbUsername);
 
-        tfUsername = new JTextField(20);
-        cs.gridx = 1;
-        cs.gridy = 0;
-        cs.gridwidth = 2;
-        panel.add(tfUsername, cs);
+       tfUsername = new JTextField(20);
+       tfUsername.setBounds(10, 110, 100, 100);
+       panel.add(tfUsername);
 
-        lbPassword = new JLabel("Password: ");
-        cs.gridx = 0;
-        cs.gridy = 1;
-        cs.gridwidth = 1;
-        panel.add(lbPassword, cs);
+        lbPassword = new JLabel("Password: ");     
+        lbPassword.setBounds(60, 10, 100, 100);
+        panel.add(lbPassword);
 
         pfPassword = new JPasswordField(20);
-        cs.gridx = 1;
-        cs.gridy = 1;
-        cs.gridwidth = 2;
-        panel.add(pfPassword, cs);
+
+        lbPassword.setBounds(60, 110, 100, 100);
+        panel.add(pfPassword);
         panel.setBorder(new LineBorder(Color.GRAY));
 
         btnLogin = new JButton("Login");

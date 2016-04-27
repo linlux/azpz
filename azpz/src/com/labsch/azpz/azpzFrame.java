@@ -7,9 +7,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import com.labsch.util.DialogHandling;
+
+import com.labsch.dlg_login.loginDialog;
 
 /**
  * @author Martin Labsch, 26.04.2016
@@ -37,15 +40,34 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener
         {
             JMenuItem mi = (JMenuItem) obj;
 
+			
             if (mi.getName() != null && mi.getName().equals("menuItemClose"))
             {
                 if (DialogHandling.queryExit((Component) e.getSource()))
                 {
                     System.exit(0);
                 }
-            }
-
-            if (debug)
+			//     @author Matthias Lüthke, 27.04.2016
+			else 	if (mi.getName() != null && mi.getName().equals("menuItemLogin"))		
+			{
+			       System.out.println(mi.getName()); 
+			       final JFrame frame = new JFrame("JDialog Test");
+			       
+			       final JButton btnLogin = new JButton("Click to login");		             
+				
+				
+			       frame.setLocationRelativeTo(this);						
+			   
+			       
+			       loginDialog loginDlg = new loginDialog(frame);
+			       frame.setLocationRelativeTo(this);	
+	                       loginDlg.setVisible(true);
+	                        // if logon successfully
+	                        if(loginDlg.isSucceeded())                        
+	                            btnLogin.setText("Hi alles OK " + loginDlg.getUsername() + "!");   
+			       
+			}
+			else 			
             {
                 System.out.println(mi.getName());
             }
@@ -122,7 +144,7 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener
         if (debug)
         {
             System.out.println("windowOpened");
-        }
+		}
     }
 
 }

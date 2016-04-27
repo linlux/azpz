@@ -17,7 +17,7 @@ USE `azpz`;
 #  Prozeduren:
 #  Erste Prozedure auch als Beispiel
 
-CREATE PROCEDURE IF NOT EXISTS `table_exits`(IN `ptable_name` VARCHAR(30), OUT `count_table` INT)
+CREATE   PROCEDURE IF NOT EXITS `table_exits`(IN `ptable_name` VARCHAR(30), OUT `count_table` INT)
         DETERMINISTIC
     SELECT COUNT(*) INTO count_table   
     FROM `information_schema`.`TABLES` WHERE 
