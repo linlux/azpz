@@ -15,176 +15,188 @@ import com.labsch.util.FileHandling;
 public class azpzMain
 {
 
-	/**
-	 * @author Martin Labsch, 26.04.2016
-	 */
-	private enum StartupMode
-	{
-		NORMAL, MAXIMIZED
-	}
+    /**
+     * @author Martin Labsch, 26.04.2016
+     */
+    private enum StartupMode
+    {
+        NORMAL, MAXIMIZED
+    }
 
-	private static int MAIN_FRAME_WIDTH;
-	private static int MAIN_FRAME_HEIGHT;
-	private static String APP_LANG;
+    private static int MAIN_FRAME_WIDTH;
+    private static int MAIN_FRAME_HEIGHT;
+    private static String APP_LANG;
 
-	private static String appRootDir = FileHandling.getAppPath();
+    private static String appRootDir = FileHandling.getAppPath();
 
-	private static String settingsFilePath = appRootDir != null ? appRootDir + "\\settings\\settings.properties" : null;
-	private static ImageIcon mainFrameIcon = appRootDir != null ? new ImageIcon(appRootDir + "\\pic\\Hourglass-icon-48pxl.png") : null;
-	private static ImageIcon mainFrameIcon2 = appRootDir != null ? new ImageIcon(appRootDir + "\\pic\\Hourglass-icon-pxl.png") : null;
+    private static String settingsFilePath = appRootDir != null ? appRootDir + "\\settings\\settings.properties" : null;
 
-	private static int mainFrameX, mainFrameY;
-	private static String titleMainFrame = "AzPz";
+    private static ImageIcon mainFrameIcon = appRootDir != null ? new ImageIcon(appRootDir + "\\pic\\Hourglass-icon-48pxl.png") : null;
+    private static ImageIcon mainFrameIcon2 = appRootDir != null ? new ImageIcon(appRootDir + "\\pic\\Hourglass-icon-pxl.png") : null;
 
-	/**
-	 * @author Martin Labsch, 26.04.2016
-	 * @param args
-	 */
-	public static void main(String[] args)
-	{
-		loadOrCreateSettingsFile();
-		initializeComponents();
-	}
+    private static int mainFrameX, mainFrameY;
+    private static String titleMainFrame = "AzPz";
 
-	/**
-	 * @author Martin Labsch, 26.04.2016
-	 */
-	private static void initializeComponents()
-	{
-		azpzFrame mainFrame = new azpzFrame();
-		mainFrame.addWindowListener(mainFrame);
+    /**
+     * @author Martin Labsch, 26.04.2016
+     * @param args
+     */
+    public static void main(String[] args)
+    {
+        loadOrCreateSettingsFile();
+        initializeComponents();
+    }
 
-		JMenuBar menuBar = new JMenuBar();
+    /**
+     * @author Martin Labsch, 26.04.2016
+     */
+    private static void initializeComponents()
+    {
+        azpzFrame mainFrame = new azpzFrame();
+        mainFrame.setName("mainFrame");
+        mainFrame.addWindowListener(mainFrame);
 
-		JMenu menuFile = createMenuAndAddToMenuBar("Datei", "menuFile", 'D', menuBar);
+        JMenuBar menuBar = new JMenuBar();
 
-		// TODO Mehrsprachigkeit: Bezeichner aus Datei holen (./lang)
-		// menu-entries
-		createMenuItemAndAddToMenu("Öffnen", "menuItemOpen", 'F', mainFrame, menuFile);
-		createMenuItemAndAddToMenu("Beenden", "menuItemClose", 'E', mainFrame, menuFile);
+        JMenu menuFile = createMenuAndAddToMenuBar("Datei", "menuFile", 'D', menuBar);
 
-		// Titel
-		mainFrame.setTitle(titleMainFrame);
-		// Icon
-		if (mainFrameIcon != null)
-		{
-			mainFrame.setIconImage(mainFrameIcon.getImage());
-		}
-		// settings for mainFrame
-		// TODO Nachfragen, ob wirklich beendet werden soll
-		mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		mainFrame.setSize(MAIN_FRAME_WIDTH, MAIN_FRAME_HEIGHT);
-		mainFrame.setLocationRelativeTo(null);
+        // TODO Mehrsprachigkeit: Bezeichner aus Datei holen (./lang)
+        // menu-entries
+        createMenuItemAndAddToMenu("Öffnen", "menuItemOpen", 'F', mainFrame, menuFile);
+        createMenuItemAndAddToMenu("Beenden", "menuItemClose", 'E', mainFrame, menuFile);
 
-		// adding the components to the mainFrame
-		mainFrame.add(menuBar, BorderLayout.PAGE_START);
+        // Titel
+        mainFrame.setTitle(titleMainFrame);
+        // Icon
+        if (mainFrameIcon != null)
+        {
+            mainFrame.setIconImage(mainFrameIcon.getImage());
+        }
+        // settings for mainFrame
+        // TODO Nachfragen, ob wirklich beendet werden soll
+        mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        mainFrame.setSize(MAIN_FRAME_WIDTH, MAIN_FRAME_HEIGHT);
+        mainFrame.setLocationRelativeTo(null);
 
-		mainFrame.setVisible(true);
+        // adding the components to the mainFrame
+        mainFrame.add(menuBar, BorderLayout.PAGE_START);
 
-	}
+        mainFrame.setVisible(true);
 
-	/**
-	 * creates an JMenu and added it to an JMenuBar.
-	 * 
-	 * @author Martin Labsch, 26.04.2016
-	 * @param text
-	 *            - will be displayed
-	 * @param name
-	 *            - for later identification e.g. listeners
-	 * @param mnemonic
-	 *            - the key to navigation via keyboard
-	 * @param menuBar
-	 *            - where the menu will be added
-	 * @return
-	 */
-	private static JMenu createMenuAndAddToMenuBar(String text, String name, char mnemonic, JMenuBar menuBar)
-	{
-		JMenu menu = new JMenu();
+    }
 
-		menu.setText(text);
-		menu.setName(name);
-		menu.setMnemonic('D');
+    /**
+     * creates an JMenu and added it to an JMenuBar.
+     * 
+     * @author Martin Labsch, 26.04.2016
+     * @param text
+     *            - will be displayed
+     * @param name
+     *            - for later identification e.g. listeners
+     * @param mnemonic
+     *            - the key to navigation via keyboard
+     * @param menuBar
+     *            - where the menu will be added
+     * @return
+     */
+    private static JMenu createMenuAndAddToMenuBar(String text, String name, char mnemonic, JMenuBar menuBar)
+    {
+        JMenu menu = new JMenu();
 
-		menuBar.add(menu);
+        menu.setText(text);
+        menu.setName(name);
+        menu.setMnemonic('D');
 
-		return menu;
-	}
+        menuBar.add(menu);
 
-	/**
-	 * creates an JMenuItem and added it to an JMenu.
-	 * 
-	 * @author Martin Labsch, 26.04.2016
-	 * @param text
-	 *            - will be displayed
-	 * @param name
-	 *            - for later identification e.g. listeners
-	 * @param mnemonic
-	 *            - the key to navigation via keyboard
-	 * @param actionListener
-	 *            - will be added to the item
-	 * @param menu
-	 *            - where the menu-item will be added
-	 * @return
-	 */
-	private static JMenuItem createMenuItemAndAddToMenu(String text, String name, char mnemonic, azpzFrame actionListener, JMenu menu)
-	{
-		JMenuItem mi = new JMenuItem(text);
-		mi.setName(name);
-		mi.setMnemonic(mnemonic);
-		mi.addActionListener(actionListener);
+        return menu;
+    }
 
-		menu.add(mi);
+    /**
+     * creates an JMenuItem and added it to an JMenu.
+     * 
+     * @author Martin Labsch, 26.04.2016
+     * @param text
+     *            - will be displayed
+     * @param name
+     *            - for later identification e.g. listeners
+     * @param mnemonic
+     *            - the key to navigation via keyboard
+     * @param actionListener
+     *            - will be added to the item
+     * @param menu
+     *            - where the menu-item will be added
+     * @return
+     */
+    private static JMenuItem createMenuItemAndAddToMenu(String text, String name, char mnemonic, azpzFrame actionListener, JMenu menu)
+    {
+        JMenuItem mi = new JMenuItem(text);
+        mi.setName(name);
+        mi.setMnemonic(mnemonic);
+        mi.addActionListener(actionListener);
 
-		return mi;
-	}
+        menu.add(mi);
 
-	/**
-	 * loads the settings from file or creates a settings-file with initial values<br>
-	 * if the file doesnt exists.
-	 * 
-	 * @author Martin Labsch, 26.04.2016
-	 */
-	private static void loadOrCreateSettingsFile()
-	{
-		// test if file exists
-		// Path path = (Path) FileSystems.getDefault().getPath(".", more);
+        return mi;
+    }
 
-		File settingsFile = new File(settingsFilePath);
+    /**
+     * loads the settings from file or creates a settings-file with initial values<br>
+     * if the file doesnt exists.
+     * 
+     * @author Martin Labsch, 26.04.2016
+     */
+    private static void loadOrCreateSettingsFile()
+    {
+        // test if file exists
+        // Path path = (Path) FileSystems.getDefault().getPath(".", more);
 
-		// create settingsFile if doesnt exists
-		if (!settingsFile.isFile())
-		{
-			FileHandling.createFile(settingsFile);
-			FileHandling.setInitialPropertiesFile(settingsFile);
-		}
+        File settingsFile = new File(settingsFilePath);
 
-		if (settingsFile.isFile())
-		{
-			Properties prop = FileHandling.getProperties(settingsFile);
+        // create settingsFile if doesnt exists
+        if (!settingsFile.isFile())
+        {
+            FileHandling.createFile(settingsFile);
+            FileHandling.setInitialPropertiesFile(settingsFile);
+        }
 
-			if (prop.size() > 0)
-			{
-				azpzMain.MAIN_FRAME_HEIGHT = new Integer(prop.getProperty("MAIN_FRAME_HEIGHT"));
-				azpzMain.MAIN_FRAME_WIDTH = new Integer(prop.getProperty("MAIN_FRAME_WIDTH"));
-				azpzMain.APP_LANG = prop.getProperty("APP_LANG");
+        if (settingsFile.isFile())
+        {
+            Properties prop = FileHandling.getProperties(settingsFile);
 
-			}
-			else
-			{
-				System.out.println("Keine Einstellungen vorhanden.");
-				// Status 1 because "a nonzero status code indicates abnormal termination"
-				System.exit(1);
-			}
+            if (prop.size() > 0)
+            {
+                azpzMain.MAIN_FRAME_HEIGHT = new Integer(prop.getProperty("MAIN_FRAME_HEIGHT"));
+                azpzMain.MAIN_FRAME_WIDTH = new Integer(prop.getProperty("MAIN_FRAME_WIDTH"));
+                azpzMain.APP_LANG = prop.getProperty("APP_LANG");
 
-		}
+            }
+            else
+            {
+                System.out.println("Keine Einstellungen vorhanden.");
+                // Status 1 because "a nonzero status code indicates abnormal termination"
+                System.exit(1);
+            }
 
-		// System.out.println(FileSystems.getDefault());
+        }
 
-		// Files.walk(Path , options)
+        // System.out.println(FileSystems.getDefault());
 
-		// String propertiesFile = "F:\\PrOpErties.txt";
-		// DemoPropertiesErstelle(propertiesFile);
-		// DemoPropertiesLesen(propertiesFile);
+        // Files.walk(Path , options)
 
-	}
+        // String propertiesFile = "F:\\PrOpErties.txt";
+        // DemoPropertiesErstelle(propertiesFile);
+        // DemoPropertiesLesen(propertiesFile);
+
+    }
+
+    /**
+     * 
+     * @author Martin Labsch, 27.04.2016
+     * @return path of File 'setting.properties'
+     */
+    public static String getSettingsFilePath()
+    {
+        return settingsFilePath;
+    }
 }
