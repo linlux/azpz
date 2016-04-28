@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Properties;
 
+import javax.swing.JFrame;
+
 import com.labsch.azpz.azpzMain;
 
 /**
@@ -82,6 +84,7 @@ public class FileHandling
 
         props.put("MAIN_FRAME_WIDTH", "800");
         props.put("MAIN_FRAME_HEIGHT", "600");
+        props.put("MAXIMIZED", "false");
         props.put("language", "de");
 
         setPropertyFile(propFile, props);
@@ -186,6 +189,7 @@ public class FileHandling
 
         props.put("MAIN_FRAME_WIDTH", Integer.toString(parentComponent.getWidth()));
         props.put("MAIN_FRAME_HEIGHT", Integer.toString(parentComponent.getHeight()));
+        props.put("MAXIMIZED", ((JFrame)parentComponent).getExtendedState() == Frame.MAXIMIZED_BOTH ? "true" : "false");
         props.put("language", "fr");
 
         setPropertyFile(new File(azpzMain.getSettingsFileLocation()), props);

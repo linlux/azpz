@@ -1,6 +1,7 @@
 package com.labsch.azpz;
 
 import java.awt.BorderLayout;
+import java.awt.Frame;
 import java.io.File;
 import java.util.Properties;
 
@@ -25,6 +26,7 @@ public class azpzMain
 
     private static int MAIN_FRAME_WIDTH;
     private static int MAIN_FRAME_HEIGHT;
+    private static Boolean MAXIMIZED;
     private static String APP_LANG;
 
     private static String appRootDir = FileHandling.getAppPath();
@@ -82,9 +84,9 @@ public class azpzMain
             mainFrame.setIconImage(mainFrameIcon.getImage());
         }
         // settings for mainFrame
-        // TODO Nachfragen, ob wirklich beendet werden soll
         mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         mainFrame.setSize(MAIN_FRAME_WIDTH, MAIN_FRAME_HEIGHT);
+        mainFrame.setExtendedState(MAXIMIZED ? Frame.MAXIMIZED_BOTH : mainFrame.getExtendedState());
         mainFrame.setLocationRelativeTo(null);
 
         // adding the components to the mainFrame
@@ -181,6 +183,7 @@ public class azpzMain
             {
                 azpzMain.MAIN_FRAME_HEIGHT = new Integer(prop.getProperty("MAIN_FRAME_HEIGHT"));
                 azpzMain.MAIN_FRAME_WIDTH = new Integer(prop.getProperty("MAIN_FRAME_WIDTH"));
+                azpzMain.MAXIMIZED = new Boolean((prop.getProperty("MAXIMIZED")));
                 azpzMain.APP_LANG = prop.getProperty("APP_LANG");
 
             }
