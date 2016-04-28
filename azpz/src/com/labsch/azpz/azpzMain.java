@@ -160,6 +160,13 @@ public class azpzMain
     {
         // test if file exists
         // Path path = (Path) FileSystems.getDefault().getPath(".", more);
+	
+	
+	/**
+	 * ML 20160428 ToDo es muss überprüft werden ob Pfad vorhanden ist
+	 * sonst Fehler   C:\Users\Alfa\git\azpz\azpz\settings
+	 */
+	
 
         File settingsFile = new File(settingsFilePath);
 
