@@ -29,7 +29,8 @@ public class azpzMain
 
     private static String appRootDir = FileHandling.getAppPath();
 
-    private static String settingsFilePath = appRootDir != null ? appRootDir + "\\settings\\settings.properties" : null;
+    private static String settingsFilePath = "settings";
+    private static String settingsFileName = "settings.properties";
 
     private static ImageIcon mainFrameIcon = appRootDir != null ? new ImageIcon(appRootDir + "\\pic\\Hourglass-icon-48pxl.png") : null;
     private static ImageIcon mainFrameIcon2 = appRootDir != null ? new ImageIcon(appRootDir + "\\pic\\Hourglass-icon-pxl.png") : null;
@@ -47,8 +48,6 @@ public class azpzMain
         initializeComponents();
     }
 
-	
-	
     /**
      * @author Martin Labsch, 26.04.2016
      */
@@ -61,19 +60,19 @@ public class azpzMain
         JMenuBar menuBar = new JMenuBar();
 
         JMenu menuFile = createMenuAndAddToMenuBar("Datei", "menuFile", 'D', menuBar);
-		/**
-		 *    @author Matthias Lüthke, 27.04.2016
-		 */
-		JMenu menuLogin = createMenuAndAddToMenuBar("Login", "menuLogin", 'L', menuBar);
+        /**
+         * @author Matthias Lüthke, 27.04.2016
+         */
+        JMenu menuLogin = createMenuAndAddToMenuBar("Login", "menuLogin", 'L', menuBar);
 
         // TODO Mehrsprachigkeit: Bezeichner aus Datei holen (./lang)
         // menu-entries
         createMenuItemAndAddToMenu("Öffnen", "menuItemOpen", 'F', mainFrame, menuFile);
         createMenuItemAndAddToMenu("Beenden", "menuItemClose", 'E', mainFrame, menuFile);
-		/**
-		 *    @author Matthias Lüthke, 27.04.2016
-		 */
-		createMenuItemAndAddToMenu("LogIn", "menuItemLogin", 'L', mainFrame, menuLogin);
+        /**
+         * @author Matthias Lüthke, 27.04.2016
+         */
+        createMenuItemAndAddToMenu("LogIn", "menuItemLogin", 'L', mainFrame, menuLogin);
 
         // Titel
         mainFrame.setTitle(titleMainFrame);
@@ -158,18 +157,22 @@ public class azpzMain
      */
     private static void loadOrCreateSettingsFile()
     {
-        // test if file exists
-        // Path path = (Path) FileSystems.getDefault().getPath(".", more);
-
-        File settingsFile = new File(settingsFilePath);
+        File dir = new File(appRootDir + File.separator + settingsFilePath);
+        File settingsFile = new File(dir + File.separator + settingsFileName);
 
         // create settingsFile if doesnt exists
         if (!settingsFile.isFile())
         {
-            FileHandling.createFile(settingsFile);
-            FileHandling.setInitialPropertiesFile(settingsFile);
+            if (FileHandling.createDir(dir))
+            {
+                if (FileHandling.createFile(settingsFile))
+                {
+                    FileHandling.setInitialPropertiesFile(settingsFile);
+                }
+            }
         }
 
+        // load settings from file
         if (settingsFile.isFile())
         {
             Properties prop = FileHandling.getProperties(settingsFile);
@@ -184,29 +187,21 @@ public class azpzMain
             else
             {
                 System.out.println("Keine Einstellungen vorhanden.");
-                // Status 1 because "a nonzero status code indicates abnormal termination"
-                System.exit(1);
+                // Status -1 because "a nonzero status code indicates abnormal termination"
+                System.exit(-1);
             }
 
         }
-
-        // System.out.println(FileSystems.getDefault());
-
-        // Files.walk(Path , options)
-
-        // String propertiesFile = "F:\\PrOpErties.txt";
-        // DemoPropertiesErstelle(propertiesFile);
-        // DemoPropertiesLesen(propertiesFile);
 
     }
 
     /**
      * 
      * @author Martin Labsch, 27.04.2016
-     * @return path of File 'setting.properties'
+     * @return path of settingsfile inluding filename
      */
-    public static String getSettingsFilePath()
+    public static String getSettingsFileLocation()
     {
-        return settingsFilePath;
+        return appRootDir + File.separator + settingsFilePath + File.separator + settingsFileName;
     }
 }

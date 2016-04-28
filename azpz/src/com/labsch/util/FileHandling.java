@@ -27,22 +27,47 @@ public class FileHandling
      * 
      * Creates a File in the Filesystem.
      * 
-     * @author Martin Labsch, 26.04.2016<br>
-     *         26.04.2016
+     * @author Martin Labsch, 26.04.2016
      * @param file
      *            full path including filename.
      */
-    public static void createFile(File file)
+    public static boolean createFile(File file)
     {
+        boolean retValue = false;
+
         try
         {
-            file.createNewFile();
+            retValue = file.createNewFile();
         }
         catch (IOException e)
         {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+        return retValue;
+
+    }
+
+    /**
+     * 
+     * Creates a directory including any necessary but nonexistent parent directories in the Filesystem.
+     * 
+     * @author Martin Labsch, 28.04.2016
+     * @param dir
+     *            full path including filename.
+     */
+    public static boolean createDir(File dir)
+    {
+        boolean retValue = false;
+
+        if (!dir.isDirectory())
+        {
+            retValue = dir.mkdir();
+        }
+
+
+        return retValue;
 
     }
 
@@ -163,7 +188,7 @@ public class FileHandling
         props.put("MAIN_FRAME_HEIGHT", Integer.toString(parentComponent.getHeight()));
         props.put("language", "fr");
 
-        setPropertyFile(new File(azpzMain.getSettingsFilePath()), props);
+        setPropertyFile(new File(azpzMain.getSettingsFileLocation()), props);
 
         // comp.getClass()
         // setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
@@ -175,6 +200,35 @@ public class FileHandling
             System.out.println(((Frame) parentComponent).getExtendedState());
             System.out.println();
         }
+
+    }
+
+    /**
+     * creates an directory in Filesystem when it not exists
+     * 
+     * @author Martin Labsch, 28.04.2016
+     * @param dir
+     * @return true if directory was created or exists
+     */
+    public static boolean createDirIfNotExists(String dir)
+    {
+        boolean retValue = false;
+
+        File file = new File(dir);
+
+        if (file.isDirectory())
+        {
+            System.out.println("jo");
+            retValue = true;
+        }
+        else
+        {
+            // file.mk
+            // System.out.println("nö");
+
+        }
+
+        return retValue;
 
     }
 
