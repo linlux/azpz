@@ -1,11 +1,12 @@
 package com.labsch.dlg_login;
 
+import java.util.Date;
+
 public class login
 
 {        
    
-   //
- 
+    
     /**
 	 * @using	 * 
 	 *   . authenticate('ML' username, String 'geheim')
@@ -21,7 +22,12 @@ public class login
     {
 	boolean breturn = false;
 	if (username.equals("ML") && password.equals("geheim")) 
+	{
 	    breturn = true;
+	    System.out.println("Login From User " +  username.toString()  + " " + password  );
+	}
+	if (! breturn )
+	    System.out.println("Login From User  " +  username.toString()  + " " + password  + " ist fehlgeschlagen " );
 	
 	 return breturn;
     }

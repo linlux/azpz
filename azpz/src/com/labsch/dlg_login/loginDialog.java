@@ -88,65 +88,8 @@ public class loginDialog extends JDialog  implements  ActionListener
 	
 	pfPassword = new JPasswordField();
 	pfPassword.setBounds(115, 66, tf_width, tf_height);
-	this.getContentPane().add(pfPassword);
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-     
-            
-//     // Layout Manager ausschalten
-//        this.setLayout(null);     
-//     	
-//       // this.setResizable(false);
-//
-//        lbUsername = new JLabel("Username: ");
-//     //  lbUsername.setBounds(20, 30, 100, 100);
-//        lbUsername.setBounds(20,30, lbl_width, lbl_height);
-//        this.add(lbUsername);
-//
-//       tfUsername = new JTextField(20);
-//       tfUsername.setBounds(10, 110, 100, 100);
-//       this.add(tfUsername);
-//
-//        lbPassword = new JLabel("Password: ");     
-//        lbPassword.setBounds(10, 150,  lbl_width, lbl_height);
-//        this.add(lbPassword);
-//
-//        pfPassword = new JPasswordField(20);
-//
-//        pfPassword.setBounds(60, 110, tfl_width, tf_height);
-//        this.add(pfPassword);
-//        //panel.setBorder(new LineBorder(Color.GRAY));
-//
-//        btnLogin = new JButton("Login");
-//        this.add(btnLogin);
-//        btnLogin.setBounds(100, 180, btn_width, btn_height);
-//        
-//        btnCancel = new JButton("Cancel");
-//	btnCancel.setBounds(220, 180, btn_width, btn_height);        
-//	this.add(btnCancel);           
-        
+	this.getContentPane().add(pfPassword);              
+                  
 
   }
 
@@ -163,6 +106,7 @@ public class loginDialog extends JDialog  implements  ActionListener
             @Override
 	    public void actionPerformed(ActionEvent e)
              {
+        	        	
                 if (login.authenticate(getUsername(), getPassword()))
                  {
                     JOptionPane.showMessageDialog(loginDialog.this,
