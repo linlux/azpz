@@ -64,7 +64,7 @@ public class azpzMain
 		/**
 		 *    @author Matthias Lüthke, 27.04.2016
 		 */
-		JMenu menuLogin = createMenuAndAddToMenuBar("Login", "menuLogin", 'L', menuBar);
+	JMenu menuLogin = createMenuAndAddToMenuBar("Login", "menuLogin", 'L', menuBar);
 
         // TODO Mehrsprachigkeit: Bezeichner aus Datei holen (./lang)
         // menu-entries

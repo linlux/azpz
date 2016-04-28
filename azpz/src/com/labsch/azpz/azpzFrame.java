@@ -57,7 +57,7 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener
                 frame.setLocationRelativeTo(this);
 
                 loginDialog loginDlg = new loginDialog(frame);
-                frame.setLocationRelativeTo(this);
+            //    frame.setLocationRelativeTo(this);
                 loginDlg.setVisible(true);
                 // if logon successfully
                 if (loginDlg.isSucceeded())
