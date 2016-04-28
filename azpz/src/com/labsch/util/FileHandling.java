@@ -68,12 +68,13 @@ public class FileHandling
             retValue = dir.mkdir();
         }
 
-
         return retValue;
 
     }
 
     /**
+     * intial properties of mainFrame.
+     * 
      * @author Martin Labsch, 26.04.2016
      * @param settingsFile
      */
@@ -84,6 +85,8 @@ public class FileHandling
 
         props.put("MAIN_FRAME_WIDTH", "800");
         props.put("MAIN_FRAME_HEIGHT", "600");
+        props.put("MAINFRAME_X", "0");
+        props.put("MAINFRAME_Y", "0");
         props.put("MAXIMIZED", "false");
         props.put("language", "de");
 
@@ -189,7 +192,9 @@ public class FileHandling
 
         props.put("MAIN_FRAME_WIDTH", Integer.toString(parentComponent.getWidth()));
         props.put("MAIN_FRAME_HEIGHT", Integer.toString(parentComponent.getHeight()));
-        props.put("MAXIMIZED", ((JFrame)parentComponent).getExtendedState() == Frame.MAXIMIZED_BOTH ? "true" : "false");
+        props.put("MAINFRAME_X", Integer.toString(parentComponent.getX()));
+        props.put("MAINFRAME_Y", Integer.toString(parentComponent.getY()));
+        props.put("MAXIMIZED", ((JFrame) parentComponent).getExtendedState() == Frame.MAXIMIZED_BOTH ? "true" : "false");
         props.put("language", "fr");
 
         setPropertyFile(new File(azpzMain.getSettingsFileLocation()), props);

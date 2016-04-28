@@ -26,6 +26,8 @@ public class azpzMain
 
     private static int MAIN_FRAME_WIDTH;
     private static int MAIN_FRAME_HEIGHT;
+    private static int MAINFRAME_X;
+    private static int MAINFRAME_Y;
     private static Boolean MAXIMIZED;
     private static String APP_LANG;
 
@@ -37,7 +39,6 @@ public class azpzMain
     private static ImageIcon mainFrameIcon = appRootDir != null ? new ImageIcon(appRootDir + "\\pic\\Hourglass-icon-48pxl.png") : null;
     private static ImageIcon mainFrameIcon2 = appRootDir != null ? new ImageIcon(appRootDir + "\\pic\\Hourglass-icon-pxl.png") : null;
 
-    private static int mainFrameX, mainFrameY;
     private static String titleMainFrame = "AzPz";
 
     /**
@@ -87,7 +88,8 @@ public class azpzMain
         mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         mainFrame.setSize(MAIN_FRAME_WIDTH, MAIN_FRAME_HEIGHT);
         mainFrame.setExtendedState(MAXIMIZED ? Frame.MAXIMIZED_BOTH : mainFrame.getExtendedState());
-        mainFrame.setLocationRelativeTo(null);
+//        mainFrame.setLocationRelativeTo(null);
+        mainFrame.setLocation(MAINFRAME_X, MAINFRAME_Y);
 
         // adding the components to the mainFrame
         mainFrame.add(menuBar, BorderLayout.PAGE_START);
@@ -179,13 +181,14 @@ public class azpzMain
         {
             Properties prop = FileHandling.getProperties(settingsFile);
 
-            if (prop.size() > 0)
+            if (!prop.isEmpty())
             {
-                azpzMain.MAIN_FRAME_HEIGHT = new Integer(prop.getProperty("MAIN_FRAME_HEIGHT"));
-                azpzMain.MAIN_FRAME_WIDTH = new Integer(prop.getProperty("MAIN_FRAME_WIDTH"));
-                azpzMain.MAXIMIZED = new Boolean((prop.getProperty("MAXIMIZED")));
-                azpzMain.APP_LANG = prop.getProperty("APP_LANG");
-
+                azpzMain.MAIN_FRAME_HEIGHT = null != prop.getProperty("MAIN_FRAME_HEIGHT") ? new Integer(prop.getProperty("MAIN_FRAME_HEIGHT")) : 800;
+                azpzMain.MAIN_FRAME_WIDTH = null != prop.getProperty("MAIN_FRAME_WIDTH") ? new Integer(prop.getProperty("MAIN_FRAME_WIDTH")) : 800;
+                azpzMain.MAINFRAME_X = null != prop.getProperty("MAINFRAME_X") ? new Integer(prop.getProperty("MAINFRAME_X")) : 0;
+                azpzMain.MAINFRAME_Y = null != prop.getProperty("MAINFRAME_Y") ? new Integer(prop.getProperty("MAINFRAME_Y")) : 0;
+                azpzMain.MAXIMIZED = null !=  prop.getProperty("MAXIMIZED") ? new Boolean((prop.getProperty("MAXIMIZED"))) : false;
+                azpzMain.APP_LANG = null !=  prop.getProperty("APP_LANG") ? prop.getProperty("APP_LANG") : "de";
             }
             else
             {
