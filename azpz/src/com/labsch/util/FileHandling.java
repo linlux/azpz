@@ -1,11 +1,16 @@
 package com.labsch.util;
 
+import java.awt.Component;
+import java.awt.Frame;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Properties;
+
+import com.labsch.azpz.azpzMain;
 
 /**
  * 
@@ -16,108 +21,161 @@ import java.util.Properties;
  */
 public class FileHandling
 {
-	/**
-	 * 
-	 * Creates a File in the Filesystem.
-	 * 
-	 * @author Martin Labsch, 26.04.2016<br>
-	 *         26.04.2016
-	 * @param file
-	 *            full path including filename.
-	 */
-	public static void createFile(File file)
-	{
-		try
-		{
-			file.createNewFile();
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    private static final boolean debug = false;
 
-	}
+    /**
+     * 
+     * Creates a File in the Filesystem.
+     * 
+     * @author Martin Labsch, 26.04.2016<br>
+     *         26.04.2016
+     * @param file
+     *            full path including filename.
+     */
+    public static void createFile(File file)
+    {
+        try
+        {
+            file.createNewFile();
+        }
+        catch (IOException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-	/**
-	 * @author Martin Labsch, 26.04.2016<br>
-	 *         26.04.2016
-	 * @param settingsFile
-	 */
-	public static void setInitialPropertiesFile(File settingsFile)
-	{
+    }
 
-		Properties prop = new Properties();
+    /**
+     * @author Martin Labsch, 26.04.2016
+     * @param settingsFile
+     */
+    public static void setInitialPropertiesFile(File propFile)
+    {
 
-		prop.setProperty("MAIN_FRAME_WIDTH", "800");
-		prop.setProperty("MAIN_FRAME_HEIGHT", "600");
-		prop.setProperty("language", "de");
+        HashMap<String, String> props = new HashMap<String, String>();
 
-		try
-		{
-			prop.store(new FileOutputStream(settingsFile), "");
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        props.put("MAIN_FRAME_WIDTH", "800");
+        props.put("MAIN_FRAME_HEIGHT", "600");
+        props.put("language", "de");
 
-	}
+        setPropertyFile(propFile, props);
+    }
 
-	/**
+    /**
+     * stores properties from HashMap in property-File.
+     * 
+     * @author Martin Labsch, 26.04.2016
+     * @param settingsFile
+     */
+    public static void setPropertyFile(File propFile, HashMap<String, String> props)
+    {
 
-	 * @author Martin Labsch, 26.04.2016
-	 * @param propFile
-	 * @return
-	 */
-	public static Properties getProperties(File propFile)
-	{
-		Properties prop = new Properties();
-		FileInputStream inStream;
-		try
-		{
-			inStream = new FileInputStream(propFile);
-			if (inStream != null)
-			{
-				prop.load(inStream);
-				// prop.list(System.out);
-			}
-		}
-		catch (FileNotFoundException e)
-		{
-			// TODO log: settingsFile wurde nicht gefunden.
-			e.printStackTrace();
-		}
-		catch (IOException e)
-		{
-			// TODO log: Properties konnten nicht geladen werden.
-			e.printStackTrace();
-		}
+        Properties prop = new Properties();
 
-		return prop;
-	}
+        for (String p : props.keySet())
+        {
+            if (debug)
+            {
+                System.out.println(p + " " + props.get(p));
+            }
+            prop.setProperty(p, props.get(p));
+        }
 
-	/**
-	 * 
-	 * @author Martin Labsch, 26.04.2016<br>
-	 *         26.04.2016
-	 * @return null or the actual app-path
-	 */
-	public static String getAppPath()
-	{
-		String appPath = null;
+        try
+        {
+            prop.store(new FileOutputStream(propFile), "comment");
+        }
+        catch (IOException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-		try
-		{
-			appPath = new File(".").getCanonicalPath();
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return appPath;
-	}
+    }
+
+    /**
+     * @author Martin Labsch, 26.04.2016
+     * @param propFile
+     * @return
+     */
+    public static Properties getProperties(File propFile)
+    {
+        Properties prop = new Properties();
+        FileInputStream inStream;
+        try
+        {
+            inStream = new FileInputStream(propFile);
+            if (inStream != null)
+            {
+                prop.load(inStream);
+                // prop.list(System.out);
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            // TODO log: settingsFile wurde nicht gefunden.
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            // TODO log: Properties konnten nicht geladen werden.
+            e.printStackTrace();
+        }
+
+        return prop;
+    }
+
+    /**
+     * 
+     * @author Martin Labsch, 26.04.2016<br>
+     *         26.04.2016
+     * @return null or the actual app-path
+     */
+    public static String getAppPath()
+    {
+        String appPath = null;
+
+        try
+        {
+            appPath = new File(".").getCanonicalPath();
+        }
+        catch (IOException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return appPath;
+    }
+
+    /**
+     * safes the actual size and position of mainFrame.
+     * 
+     * @author Martin Labsch, 27.04.2016
+     * @param parentComponent
+     */
+    public static void safeActualProperties(Component parentComponent)
+    {
+
+        HashMap<String, String> props = new HashMap<String, String>();
+
+        props.put("MAIN_FRAME_WIDTH", Integer.toString(parentComponent.getWidth()));
+        props.put("MAIN_FRAME_HEIGHT", Integer.toString(parentComponent.getHeight()));
+        props.put("language", "fr");
+
+        setPropertyFile(new File(azpzMain.getSettingsFilePath()), props);
+
+        // comp.getClass()
+        // setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+
+        if (debug)
+        {
+            System.out.println();
+            System.out.println(java.awt.Frame.MAXIMIZED_BOTH);
+            System.out.println(((Frame) parentComponent).getExtendedState());
+            System.out.println();
+        }
+
+    }
 
 }

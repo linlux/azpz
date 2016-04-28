@@ -19,8 +19,13 @@ import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+<<<<<<< HEAD
 import com.labsch.util2.*;
 
+=======
+import com.labsch.util2.StatusBar;
+import com.labsch.util2.WinUtil;
+>>>>>>> refs/heads/master
 
 //Verwenden von mySQL als Datenbank:
 //1. 	Herunterladen des mySQL-Datenbank-Treibers (Connector/J) von
