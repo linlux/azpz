@@ -19,8 +19,8 @@ import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import util2.StatusBar;
-import util2.WinUtil;
+import com.labsch.util2.*;
+
 
 //Verwenden von mySQL als Datenbank:
 //1. 	Herunterladen des mySQL-Datenbank-Treibers (Connector/J) von
