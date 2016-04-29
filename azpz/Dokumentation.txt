@@ -1,6 +1,0 @@
-Das Hauptfenster 'mainFrame' laedt seine Groesze und Position aus ./settings/settings.properties.
-Sind die Datei und das Verzeichnis nicht vorhanden, werden sie angelegt und mit initialen Werten beschrieben.
-Ist die Datei vorhanden, werden beim Beenden die aktuellen Werte gespeichert und beim nächsten Start geladen.
-Hierdurch hat das Fenster nach einem Neustart immer die Groesze und Position, welches es beim Verlassen des Programms hatte.
-
-Der Beenden-Dialog wurde mit Mnemonics ausgestattet. 
