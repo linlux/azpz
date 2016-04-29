@@ -1,7 +1,5 @@
 package com.labsch.util;
 
-import java.awt.Component;
-import java.awt.Frame;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
@@ -15,35 +13,18 @@ import com.labsch.azpz.azpzFrame;
 public class DialogHandling
 {
 
-    // Gibt 'true' zurück, wenn das Programm beendet werden soll
     /**
-     * 
      * @author Martin Labsch, 27.04.2016
-     * @param comp
-     * @return
      */
-    public static boolean queryExit(Component comp)
+    public static void showExitConfirmationDialog()
     {
 
-        boolean retValue = false;
         /*
-         * to get the actual properties and listeners from the mainFrame
+         * get the listeners from the mainFrame
          */
-        Frame[] allFrames = azpzFrame.getFrames();
-        Frame mainFrame = null;
+        azpzFrame mainFrame = null;
 
-        if (allFrames.length > 0)
-        {
-            for (int i = 0; i < allFrames.length; i++)
-            {
-                if (allFrames[i].getName().equals("mainFrame"))
-                {
-                    mainFrame = allFrames[i];
-                }
-            }
-        }
-
-        int optionValue;
+        mainFrame = (azpzFrame) FrameHandling.getAnAzpzFrameByName("mainFrame");
 
         // Benutzerdefinierte Button-Texte, Mnemonic und ActionListener
         JButton b1 = new JButton("Ja");
@@ -57,33 +38,19 @@ public class DialogHandling
         b3.setMnemonic('A');
         if (mainFrame != null)
         {
-            b1.addActionListener((azpzFrame) mainFrame);
-            b2.addActionListener((azpzFrame) mainFrame);
-            b3.addActionListener((azpzFrame) mainFrame);
+            b1.addActionListener(mainFrame);
+            b2.addActionListener(mainFrame);
+            b3.addActionListener(mainFrame);
         }
         JButton[] options =
         { b1, b2, b3 };
 
-        optionValue = JOptionPane.showOptionDialog(comp, "Möchten Sie das Programm beenden?", "Programm beenden", JOptionPane.YES_NO_CANCEL_OPTION,
+        /**
+         * @author Martin Labsch, 29.04.2016
+         * Hiernach geht's NICHT weiter, wenn 'Ja' gewaehlt wurde. Der Grund ist mir nicht bekannt.
+         * Wurde etwas anderes gewaehlt, werden auch die Anweisungen darunter (falls vorhanden) ausgefuehrt.
+         */
+        JOptionPane.showOptionDialog(mainFrame, "Möchten Sie das Programm beenden?", "Programm beenden", JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
-
-        if (optionValue == JOptionPane.NO_OPTION)
-            retValue = false;
-        else if (optionValue == JOptionPane.YES_OPTION)
-            retValue = true;
-
-        // storing the actual mainFrame properties
-        if (comp.getName().equals("mainFrame"))
-        {
-            FileHandling.safeActualProperties(comp);
-        }
-        if (comp.getName().equals("menuItemClose"))
-        {
-            if(mainFrame != null){
-                FileHandling.safeActualProperties(mainFrame);
-            }
-        }
-
-        return retValue;
     }
 }

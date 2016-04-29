@@ -12,6 +12,7 @@ import java.util.Properties;
 
 import javax.swing.JFrame;
 
+import com.labsch.azpz.azpzFrame;
 import com.labsch.azpz.azpzMain;
 
 /**
@@ -183,30 +184,27 @@ public class FileHandling
      * safes the actual size and position of mainFrame.
      * 
      * @author Martin Labsch, 27.04.2016
-     * @param parentComponent
      */
-    public static void safeActualProperties(Component parentComponent)
+    public static void safeActualProperties()
     {
 
+        azpzFrame mainFrame = (azpzFrame) FrameHandling.getAnAzpzFrameByName("mainFrame");
         HashMap<String, String> props = new HashMap<String, String>();
 
-        props.put("MAIN_FRAME_WIDTH", Integer.toString(parentComponent.getWidth()));
-        props.put("MAIN_FRAME_HEIGHT", Integer.toString(parentComponent.getHeight()));
-        props.put("MAINFRAME_X", Integer.toString(parentComponent.getX()));
-        props.put("MAINFRAME_Y", Integer.toString(parentComponent.getY()));
-        props.put("MAXIMIZED", ((JFrame) parentComponent).getExtendedState() == Frame.MAXIMIZED_BOTH ? "true" : "false");
+        props.put("MAIN_FRAME_WIDTH", Integer.toString(mainFrame.getWidth()));
+        props.put("MAIN_FRAME_HEIGHT", Integer.toString(mainFrame.getHeight()));
+        props.put("MAINFRAME_X", Integer.toString(mainFrame.getX()));
+        props.put("MAINFRAME_Y", Integer.toString(mainFrame.getY()));
+        props.put("MAXIMIZED", ((JFrame) mainFrame).getExtendedState() == Frame.MAXIMIZED_BOTH ? "true" : "false");
         props.put("language", "fr");
 
         setPropertyFile(new File(azpzMain.getSettingsFileLocation()), props);
-
-        // comp.getClass()
-        // setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 
         if (debug)
         {
             System.out.println();
             System.out.println(java.awt.Frame.MAXIMIZED_BOTH);
-            System.out.println(((Frame) parentComponent).getExtendedState());
+            System.out.println(((Frame) mainFrame).getExtendedState());
             System.out.println();
         }
 
