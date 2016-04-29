@@ -36,38 +36,43 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener
 
         Object obj = e.getSource();
 
-        if (obj instanceof JMenuItem)
+        if ((obj instanceof JMenuItem && ((JMenuItem) obj).getName().equals("menuItemClose")))
         {
-            JMenuItem mi = (JMenuItem) obj;
+            DialogHandling.queryExit((Component) e.getSource());
+        }
 
-            if (mi.getName() != null && mi.getName().equals("menuItemClose"))
-            {
-                if (DialogHandling.queryExit((Component) e.getSource()))
-                {
-                    System.exit(0);
-                }
-            }
-            // @author Matthias Lüthke, 27.04.2016
-            else if (mi.getName() != null && mi.getName().equals("menuItemLogin"))
-            {
-                final JFrame frame = new JFrame("JDialog Test");
+        if (obj instanceof JButton && ((JButton) obj).getName().equals("appCloseOptionYes"))
+        {
+            System.exit(0);
+        }
 
-                final JButton btnLogin = new JButton("Click to login");
+        // @author Matthias Lüthke, 27.04.2016
+        if (obj instanceof JMenuItem && ((JMenuItem) e.getSource()).getName().equals("menuItemLogin"))
+        {
 
-                frame.setLocationRelativeTo(this);
+            final JFrame frame = new JFrame("JDialog Test");
 
-                loginDialog loginDlg = new loginDialog(frame);
-                frame.setLocationRelativeTo(this);
-                loginDlg.setVisible(true);
-                // if logon successfully
-                if (loginDlg.isSucceeded())
-                    btnLogin.setText("Hi alles OK " + loginDlg.getUsername() + "!");
+            final JButton btnLogin = new JButton("Click to login");
 
-            }
+            frame.setLocationRelativeTo(this);
+
+            loginDialog loginDlg = new loginDialog(frame);
+            frame.setLocationRelativeTo(this);
+            loginDlg.setVisible(true);
+            // if logon successfully
+            if (loginDlg.isSucceeded())
+                btnLogin.setText("Hi alles OK " + loginDlg.getUsername() + "!");
 
             if (debug)
             {
-                System.out.println(mi.getName());
+                if (e.getSource() instanceof JMenuItem)
+                {
+                    System.out.println(((JMenuItem) e.getSource()).getName());
+                }
+                if (e.getSource() instanceof JButton)
+                {
+                    System.out.println(((JButton) e.getSource()).getName());
+                }
             }
 
         }

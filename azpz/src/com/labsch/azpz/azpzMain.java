@@ -24,6 +24,8 @@ public class azpzMain
         NORMAL, MAXIMIZED
     }
 
+    private static final boolean debug = false;
+
     private static int MAIN_FRAME_WIDTH;
     private static int MAIN_FRAME_HEIGHT;
     private static int MAINFRAME_X;
@@ -70,7 +72,8 @@ public class azpzMain
 
         // TODO Mehrsprachigkeit: Bezeichner aus Datei holen (./lang)
         // menu-entries
-        createMenuItemAndAddToMenu("Öffnen", "menuItemOpen", 'F', mainFrame, menuFile);
+        createMenuAndAddToMenuBar("Verbinden", "menuItemConnect", 'V', mainFrame, menuBar);
+        // createMenuItemAndAddToMenu("Öffnen", "menuItemOpen", 'F', mainFrame, menuFile);
         createMenuItemAndAddToMenu("Beenden", "menuItemClose", 'E', mainFrame, menuFile);
         /**
          * @author Matthias Lüthke, 27.04.2016
@@ -149,8 +152,40 @@ public class azpzMain
         mi.addActionListener(actionListener);
 
         menu.add(mi);
-
+        
         return mi;
+    }
+
+    /**
+     * creates an JMenu and added it to an JMenuBar.
+     * 
+     * @author Martin Labsch, 29.04.2016
+     * @param text
+     *            - will be displayed
+     * @param name
+     *            - for later identification e.g. listeners
+     * @param mnemonic
+     *            - the key to navigation via keyboard
+     * @param actionListener
+     *            - will be added to the item
+     * @param menu
+     *            - where the menu will be added
+     * @return
+     */
+    private static JMenuItem createMenuAndAddToMenuBar(String text, String name, char mnemonic, azpzFrame actionListener, JMenuBar menu)
+    {
+        JMenu m = new JMenu(text);
+        m.setName(name);
+        m.setMnemonic(mnemonic);
+        m.addActionListener(actionListener);
+        
+        menu.add(m);
+        
+        if(debug){
+            System.out.println(m.getComponentZOrder(m));
+        }
+        
+        return m;
     }
 
     /**
