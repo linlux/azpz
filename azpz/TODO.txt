@@ -1,0 +1,3 @@
+Dafuer sorgen, dass die urspuengliche Fenstergroesze wieder hergestellt wird:
+Wurde das Programm maximiert beendet und entsprechend maximiert gestartet und man klickt auf den Button des Fensters,
+mit welchem wieder die Groesze vor dem Maximieren hergestellt werden sollte, wird diese NICHT wieder hergestellt.

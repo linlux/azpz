@@ -1,6 +1,6 @@
 package com.labsch.azpz;
 
-import java.awt.Component;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
@@ -8,10 +8,11 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
 import com.labsch.util.DialogHandling;
-
+import com.labsch.util.FileHandling;
 import com.labsch.dlg_login.loginDialog;
 
 /**
@@ -38,16 +39,38 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener
 
         if ((obj instanceof JMenuItem && ((JMenuItem) obj).getName().equals("menuItemClose")))
         {
-            DialogHandling.queryExit((Component) e.getSource());
+            DialogHandling.showExitConfirmationDialog();
         }
 
-        if (obj instanceof JButton && ((JButton) obj).getName().equals("appCloseOptionYes"))
+        else if (obj instanceof JButton && ((JButton) obj).getName().equals("appCloseOptionYes"))
         {
+            FileHandling.safeActualProperties();
             System.exit(0);
         }
 
+        // close Dialog if No or Cancel was choosed
+        else if (obj instanceof JButton && (((JButton) obj).getName().equals("appCloseOptionNo") || ((JButton) obj).getName().equals("appCloseOptionCancel")))
+        {
+            Window[] allWindows = azpzFrame.getWindows();
+
+            if (allWindows.length > 0)
+            {
+                for (int i = 0; i < allWindows.length; i++)
+                {
+                    if (allWindows[i] instanceof JDialog)
+                    {
+                        allWindows[i].dispose();
+                    }
+                }
+            }
+            if (debug)
+            {
+                System.out.println("appCloseOptionNo");
+            }
+        }
+
         // @author Matthias Lüthke, 27.04.2016
-        if (obj instanceof JMenuItem && ((JMenuItem) e.getSource()).getName().equals("menuItemLogin"))
+        else if (obj instanceof JMenuItem && ((JMenuItem) e.getSource()).getName().equals("menuItemLogin"))
         {
 
             final JFrame frame = new JFrame("JDialog Test");
@@ -101,13 +124,13 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener
     public void windowClosing(WindowEvent e)
     {
 
-        if (DialogHandling.queryExit((Component) e.getSource()))
+        // Object obj = e.getSource();
+
+        if (((azpzFrame) e.getSource()).getName().equals("mainFrame"))
         {
-            if (((azpzFrame) e.getSource()).getName().equals("mainFrame"))
-            {
-                System.exit(0);
-            }
+            DialogHandling.showExitConfirmationDialog();
         }
+
         if (debug)
         {
             System.out.println("windowClosing");

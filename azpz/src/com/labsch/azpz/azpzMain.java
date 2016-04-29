@@ -121,7 +121,7 @@ public class azpzMain
 
         menu.setText(text);
         menu.setName(name);
-        menu.setMnemonic('D');
+        menu.setMnemonic(mnemonic);
 
         menuBar.add(menu);
 
