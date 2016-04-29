@@ -106,26 +106,34 @@ public class loginDialog extends JDialog  implements  ActionListener
             @Override
 	    public void actionPerformed(ActionEvent e)
              {
+        	Object obj = e.getSource();
+        	
+        	  if (obj instanceof JButton)
+        	  {
+        	      JButton btn = (JButton) obj;
+        	            	      
+        	      if (login.authenticate(getUsername(), getPassword()))
+                      {
+                         JOptionPane.showMessageDialog(loginDialog.this,
+                                 "Moin, Moin " + getUsername() + "! Sie sind erfolgreich eingeloggt.",
+                                 "Login",
+                                 JOptionPane.INFORMATION_MESSAGE);
+                         succeeded = true;
+                         dispose();
+                     } else 
+                     {
+                         JOptionPane.showMessageDialog(loginDialog.this,
+                                 "falscher username der falsches password",
+                                 "Login",
+                                 JOptionPane.ERROR_MESSAGE);
+                         // reset username and password
+                         tfUsername.setText("");
+                         pfPassword.setText("");
+                         succeeded = false;
+                     }
+        	  }
         	        	
-                if (login.authenticate(getUsername(), getPassword()))
-                 {
-                    JOptionPane.showMessageDialog(loginDialog.this,
-                            "Moin, Moin " + getUsername() + "! Sie sind erfolgreich eingeloggt.",
-                            "Login",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    succeeded = true;
-                    dispose();
-                } else 
-                {
-                    JOptionPane.showMessageDialog(loginDialog.this,
-                            "falscher username der falsches password",
-                            "Login",
-                            JOptionPane.ERROR_MESSAGE);
-                    // reset username and password
-                    tfUsername.setText("");
-                    pfPassword.setText("");
-                    succeeded = false;
-                }
+              
             }
         }
         )   ;
