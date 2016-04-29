@@ -1,6 +1,7 @@
 package com.labsch.azpz;
 
 import java.awt.BorderLayout;
+import java.awt.Frame;
 import java.io.File;
 import java.util.Properties;
 
@@ -25,16 +26,19 @@ public class azpzMain
 
     private static int MAIN_FRAME_WIDTH;
     private static int MAIN_FRAME_HEIGHT;
+    private static int MAINFRAME_X;
+    private static int MAINFRAME_Y;
+    private static Boolean MAXIMIZED;
     private static String APP_LANG;
 
     private static String appRootDir = FileHandling.getAppPath();
 
-    private static String settingsFilePath = appRootDir != null ? appRootDir + "\\settings\\settings.properties" : null;
+    private static String settingsFilePath = "settings";
+    private static String settingsFileName = "settings.properties";
 
     private static ImageIcon mainFrameIcon = appRootDir != null ? new ImageIcon(appRootDir + "\\pic\\Hourglass-icon-48pxl.png") : null;
     private static ImageIcon mainFrameIcon2 = appRootDir != null ? new ImageIcon(appRootDir + "\\pic\\Hourglass-icon-pxl.png") : null;
 
-    private static int mainFrameX, mainFrameY;
     private static String titleMainFrame = "AzPz";
 
     /**
@@ -47,8 +51,6 @@ public class azpzMain
         initializeComponents();
     }
 
-	
-	
     /**
      * @author Martin Labsch, 26.04.2016
      */
@@ -61,19 +63,19 @@ public class azpzMain
         JMenuBar menuBar = new JMenuBar();
 
         JMenu menuFile = createMenuAndAddToMenuBar("Datei", "menuFile", 'D', menuBar);
-		/**
-		 *    @author Matthias Lüthke, 27.04.2016
-		 */
-	JMenu menuLogin = createMenuAndAddToMenuBar("Login", "menuLogin", 'L', menuBar);
+        /**
+         * @author Matthias Lüthke, 27.04.2016
+         */
+        JMenu menuLogin = createMenuAndAddToMenuBar("Login", "menuLogin", 'L', menuBar);
 
         // TODO Mehrsprachigkeit: Bezeichner aus Datei holen (./lang)
         // menu-entries
         createMenuItemAndAddToMenu("Öffnen", "menuItemOpen", 'F', mainFrame, menuFile);
         createMenuItemAndAddToMenu("Beenden", "menuItemClose", 'E', mainFrame, menuFile);
-		/**
-		 *    @author Matthias Lüthke, 27.04.2016
-		 */
-		createMenuItemAndAddToMenu("LogIn", "menuItemLogin", 'L', mainFrame, menuLogin);
+        /**
+         * @author Matthias Lüthke, 27.04.2016
+         */
+        createMenuItemAndAddToMenu("LogIn", "menuItemLogin", 'L', mainFrame, menuLogin);
 
         // Titel
         mainFrame.setTitle(titleMainFrame);
@@ -83,10 +85,11 @@ public class azpzMain
             mainFrame.setIconImage(mainFrameIcon.getImage());
         }
         // settings for mainFrame
-        // TODO Nachfragen, ob wirklich beendet werden soll
         mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         mainFrame.setSize(MAIN_FRAME_WIDTH, MAIN_FRAME_HEIGHT);
-        mainFrame.setLocationRelativeTo(null);
+        mainFrame.setExtendedState(MAXIMIZED ? Frame.MAXIMIZED_BOTH : mainFrame.getExtendedState());
+//        mainFrame.setLocationRelativeTo(null);
+        mainFrame.setLocation(MAINFRAME_X, MAINFRAME_Y);
 
         // adding the components to the mainFrame
         mainFrame.add(menuBar, BorderLayout.PAGE_START);
@@ -158,62 +161,53 @@ public class azpzMain
      */
     private static void loadOrCreateSettingsFile()
     {
-        // test if file exists
-        // Path path = (Path) FileSystems.getDefault().getPath(".", more);
-	
-	
-	/**
-	 * ML 20160428 ToDo es muss überprüft werden ob Pfad vorhanden ist
-	 * sonst Fehler   C:\Users\Alfa\git\azpz\azpz\settings
-	 */
-	
-
-        File settingsFile = new File(settingsFilePath);
+        File dir = new File(appRootDir + File.separator + settingsFilePath);
+        File settingsFile = new File(dir + File.separator + settingsFileName);
 
         // create settingsFile if doesnt exists
         if (!settingsFile.isFile())
         {
-            FileHandling.createFile(settingsFile);
-            FileHandling.setInitialPropertiesFile(settingsFile);
+            if (FileHandling.createDir(dir))
+            {
+                if (FileHandling.createFile(settingsFile))
+                {
+                    FileHandling.setInitialPropertiesFile(settingsFile);
+                }
+            }
         }
 
+        // load settings from file
         if (settingsFile.isFile())
         {
             Properties prop = FileHandling.getProperties(settingsFile);
 
-            if (prop.size() > 0)
+            if (!prop.isEmpty())
             {
-                azpzMain.MAIN_FRAME_HEIGHT = new Integer(prop.getProperty("MAIN_FRAME_HEIGHT"));
-                azpzMain.MAIN_FRAME_WIDTH = new Integer(prop.getProperty("MAIN_FRAME_WIDTH"));
-                azpzMain.APP_LANG = prop.getProperty("APP_LANG");
-
+                azpzMain.MAIN_FRAME_HEIGHT = null != prop.getProperty("MAIN_FRAME_HEIGHT") ? new Integer(prop.getProperty("MAIN_FRAME_HEIGHT")) : 800;
+                azpzMain.MAIN_FRAME_WIDTH = null != prop.getProperty("MAIN_FRAME_WIDTH") ? new Integer(prop.getProperty("MAIN_FRAME_WIDTH")) : 800;
+                azpzMain.MAINFRAME_X = null != prop.getProperty("MAINFRAME_X") ? new Integer(prop.getProperty("MAINFRAME_X")) : 0;
+                azpzMain.MAINFRAME_Y = null != prop.getProperty("MAINFRAME_Y") ? new Integer(prop.getProperty("MAINFRAME_Y")) : 0;
+                azpzMain.MAXIMIZED = null !=  prop.getProperty("MAXIMIZED") ? new Boolean((prop.getProperty("MAXIMIZED"))) : false;
+                azpzMain.APP_LANG = null !=  prop.getProperty("APP_LANG") ? prop.getProperty("APP_LANG") : "de";
             }
             else
             {
                 System.out.println("Keine Einstellungen vorhanden.");
-                // Status 1 because "a nonzero status code indicates abnormal termination"
-                System.exit(1);
+                // Status -1 because "a nonzero status code indicates abnormal termination"
+                System.exit(-1);
             }
 
         }
-
-        // System.out.println(FileSystems.getDefault());
-
-        // Files.walk(Path , options)
-
-        // String propertiesFile = "F:\\PrOpErties.txt";
-        // DemoPropertiesErstelle(propertiesFile);
-        // DemoPropertiesLesen(propertiesFile);
 
     }
 
     /**
      * 
      * @author Martin Labsch, 27.04.2016
-     * @return path of File 'setting.properties'
+     * @return path of settingsfile inluding filename
      */
-    public static String getSettingsFilePath()
+    public static String getSettingsFileLocation()
     {
-        return settingsFilePath;
+        return appRootDir + File.separator + settingsFilePath + File.separator + settingsFileName;
     }
 }

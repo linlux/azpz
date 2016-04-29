@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Properties;
 
+import javax.swing.JFrame;
+
 import com.labsch.azpz.azpzMain;
 
 /**
@@ -27,16 +29,17 @@ public class FileHandling
      * 
      * Creates a File in the Filesystem.
      * 
-     * @author Martin Labsch, 26.04.2016<br>
-     *         26.04.2016
+     * @author Martin Labsch, 26.04.2016
      * @param file
      *            full path including filename.
      */
-    public static void createFile(File file)
+    public static boolean createFile(File file)
     {
+        boolean retValue = false;
+
         try
         {
-            file.createNewFile();
+            retValue = file.createNewFile();
         }
         catch (IOException e)
         {
@@ -44,9 +47,34 @@ public class FileHandling
             e.printStackTrace();
         }
 
+        return retValue;
+
     }
 
     /**
+     * 
+     * Creates a directory including any necessary but nonexistent parent directories in the Filesystem.
+     * 
+     * @author Martin Labsch, 28.04.2016
+     * @param dir
+     *            full path including filename.
+     */
+    public static boolean createDir(File dir)
+    {
+        boolean retValue = false;
+
+        if (!dir.isDirectory())
+        {
+            retValue = dir.mkdir();
+        }
+
+        return retValue;
+
+    }
+
+    /**
+     * intial properties of mainFrame.
+     * 
      * @author Martin Labsch, 26.04.2016
      * @param settingsFile
      */
@@ -57,6 +85,9 @@ public class FileHandling
 
         props.put("MAIN_FRAME_WIDTH", "800");
         props.put("MAIN_FRAME_HEIGHT", "600");
+        props.put("MAINFRAME_X", "0");
+        props.put("MAINFRAME_Y", "0");
+        props.put("MAXIMIZED", "false");
         props.put("language", "de");
 
         setPropertyFile(propFile, props);
@@ -161,9 +192,12 @@ public class FileHandling
 
         props.put("MAIN_FRAME_WIDTH", Integer.toString(parentComponent.getWidth()));
         props.put("MAIN_FRAME_HEIGHT", Integer.toString(parentComponent.getHeight()));
+        props.put("MAINFRAME_X", Integer.toString(parentComponent.getX()));
+        props.put("MAINFRAME_Y", Integer.toString(parentComponent.getY()));
+        props.put("MAXIMIZED", ((JFrame) parentComponent).getExtendedState() == Frame.MAXIMIZED_BOTH ? "true" : "false");
         props.put("language", "fr");
 
-        setPropertyFile(new File(azpzMain.getSettingsFilePath()), props);
+        setPropertyFile(new File(azpzMain.getSettingsFileLocation()), props);
 
         // comp.getClass()
         // setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
@@ -175,6 +209,35 @@ public class FileHandling
             System.out.println(((Frame) parentComponent).getExtendedState());
             System.out.println();
         }
+
+    }
+
+    /**
+     * creates an directory in Filesystem when it not exists
+     * 
+     * @author Martin Labsch, 28.04.2016
+     * @param dir
+     * @return true if directory was created or exists
+     */
+    public static boolean createDirIfNotExists(String dir)
+    {
+        boolean retValue = false;
+
+        File file = new File(dir);
+
+        if (file.isDirectory())
+        {
+            System.out.println("jo");
+            retValue = true;
+        }
+        else
+        {
+            // file.mk
+            // System.out.println("nö");
+
+        }
+
+        return retValue;
 
     }
 
