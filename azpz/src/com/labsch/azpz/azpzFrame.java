@@ -1,11 +1,13 @@
 package com.labsch.azpz;
 
+import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.event.WindowStateListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -19,7 +21,7 @@ import com.labsch.dlg_login.loginDialog;
  * @author Martin Labsch, 26.04.2016
  */
 @SuppressWarnings("serial")
-public class azpzFrame extends JFrame implements ActionListener, WindowListener
+public class azpzFrame extends JFrame implements ActionListener, WindowListener, WindowStateListener
 {
 
     private static final boolean debug = false;
@@ -171,6 +173,31 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener
         {
             System.out.println("windowOpened");
         }
+    }
+
+    @Override
+    public void windowStateChanged(WindowEvent e)
+    {
+//        if (e.getSource() instanceof azpzFrame && ((azpzFrame) e.getSource()).getName().equals("mainFrame"))
+//        {
+//            azpzFrame af = (azpzFrame) e.getSource();
+//            System.out.println();
+//            System.out.println(af.getExtendedState());
+//            System.out.println(azpzMain.getMAINFRAME_WIDTH());
+//            System.out.println(azpzMain.getMAINFRAME_HEIGHT());
+//            System.out.println(azpzMain.getMAINFRAME_X());
+//            System.out.println(azpzMain.getMAINFRAME_Y());
+//
+//            if (af.getExtendedState() == Frame.NORMAL)
+//            {
+//            }
+//        }
+
+        if (debug)
+        {
+            System.out.println("windowStateChanged");
+        }
+
     }
 
 }

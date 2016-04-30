@@ -26,11 +26,11 @@ public class azpzMain
 
     private static final boolean debug = false;
 
-    private static int MAIN_FRAME_WIDTH;
-    private static int MAIN_FRAME_HEIGHT;
+    private static int MAINFRAME_WIDTH;
+    private static int MAINFRAME_HEIGHT;
     private static int MAINFRAME_X;
     private static int MAINFRAME_Y;
-    private static Boolean MAXIMIZED;
+    private static Boolean MAINFRAME_MAXIMIZED_BOTH;
     private static String APP_LANG;
 
     private static String appRootDir = FileHandling.getAppPath();
@@ -59,12 +59,9 @@ public class azpzMain
     private static void initializeComponents()
     {
         azpzFrame mainFrame = new azpzFrame();
-        mainFrame.setName("mainFrame");
-        mainFrame.addWindowListener(mainFrame);
-
         JMenuBar menuBar = new JMenuBar();
-
         JMenu menuFile = createMenuAndAddToMenuBar("Datei", "menuFile", 'D', menuBar);
+
         /**
          * @author Matthias Lüthke, 27.04.2016
          */
@@ -80,23 +77,23 @@ public class azpzMain
          */
         createMenuItemAndAddToMenu("LogIn", "menuItemLogin", 'L', mainFrame, menuLogin);
 
-        // Titel
+        mainFrame.setName("mainFrame");
         mainFrame.setTitle(titleMainFrame);
-        // Icon
+        mainFrame.addWindowListener(mainFrame);
+        mainFrame.addWindowStateListener(mainFrame);
         if (mainFrameIcon != null)
         {
             mainFrame.setIconImage(mainFrameIcon.getImage());
         }
         // settings for mainFrame
         mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        mainFrame.setSize(MAIN_FRAME_WIDTH, MAIN_FRAME_HEIGHT);
-        mainFrame.setExtendedState(MAXIMIZED ? Frame.MAXIMIZED_BOTH : mainFrame.getExtendedState());
+        mainFrame.setSize(MAINFRAME_WIDTH, MAINFRAME_HEIGHT);
+        mainFrame.setExtendedState(MAINFRAME_MAXIMIZED_BOTH ? Frame.MAXIMIZED_BOTH : mainFrame.getExtendedState());
 //        mainFrame.setLocationRelativeTo(null);
         mainFrame.setLocation(MAINFRAME_X, MAINFRAME_Y);
 
         // adding the components to the mainFrame
         mainFrame.add(menuBar, BorderLayout.PAGE_START);
-
         mainFrame.setVisible(true);
 
     }
@@ -218,11 +215,11 @@ public class azpzMain
 
             if (!prop.isEmpty())
             {
-                azpzMain.MAIN_FRAME_HEIGHT = null != prop.getProperty("MAIN_FRAME_HEIGHT") ? new Integer(prop.getProperty("MAIN_FRAME_HEIGHT")) : 800;
-                azpzMain.MAIN_FRAME_WIDTH = null != prop.getProperty("MAIN_FRAME_WIDTH") ? new Integer(prop.getProperty("MAIN_FRAME_WIDTH")) : 800;
+                azpzMain.MAINFRAME_HEIGHT = null != prop.getProperty("MAIN_FRAME_HEIGHT") ? new Integer(prop.getProperty("MAIN_FRAME_HEIGHT")) : 800;
+                azpzMain.MAINFRAME_WIDTH = null != prop.getProperty("MAIN_FRAME_WIDTH") ? new Integer(prop.getProperty("MAIN_FRAME_WIDTH")) : 800;
                 azpzMain.MAINFRAME_X = null != prop.getProperty("MAINFRAME_X") ? new Integer(prop.getProperty("MAINFRAME_X")) : 0;
                 azpzMain.MAINFRAME_Y = null != prop.getProperty("MAINFRAME_Y") ? new Integer(prop.getProperty("MAINFRAME_Y")) : 0;
-                azpzMain.MAXIMIZED = null !=  prop.getProperty("MAXIMIZED") ? new Boolean((prop.getProperty("MAXIMIZED"))) : false;
+                azpzMain.MAINFRAME_MAXIMIZED_BOTH = null !=  prop.getProperty("MAXIMIZED") ? new Boolean((prop.getProperty("MAXIMIZED"))) : false;
                 azpzMain.APP_LANG = null !=  prop.getProperty("APP_LANG") ? prop.getProperty("APP_LANG") : "de";
             }
             else
@@ -245,4 +242,86 @@ public class azpzMain
     {
         return appRootDir + File.separator + settingsFilePath + File.separator + settingsFileName;
     }
+
+    /**
+     * @return the mAINFRAME_WIDTH
+     */
+    public static int getMAINFRAME_WIDTH()
+    {
+        return MAINFRAME_WIDTH;
+    }
+
+    /**
+     * @param mAINFRAME_WIDTH the mAINFRAME_WIDTH to set
+     */
+    public static void setMAINFRAME_WIDTH(int mAINFRAME_WIDTH)
+    {
+        MAINFRAME_WIDTH = mAINFRAME_WIDTH;
+    }
+
+    /**
+     * @return the mAINFRAME_HEIGHT
+     */
+    public static int getMAINFRAME_HEIGHT()
+    {
+        return MAINFRAME_HEIGHT;
+    }
+
+    /**
+     * @param mAINFRAME_HEIGHT the mAINFRAME_HEIGHT to set
+     */
+    public static void setMAINFRAME_HEIGHT(int mAINFRAME_HEIGHT)
+    {
+        MAINFRAME_HEIGHT = mAINFRAME_HEIGHT;
+    }
+
+    /**
+     * @return the mAINFRAME_X
+     */
+    public static int getMAINFRAME_X()
+    {
+        return MAINFRAME_X;
+    }
+
+    /**
+     * @param mAINFRAME_X the mAINFRAME_X to set
+     */
+    public static void setMAINFRAME_X(int mAINFRAME_X)
+    {
+        MAINFRAME_X = mAINFRAME_X;
+    }
+
+    /**
+     * @return the mAINFRAME_Y
+     */
+    public static int getMAINFRAME_Y()
+    {
+        return MAINFRAME_Y;
+    }
+
+    /**
+     * @param mAINFRAME_Y the mAINFRAME_Y to set
+     */
+    public static void setMAINFRAME_Y(int mAINFRAME_Y)
+    {
+        MAINFRAME_Y = mAINFRAME_Y;
+    }
+
+    /**
+     * @return the mAINFRAME_MAXIMIZED_BOTH
+     */
+    public static Boolean getMAINFRAME_MAXIMIZED_BOTH()
+    {
+        return MAINFRAME_MAXIMIZED_BOTH;
+    }
+
+    /**
+     * @param mAINFRAME_MAXIMIZED_BOTH the mAINFRAME_MAXIMIZED_BOTH to set
+     */
+    public static void setMAINFRAME_MAXIMIZED_BOTH(Boolean mAINFRAME_MAXIMIZED_BOTH)
+    {
+        MAINFRAME_MAXIMIZED_BOTH = mAINFRAME_MAXIMIZED_BOTH;
+    }
+
+
 }
