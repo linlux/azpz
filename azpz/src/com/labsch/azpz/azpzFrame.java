@@ -270,8 +270,7 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
 
     /**
      * @param bLogin the bLogin to set
-     */
-     */
+     */     
     public void setbLogin(boolean bLogin)
     {
         this.bLogin = bLogin;
