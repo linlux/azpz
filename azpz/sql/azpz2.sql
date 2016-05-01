@@ -16,8 +16,9 @@ USE `azpz`;
 #
 #  Prozeduren:
 #  Erste Prozedure auch als Beispiel
+DROP PROCEDURE IF EXISTS `table_exits`;
 
-CREATE   PROCEDURE IF NOT EXITS `table_exits`(IN `ptable_name` VARCHAR(30), OUT `count_table` INT)
+CREATE   PROCEDURE `table_exits`(IN `ptable_name` VARCHAR(30), OUT `count_table` INT)
         DETERMINISTIC
     SELECT COUNT(*) INTO count_table   
     FROM `information_schema`.`TABLES` WHERE 
@@ -35,7 +36,7 @@ CREATE   PROCEDURE IF NOT EXITS `table_exits`(IN `ptable_name` VARCHAR(30), OUT 
     `update_MB` varchar(30)  DEFAULT NULL,
     `insert_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
     `update_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-    `timestamp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `timestamp` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`persons_ID`) USING BTREE,
     UNIQUE KEY `persons_ID` (`persons_ID`) USING BTREE
   ) ENGINE=InnoDB    AUTO_INCREMENT=1; 
@@ -54,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `projects` (
   `update_MB` varchar(30)  DEFAULT NULL,
   `insert_Date` timestamp(6) NULL DEFAULT NULL,
   `update_Date` timestamp(6) NULL DEFAULT NULL,
-  `timestamp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `timestamp` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`projects_ID`) USING BTREE,
   UNIQUE KEY `projects_ID` (`projects_ID`) USING BTREE
 ) ENGINE=InnoDB
@@ -75,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `update_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
   `insert_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
   `update_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `timestamp` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `timestamp` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
    PRIMARY KEY (`user_ID`) USING BTREE,
   UNIQUE KEY `user_ID` (`user_ID`) USING BTREE
 ) ENGINE=InnoDB
@@ -95,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `worktime` (
   `update_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
   `insert_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
   `update_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `timestamp` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `timestamp` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `fk_persons_ID` BIGINT(20) DEFAULT NULL,
   PRIMARY KEY (`worktime_ID`) USING BTREE,
   UNIQUE KEY `worktime_ID` (`worktime_ID`) USING BTREE
@@ -118,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `address` (
   `update_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
   `insert_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
   `update_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `timestamp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `timestamp` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`address_ID`) USING BTREE,
   UNIQUE KEY `address_ID` (`address_ID`) USING BTREE
 )  ENGINE=InnoDB
@@ -129,13 +130,7 @@ CREATE TABLE IF NOT EXISTS `login` (
   `login_ID` bigint(20) NOT NULL,
   `fk_user_ID` bigint(20) NOT NULL,
   `text` varchar(30) CHARACTER SET latin1   NULL,
-  `timestamp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+  `timestamp` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`login_ID`) USING BTREE,
   UNIQUE KEY `login_ID` (`login_ID`) USING BTREE
 ) ;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-    
-
