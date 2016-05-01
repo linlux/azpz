@@ -1,5 +1,7 @@
 package com.labsch.azpz;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 
@@ -21,6 +23,8 @@ import javax.swing.JOptionPane;
 
 import com.labsch.util.DialogHandling;
 import com.labsch.util.FileHandling;
+import com.labsch.util.MenuHandling;
+import com.labsch.dbUtils.DBConnection;
 import com.labsch.dlg_login.loginDialog;
 
 /**
@@ -267,9 +271,44 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
     @Override
     public void mouseClicked(MouseEvent e)
     {
+        Object obj = e.getSource();
+
+        /**
+         * @author Martin Labsch, 01.05.2016 connect to db
+         */
+        if ((obj instanceof JMenu && ((JMenu) obj).getName().equals("menuItemConnect")))
+        {
+
+            String driverClassName = "com.mysql.jdbc.Driver";
+
+            String connectionString;
+            String server = "localhost";
+            String dataBase = "azpz";
+            connectionString = "jdbc:mysql://" + server + ":3306/";
+            connectionString += dataBase;
+
+            String userID = "root";
+            String passWord = null;
+
+            if (DBConnection.connectToDatabase(driverClassName, connectionString, userID, passWord))
+            {
+
+                JMenu m = MenuHandling.getAnMenuByNameFromFramesMenuBar("menuItemConnect", "mainFrame");
+//                JMenuItem mi = MenuHandling.getAnMenuItemByNameFromFramesMenuBar("menuItemConnect", "mainFrame");
+                if (m != null)
+                {
+                    m.setText("Verbunden");
+                    Font font = m.getFont().deriveFont(Font.BOLD);
+                    m.setFont(font);
+                    m.setForeground(Color.RED);
+                }
+            }
+        }
+
         if (debug)
         {
             System.out.println("mouseClicked");
+            System.out.println(obj.getClass());
         }
     }
 
