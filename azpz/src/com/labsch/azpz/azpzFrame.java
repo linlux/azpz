@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 
 import com.labsch.util.DialogHandling;
 import com.labsch.util.FileHandling;
+import com.labsch.util.FrameHandling;
 import com.labsch.util.MenuHandling;
 import com.labsch.dbUtils.DBConnection;
 import com.labsch.dlg_login.loginDialog;
@@ -281,20 +282,18 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
 
             String driverClassName = "com.mysql.jdbc.Driver";
 
-            String connectionString;
             String server = "localhost";
             String dataBase = "azpz";
-            connectionString = "jdbc:mysql://" + server + ":3306/";
-            connectionString += dataBase;
+            String port = ":3306/";
+            String connectionStringBegin = "jdbc:mysql://";
 
             String userID = "root";
             String passWord = null;
 
-            if (DBConnection.connectToDatabase(driverClassName, connectionString, userID, passWord))
+            if (DBConnection.connectToDatabase(driverClassName, server, dataBase, port, connectionStringBegin, userID, passWord))
             {
-
                 JMenu m = MenuHandling.getAnMenuByNameFromFramesMenuBar("menuItemConnect", "mainFrame");
-//                JMenuItem mi = MenuHandling.getAnMenuItemByNameFromFramesMenuBar("menuItemConnect", "mainFrame");
+                // JMenuItem mi = MenuHandling.getAnMenuItemByNameFromFramesMenuBar("menuItemConnect", "mainFrame");
                 if (m != null)
                 {
                     m.setText("Verbunden");
@@ -303,6 +302,10 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
                     m.setForeground(Color.RED);
                 }
             }
+        }
+        else
+        {
+
         }
 
         if (debug)
