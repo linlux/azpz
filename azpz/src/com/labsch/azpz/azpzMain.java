@@ -1,6 +1,7 @@
 package com.labsch.azpz;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Frame;
 import java.io.File;
 import java.util.Properties;
@@ -43,7 +44,8 @@ public class azpzMain
     private static ImageIcon mainFrameIcon2 = appRootDir != null ? new ImageIcon(appRootDir + "\\pic\\Hourglass-icon-pxl.png") : null;
 
     private static String titleMainFrame = "AzPz";
-
+    
+    
     /**
      * @author Martin Labsch, 26.04.2016
      * @param args
@@ -67,6 +69,11 @@ public class azpzMain
          * @author Matthias Lüthke, 27.04.2016
          */
         JMenu menuLogin = createMenuAndAddToMenuBar("Login", "menuLogin", 'L', menuBar);
+        
+        /**
+         * @author Matthias Lüthke, 27.04.2016
+         */
+        JMenu menuLogOut = createMenuAndAddToMenuBar("Logout", "menuLogOut", 'O', menuBar);
 
         // TODO Mehrsprachigkeit: Bezeichner aus Datei holen (./lang)
         // menu-entries
@@ -77,6 +84,7 @@ public class azpzMain
          * @author Matthias Lüthke, 27.04.2016
          */
         createMenuItemAndAddToMenu("LogIn", "menuItemLogin", 'L', mainFrame, menuLogin);
+        createMenuItemAndAddToMenu("LogOut", "menuLogOut", 'O', mainFrame, menuLogin);
 
         mainFrame.setName("mainFrame");
         mainFrame.setTitle(titleMainFrame);
@@ -323,6 +331,4 @@ public class azpzMain
     {
         MAINFRAME_MAXIMIZED_BOTH = mAINFRAME_MAXIMIZED_BOTH;
     }
-
-
 }
