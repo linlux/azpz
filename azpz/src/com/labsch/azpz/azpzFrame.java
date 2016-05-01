@@ -1,10 +1,11 @@
 package com.labsch.azpz;
 
-import java.awt.Frame;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowStateListener;
@@ -14,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
@@ -25,11 +27,11 @@ import com.labsch.dlg_login.loginDialog;
  * @author Martin Labsch, 26.04.2016
  */
 @SuppressWarnings("serial")
-public class azpzFrame extends JFrame implements ActionListener, WindowListener, WindowStateListener
+public class azpzFrame extends JFrame implements ActionListener, WindowListener, WindowStateListener, MouseListener
 {
 
     private static final boolean debug = false;
-    private  boolean bLogin = false; // Matthias Lüthke 01.05.2016
+    private boolean bLogin = false; // Matthias Lüthke 01.05.2016
 
     /**
      * @author Martin Labsch, 26.04.2016
@@ -50,24 +52,23 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
         }
         // Login Dialog was choosed
         // @author Matthias Lüthke, 30.04.2016
-        else if (obj instanceof JMenuItem && ((JMenuItem) e.getSource()).getName().equals("menuItemLogin"))
+        else if (obj instanceof JMenuItem && ((JMenuItem) obj).getName().equals("menuItemLogin"))
         {
-            if (!bLogin )
+            if (!bLogin)
             {
                 logIn();
             }
             else
             {
-                JOptionPane(this, "Sie sind bereits eingeloggt. ", "Login", JOptionPane.INFORMATION_MESSAGE);                
-            } 
+                JOptionPane(this, "Sie sind bereits eingeloggt. ", "Login", JOptionPane.INFORMATION_MESSAGE);
+            }
         }
-        else if (obj instanceof JMenuItem && ((JMenuItem) e.getSource()).getName().equals("menuItemLogin"))
+        else if (obj instanceof JMenuItem && ((JMenuItem) obj).getName().equals("menuItemLogin"))
         {
             if (bLogin)
-             logOut();
+                logOut();
         }
-        
-        
+
         else if (obj instanceof JButton && ((JButton) obj).getName().equals("appCloseOptionYes"))
         {
             FileHandling.safeActualProperties();
@@ -92,13 +93,17 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
 
             if (debug)
             {
-                if (e.getSource() instanceof JMenuItem)
+                if (obj instanceof JMenuItem)
                 {
-                    System.out.println(((JMenuItem) e.getSource()).getName());
+                    System.out.println(((JMenuItem) obj).getName());
                 }
-                if (e.getSource() instanceof JButton)
+                else if (obj instanceof JMenu)
                 {
-                    System.out.println(((JButton) e.getSource()).getName());
+                    System.out.println(((JMenu) obj).getName());
+                }
+                else if (obj instanceof JButton)
+                {
+                    System.out.println(((JButton) obj).getName());
                 }
             }
 
@@ -113,7 +118,7 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
     {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter df;
-        df = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm");            
+        df = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm");
 
         loginDialog loginDlg = new loginDialog(this);
         loginDlg.setLocationRelativeTo(this);
@@ -121,9 +126,8 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
         // if logon successfully
         if (loginDlg.isSucceeded())
         {
-            setbLogin(true); // Matthias Lüthke 01.05.2016   
-            
-            
+            setbLogin(true); // Matthias Lüthke 01.05.2016
+
             this.setTitle(this.getTitle().trim() + "       " + loginDlg.getUsername() + "  ist erfolgreich eingeloggt.   " + now.format(df));
         }
         else
@@ -132,19 +136,20 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
             this.setTitle("AzPz " + " Kein User eingeloggt");
         }
     }
+
     /**
      * TODO noch beschreiben
      */
     private void logOut()
-    {        
-         setbLogin(false); // Matthias Lüthke 01.05.2016         
-         this.setTitle("AzPz " + " Kein User eingeloggt");        
+    {
+        setbLogin(false); // Matthias Lüthke 01.05.2016
+        this.setTitle("AzPz " + " Kein User eingeloggt");
     }
-    
+
     private void JOptionPane(azpzFrame azpzFrame, String string, String string2, int informationMessage)
     {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
@@ -251,10 +256,56 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
     }
 
     /**
-     * @param bLogin the bLogin to set
+     * @param bLogin
+     *            the bLogin to set
      */
     public void setbLogin(boolean bLogin)
     {
         this.bLogin = bLogin;
-    }  
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e)
+    {
+        if (debug)
+        {
+            System.out.println("mouseClicked");
+        }
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e)
+    {
+        if (debug)
+        {
+            System.out.println("mouseEntered");
+        }
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e)
+    {
+        if (debug)
+        {
+            System.out.println("mouseExited");
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e)
+    {
+        if (debug)
+        {
+            System.out.println("mousePressed");
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e)
+    {
+        if (debug)
+        {
+            System.out.println("mouseReleased");
+        }
+    }
 }

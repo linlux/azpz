@@ -1,7 +1,6 @@
 package com.labsch.azpz;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Frame;
 import java.io.File;
 import java.util.Properties;
@@ -21,10 +20,10 @@ public class azpzMain
     /**
      * @author Martin Labsch, 26.04.2016
      */
-    private enum StartupMode
-    {
-        NORMAL, MAXIMIZED
-    }
+//    private enum StartupMode
+//    {
+//        NORMAL, MAXIMIZED
+//    }
 
     private static final boolean debug = false;
 
@@ -172,18 +171,19 @@ public class azpzMain
      *            - for later identification e.g. listeners
      * @param mnemonic
      *            - the key to navigation via keyboard
-     * @param actionListener
+     * @param listener
      *            - will be added to the item
      * @param menu
      *            - where the menu will be added
      * @return
      */
-    private static JMenuItem createMenuAndAddToMenuBar(String text, String name, char mnemonic, azpzFrame actionListener, JMenuBar menu)
+    private static JMenuItem createMenuAndAddToMenuBar(String text, String name, char mnemonic, azpzFrame listener, JMenuBar menu)
     {
         JMenu m = new JMenu(text);
         m.setName(name);
         m.setMnemonic(mnemonic);
-        m.addActionListener(actionListener);
+        m.addActionListener(listener);
+        m.addMouseListener(listener);
         
         menu.add(m);
         
