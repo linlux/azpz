@@ -67,7 +67,7 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
                     }
                 }
             }
-            // close Login Dialog was choosed
+            //  Login Dialog was choosed
             // @author Matthias Lüthke, 30.04.2016
             else if (obj instanceof JMenuItem && ((JMenuItem) e.getSource()).getName().equals("menuItemLogin"))
             {
