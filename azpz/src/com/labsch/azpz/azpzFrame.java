@@ -67,41 +67,37 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
                     }
                 }
             }
-            if (debug)
+            // close Login Dialog was choosed
+            // @author Matthias Lüthke, 30.04.2016
+            else if (obj instanceof JMenuItem && ((JMenuItem) e.getSource()).getName().equals("menuItemLogin"))
             {
-                System.out.println("appCloseOptionNo");
-            }
-        }
+                LocalDateTime now = LocalDateTime.now();
+                DateTimeFormatter df;
+                df = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm");
 
-        // @author Matthias Lüthke, 27.04.2016
-        else if (obj instanceof JMenuItem && ((JMenuItem) e.getSource()).getName().equals("menuItemLogin"))
-        {
-
-            LocalDateTime now = LocalDateTime.now();
-            DateTimeFormatter df;
-            df = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm");
-
-            loginDialog loginDlg = new loginDialog(this);
-            loginDlg.setLocationRelativeTo(this);
-            loginDlg.setVisible(true);
-            // if logon successfully
-            if (loginDlg.isSucceeded())
-            {
-                this.setTitle(this.getTitle().trim() + "       " + loginDlg.getUsername() + "  ist erfolgreich eingeloggt.   " + now.format(df));
-            }
-            else
-                this.setTitle("AzPz " + " Kein User eingeloggt");
-
-            if (debug)
-            {
-                if (e.getSource() instanceof JMenuItem)
+                loginDialog loginDlg = new loginDialog(this);
+                loginDlg.setLocationRelativeTo(this);
+                loginDlg.setVisible(true);
+                // if logon successfully
+                if (loginDlg.isSucceeded())
                 {
-                    System.out.println(((JMenuItem) e.getSource()).getName());
+                    this.setTitle(this.getTitle().trim() + "       " + loginDlg.getUsername() + "  ist erfolgreich eingeloggt.   " + now.format(df));
                 }
-                if (e.getSource() instanceof JButton)
+                else
+                    this.setTitle("AzPz " + " Kein User eingeloggt");
+
+                if (debug)
                 {
-                    System.out.println(((JButton) e.getSource()).getName());
+                    if (e.getSource() instanceof JMenuItem)
+                    {
+                        System.out.println(((JMenuItem) e.getSource()).getName());
+                    }
+                    if (e.getSource() instanceof JButton)
+                    {
+                        System.out.println(((JButton) e.getSource()).getName());
+                    }
                 }
+
             }
 
         }
