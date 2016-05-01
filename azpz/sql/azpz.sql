@@ -88,6 +88,76 @@ AUTO_INCREMENT=1
 
 
 
-
+# Struktur für die Tabelle `worktime`:
 #
 # Struktur für die Tabelle `worktime`:
+#
+
+CREATE TABLE IF NOT EXISTS `worktime` (
+  `worktime_ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `start` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `end` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `text` varchar(30) CHARACTER SET latin1   NULL,
+  `insert_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
+  `update_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
+  `insert_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `update_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `timestamp` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fk_persons_ID` BIGINT(20) DEFAULT NULL,
+  PRIMARY KEY (`worktime_ID`) USING BTREE,
+  UNIQUE KEY `worktime_ID` (`worktime_ID`) USING BTREE
+) ENGINE=InnoDB
+AUTO_INCREMENT=1  
+;
+
+CREATE TABLE IF NOT EXISTS `address` (
+  `address_ID` bigint(20)  NOT NULL AUTO_INCREMENT,
+  `address1` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
+  `address2` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
+  `address3` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
+  `city` varchar(30) COLLATE latin1_general_ci DEFAULT NULL,
+  `plz` varchar(10) COLLATE latin1_general_ci DEFAULT NULL,
+  `Country_short` varchar(2) COLLATE latin1_general_ci DEFAULT NULL,
+  `Country` varchar(30) COLLATE latin1_general_ci NOT NULL,
+  `fk_persons_ID` bigint(20) NOT NULL,
+  `text` varchar(30) CHARACTER SET latin1   NULL,
+  `insert_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
+  `update_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
+  `insert_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `update_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `timestamp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`address_ID`) USING BTREE,
+  UNIQUE KEY `address_ID` (`address_ID`) USING BTREE
+)  ENGINE=InnoDB
+AUTO_INCREMENT=1  ;
+
+
+CREATE TABLE IF NOT EXISTS `login` (
+  `login_ID` bigint(20) NOT NULL,
+  `fk_user_ID` bigint(20) NOT NULL,
+  `text` varchar(30) CHARACTER SET latin1   NULL,
+  `timestamp` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+  PRIMARY KEY (`login_ID`) USING BTREE,
+  UNIQUE KEY `login_ID` (`login_ID`) USING BTREE
+) ;
+
+
+#
+# Data for the `persons` table  (LIMIT 0,500)
+#
+
+INSERT INTO `persons` (`persons_ID`, `name`, `firstName`, `text`, `insert_MB`, `update_MB`, `insert_Date`, `update_Date`, `timestamp`) VALUES
+  (1,'Luethke','Matthias','Test',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-01 15:55:49.931498'),
+  (2,'Labsch','Martin','Test Martin',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-01 15:56:18.429800');
+COMMIT;
+
+#
+# Data for the `user` table  (LIMIT 0,500)
+#
+
+INSERT INTO `user` (`user_id`, `pw_clear`, `pw_hash`, `user_name`, `fk_persons_ID`, `text`, `insert_MB`, `update_MB`, `insert_Date`, `update_Date`, `timestamp`) VALUES
+  (1,'start','','MLuethke',1,NULL,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-01 16:00:39.445833'),
+  (2,'start','','MLabsch',2,NULL,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-01 16:00:47.546181');
+COMMIT;
+
+
