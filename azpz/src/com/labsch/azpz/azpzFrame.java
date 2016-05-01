@@ -45,7 +45,25 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
         {
             DialogHandling.showExitConfirmationDialog();
         }
+        // Login Dialog was choosed
+        // @author Matthias Lüthke, 30.04.2016
+        else if (obj instanceof JMenuItem && ((JMenuItem) e.getSource()).getName().equals("menuItemLogin"))
+        {
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter df;
+            df = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm");
 
+            loginDialog loginDlg = new loginDialog(this);
+            loginDlg.setLocationRelativeTo(this);
+            loginDlg.setVisible(true);
+            // if logon successfully
+            if (loginDlg.isSucceeded())
+            {
+                this.setTitle(this.getTitle().trim() + "       " + loginDlg.getUsername() + "  ist erfolgreich eingeloggt.   " + now.format(df));
+            }
+            else
+                this.setTitle("AzPz " + " Kein User eingeloggt");
+        }
         else if (obj instanceof JButton && ((JButton) obj).getName().equals("appCloseOptionYes"))
         {
             FileHandling.safeActualProperties();
@@ -67,37 +85,17 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
                     }
                 }
             }
-            //  Login Dialog was choosed
-            // @author Matthias Lüthke, 30.04.2016
-            else if (obj instanceof JMenuItem && ((JMenuItem) e.getSource()).getName().equals("menuItemLogin"))
+
+            if (debug)
             {
-                LocalDateTime now = LocalDateTime.now();
-                DateTimeFormatter df;
-                df = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm");
-
-                loginDialog loginDlg = new loginDialog(this);
-                loginDlg.setLocationRelativeTo(this);
-                loginDlg.setVisible(true);
-                // if logon successfully
-                if (loginDlg.isSucceeded())
+                if (e.getSource() instanceof JMenuItem)
                 {
-                    this.setTitle(this.getTitle().trim() + "       " + loginDlg.getUsername() + "  ist erfolgreich eingeloggt.   " + now.format(df));
+                    System.out.println(((JMenuItem) e.getSource()).getName());
                 }
-                else
-                    this.setTitle("AzPz " + " Kein User eingeloggt");
-
-                if (debug)
+                if (e.getSource() instanceof JButton)
                 {
-                    if (e.getSource() instanceof JMenuItem)
-                    {
-                        System.out.println(((JMenuItem) e.getSource()).getName());
-                    }
-                    if (e.getSource() instanceof JButton)
-                    {
-                        System.out.println(((JButton) e.getSource()).getName());
-                    }
+                    System.out.println(((JButton) e.getSource()).getName());
                 }
-
             }
 
         }
@@ -178,20 +176,20 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
     @Override
     public void windowStateChanged(WindowEvent e)
     {
-//        if (e.getSource() instanceof azpzFrame && ((azpzFrame) e.getSource()).getName().equals("mainFrame"))
-//        {
-//            azpzFrame af = (azpzFrame) e.getSource();
-//            System.out.println();
-//            System.out.println(af.getExtendedState());
-//            System.out.println(azpzMain.getMAINFRAME_WIDTH());
-//            System.out.println(azpzMain.getMAINFRAME_HEIGHT());
-//            System.out.println(azpzMain.getMAINFRAME_X());
-//            System.out.println(azpzMain.getMAINFRAME_Y());
-//
-//            if (af.getExtendedState() == Frame.NORMAL)
-//            {
-//            }
-//        }
+        // if (e.getSource() instanceof azpzFrame && ((azpzFrame) e.getSource()).getName().equals("mainFrame"))
+        // {
+        // azpzFrame af = (azpzFrame) e.getSource();
+        // System.out.println();
+        // System.out.println(af.getExtendedState());
+        // System.out.println(azpzMain.getMAINFRAME_WIDTH());
+        // System.out.println(azpzMain.getMAINFRAME_HEIGHT());
+        // System.out.println(azpzMain.getMAINFRAME_X());
+        // System.out.println(azpzMain.getMAINFRAME_Y());
+        //
+        // if (af.getExtendedState() == Frame.NORMAL)
+        // {
+        // }
+        // }
 
         if (debug)
         {
