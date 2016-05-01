@@ -27,8 +27,8 @@ public class azpzMain
 
     private static final boolean debug = false;
 
-    private static int MAINFRAME_WIDTH;
-    private static int MAINFRAME_HEIGHT;
+    private static int MAINFRAME_WIDTH = 800;
+    private static int MAINFRAME_HEIGHT = 600;
     private static int MAINFRAME_X;
     private static int MAINFRAME_Y;
     private static Boolean MAINFRAME_MAXIMIZED_BOTH;
@@ -103,7 +103,7 @@ public class azpzMain
         // mainFrame.setLocationRelativeTo(null);
         mainFrame.setLocation(MAINFRAME_X, MAINFRAME_Y);
 
-        JLabel statusBarLabel = new JLabel();
+        JLabel statusBarLabel = new JLabel("statusbar");
         statusBarLabel.setName("statusBarLabel");
 
         // adding components to statusBar
