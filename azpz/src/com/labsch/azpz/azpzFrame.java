@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowStateListener;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -75,18 +77,20 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
         else if (obj instanceof JMenuItem && ((JMenuItem) e.getSource()).getName().equals("menuItemLogin"))
         {
 
-            final JFrame frame = new JFrame("JDialog Test");
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter df;
+            df = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm");
 
-            final JButton btnLogin = new JButton("Click to login");
-
-            frame.setLocationRelativeTo(this);
-
-            loginDialog loginDlg = new loginDialog(frame);
-            frame.setLocationRelativeTo(this);
+            loginDialog loginDlg = new loginDialog(this);
+            loginDlg.setLocationRelativeTo(this);
             loginDlg.setVisible(true);
             // if logon successfully
             if (loginDlg.isSucceeded())
-                btnLogin.setText("Hi alles OK " + loginDlg.getUsername() + "!");
+            {
+                this.setTitle(this.getTitle().trim() + "       " + loginDlg.getUsername() + "  ist erfolgreich eingeloggt.   " + now.format(df));
+            }
+            else
+                this.setTitle("AzPz " + " Kein User eingeloggt");
 
             if (debug)
             {
