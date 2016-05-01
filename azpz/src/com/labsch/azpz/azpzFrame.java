@@ -54,9 +54,12 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
         if ((obj instanceof JMenuItem && ((JMenuItem) obj).getName().equals("menuItemClose")))
         {
             DialogHandling.showExitConfirmationDialog();
-        }
-        // Login Dialog was choosed
-        // @author Matthias Lüthke, 30.04.2016
+        }  
+        else if (obj instanceof JMenuItem && ((JMenuItem) e.getSource()).getName().equals("menuItemLogout"))
+        {
+            if (bLogin)
+             logOut();
+        }   
         else if (obj instanceof JMenuItem && ((JMenuItem) obj).getName().equals("menuItemLogin"))
         {
             if (!bLogin)
@@ -70,10 +73,15 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
         }
         else if (obj instanceof JMenuItem && ((JMenuItem) obj).getName().equals("menuItemLogin"))
         {
-            if (bLogin)
-                logOut();
-        }
-
+            if (!bLogin )
+            {
+                logIn();
+            }
+            else
+            {
+                JOptionPane(this, "Sie sind bereits eingeloggt. ", "Login", JOptionPane.INFORMATION_MESSAGE);                
+            } 
+        }                  
         else if (obj instanceof JButton && ((JButton) obj).getName().equals("appCloseOptionYes"))
         {
             FileHandling.safeActualProperties();
@@ -143,7 +151,7 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
     }
 
     /**
-     * TODO noch beschreiben
+      // TODO Matthias noch beschreiben    
      */
     private void logOut()
     {
@@ -261,8 +269,8 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
     }
 
     /**
-     * @param bLogin
-     *            the bLogin to set
+     * @param bLogin the bLogin to set
+     */
      */
     public void setbLogin(boolean bLogin)
     {
