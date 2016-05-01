@@ -7,12 +7,12 @@ import java.util.Properties;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import com.labsch.util.FileHandling;
-
 
 public class azpzMain
 {
@@ -20,10 +20,10 @@ public class azpzMain
     /**
      * @author Martin Labsch, 26.04.2016
      */
-//    private enum StartupMode
-//    {
-//        NORMAL, MAXIMIZED
-//    }
+    // private enum StartupMode
+    // {
+    // NORMAL, MAXIMIZED
+    // }
 
     private static final boolean debug = false;
 
@@ -43,8 +43,7 @@ public class azpzMain
     private static ImageIcon mainFrameIcon2 = appRootDir != null ? new ImageIcon(appRootDir + "\\pic\\Hourglass-icon-pxl.png") : null;
 
     private static String titleMainFrame = "AzPz";
-    
-    
+
     /**
      * @author Martin Labsch, 26.04.2016
      * @param args
@@ -61,14 +60,17 @@ public class azpzMain
     private static void initializeComponents()
     {
         azpzFrame mainFrame = new azpzFrame();
+
         JMenuBar menuBar = new JMenuBar();
+        JMenuBar statusBar = new JMenuBar();
+
         JMenu menuFile = createMenuAndAddToMenuBar("Datei", "menuFile", 'D', menuBar);
 
         /**
          * @author Matthias Lüthke, 27.04.2016
          */
         JMenu menuLogin = createMenuAndAddToMenuBar("Login", "menuLogin", 'L', menuBar);
-        
+
         /**
          * @author Matthias Lüthke, 27.04.2016
          */
@@ -77,13 +79,14 @@ public class azpzMain
         // TODO Mehrsprachigkeit: Bezeichner aus Datei holen (./lang)
         // menu-entries
         createMenuAndAddToMenuBar("Verbinden", "menuItemConnect", 'V', mainFrame, menuBar);
+
         // createMenuItemAndAddToMenu("Öffnen", "menuItemOpen", 'F', mainFrame, menuFile);
         createMenuItemAndAddToMenu("Beenden", "menuItemClose", 'E', mainFrame, menuFile);
         /**
          * @author Matthias Lüthke, 27.04.2016
          */
         createMenuItemAndAddToMenu("LogIn", "menuItemLogin", 'L', mainFrame, menuLogin);
-        createMenuItemAndAddToMenu("LogOut", "menuLogOut", 'O', mainFrame, menuLogin);
+        createMenuItemAndAddToMenu("LogOut", "menuItemLogOut", 'O', mainFrame, menuLogin);
 
         mainFrame.setName("mainFrame");
         mainFrame.setTitle(titleMainFrame);
@@ -97,11 +100,20 @@ public class azpzMain
         mainFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         mainFrame.setSize(MAINFRAME_WIDTH, MAINFRAME_HEIGHT);
         mainFrame.setExtendedState(MAINFRAME_MAXIMIZED_BOTH ? Frame.MAXIMIZED_BOTH : mainFrame.getExtendedState());
-//        mainFrame.setLocationRelativeTo(null);
+        // mainFrame.setLocationRelativeTo(null);
         mainFrame.setLocation(MAINFRAME_X, MAINFRAME_Y);
 
+        JLabel statusBarLabel = new JLabel();
+        statusBarLabel.setName("statusBarLabel");
+
+        // adding components to statusBar
+        statusBar.add(statusBarLabel);
+
         // adding the components to the mainFrame
-        mainFrame.add(menuBar, BorderLayout.PAGE_START);
+        // mainFrame.add(menuBar, BorderLayout.PAGE_END);
+        mainFrame.setJMenuBar(menuBar);
+        mainFrame.add(statusBar, BorderLayout.PAGE_END);
+
         mainFrame.setVisible(true);
 
     }
@@ -157,7 +169,7 @@ public class azpzMain
         mi.addActionListener(actionListener);
 
         menu.add(mi);
-        
+
         return mi;
     }
 
@@ -184,13 +196,14 @@ public class azpzMain
         m.setMnemonic(mnemonic);
         m.addActionListener(listener);
         m.addMouseListener(listener);
-        
+
         menu.add(m);
-        
-        if(debug){
+
+        if (debug)
+        {
             System.out.println(m.getComponentZOrder(m));
         }
-        
+
         return m;
     }
 
@@ -228,8 +241,8 @@ public class azpzMain
                 azpzMain.MAINFRAME_WIDTH = null != prop.getProperty("MAIN_FRAME_WIDTH") ? new Integer(prop.getProperty("MAIN_FRAME_WIDTH")) : 800;
                 azpzMain.MAINFRAME_X = null != prop.getProperty("MAINFRAME_X") ? new Integer(prop.getProperty("MAINFRAME_X")) : 0;
                 azpzMain.MAINFRAME_Y = null != prop.getProperty("MAINFRAME_Y") ? new Integer(prop.getProperty("MAINFRAME_Y")) : 0;
-                azpzMain.MAINFRAME_MAXIMIZED_BOTH = null !=  prop.getProperty("MAXIMIZED") ? new Boolean((prop.getProperty("MAXIMIZED"))) : false;
-                azpzMain.APP_LANG = null !=  prop.getProperty("APP_LANG") ? prop.getProperty("APP_LANG") : "de";
+                azpzMain.MAINFRAME_MAXIMIZED_BOTH = null != prop.getProperty("MAXIMIZED") ? new Boolean((prop.getProperty("MAXIMIZED"))) : false;
+                azpzMain.APP_LANG = null != prop.getProperty("APP_LANG") ? prop.getProperty("APP_LANG") : "de";
             }
             else
             {
@@ -261,7 +274,8 @@ public class azpzMain
     }
 
     /**
-     * @param mAINFRAME_WIDTH the mAINFRAME_WIDTH to set
+     * @param mAINFRAME_WIDTH
+     *            the mAINFRAME_WIDTH to set
      */
     public static void setMAINFRAME_WIDTH(int mAINFRAME_WIDTH)
     {
@@ -277,7 +291,8 @@ public class azpzMain
     }
 
     /**
-     * @param mAINFRAME_HEIGHT the mAINFRAME_HEIGHT to set
+     * @param mAINFRAME_HEIGHT
+     *            the mAINFRAME_HEIGHT to set
      */
     public static void setMAINFRAME_HEIGHT(int mAINFRAME_HEIGHT)
     {
@@ -293,7 +308,8 @@ public class azpzMain
     }
 
     /**
-     * @param mAINFRAME_X the mAINFRAME_X to set
+     * @param mAINFRAME_X
+     *            the mAINFRAME_X to set
      */
     public static void setMAINFRAME_X(int mAINFRAME_X)
     {
@@ -309,7 +325,8 @@ public class azpzMain
     }
 
     /**
-     * @param mAINFRAME_Y the mAINFRAME_Y to set
+     * @param mAINFRAME_Y
+     *            the mAINFRAME_Y to set
      */
     public static void setMAINFRAME_Y(int mAINFRAME_Y)
     {
@@ -325,7 +342,8 @@ public class azpzMain
     }
 
     /**
-     * @param mAINFRAME_MAXIMIZED_BOTH the mAINFRAME_MAXIMIZED_BOTH to set
+     * @param mAINFRAME_MAXIMIZED_BOTH
+     *            the mAINFRAME_MAXIMIZED_BOTH to set
      */
     public static void setMAINFRAME_MAXIMIZED_BOTH(Boolean mAINFRAME_MAXIMIZED_BOTH)
     {
