@@ -155,9 +155,14 @@ COMMIT;
 # Data for the `user` table  (LIMIT 0,500)
 #
 
-INSERT INTO `user` (`user_id`, `pw_clear`, `pw_hash`, `user_name`, `fk_persons_ID`, `text`, `insert_MB`, `update_MB`, `insert_Date`, `update_Date`, `timestamp`) VALUES
-  (1,'start','','MLuethke',1,NULL,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-01 16:00:39.445833'),
-  (2,'start','','MLabsch',2,NULL,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-01 16:00:47.546181');
-COMMIT;
-
+INSERT INTO `user` (  `pw_clear`,  `user_name`, `fk_persons_ID`)           
+      SELECT  "start",
+       CONCAT     ( p.`firstName`,  p.`Name`,  p.`persons_ID` )   ,         
+        p.`persons_ID`     
+      from persons p 
+       where   persons_ID 
+      not in                
+      (
+       Select    fk_persons_ID  from user
+      )
 
