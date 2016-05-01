@@ -15,6 +15,8 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import com.labsch.util.DialogHandling;
 import com.labsch.util.FileHandling;
 import com.labsch.dlg_login.loginDialog;
@@ -27,6 +29,7 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
 {
 
     private static final boolean debug = false;
+    private  boolean bLogin = false; // Matthias Lüthke 01.05.2016
 
     /**
      * @author Martin Labsch, 26.04.2016
@@ -49,21 +52,22 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
         // @author Matthias Lüthke, 30.04.2016
         else if (obj instanceof JMenuItem && ((JMenuItem) e.getSource()).getName().equals("menuItemLogin"))
         {
-            LocalDateTime now = LocalDateTime.now();
-            DateTimeFormatter df;
-            df = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm");
-
-            loginDialog loginDlg = new loginDialog(this);
-            loginDlg.setLocationRelativeTo(this);
-            loginDlg.setVisible(true);
-            // if logon successfully
-            if (loginDlg.isSucceeded())
+            if (!bLogin )
             {
-                this.setTitle(this.getTitle().trim() + "       " + loginDlg.getUsername() + "  ist erfolgreich eingeloggt.   " + now.format(df));
+                logIn();
             }
             else
-                this.setTitle("AzPz " + " Kein User eingeloggt");
+            {
+                JOptionPane(this, "Sie sind bereits eingeloggt. ", "Login", JOptionPane.INFORMATION_MESSAGE);                
+            } 
         }
+        else if (obj instanceof JMenuItem && ((JMenuItem) e.getSource()).getName().equals("menuItemLogin"))
+        {
+            if (bLogin)
+             logOut();
+        }
+        
+        
         else if (obj instanceof JButton && ((JButton) obj).getName().equals("appCloseOptionYes"))
         {
             FileHandling.safeActualProperties();
@@ -100,6 +104,47 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
 
         }
 
+    }
+
+    /**
+     * TODO noch beschreiben
+     */
+    private void logIn()
+    {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter df;
+        df = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm");            
+
+        loginDialog loginDlg = new loginDialog(this);
+        loginDlg.setLocationRelativeTo(this);
+        loginDlg.setVisible(true);
+        // if logon successfully
+        if (loginDlg.isSucceeded())
+        {
+            setbLogin(true); // Matthias Lüthke 01.05.2016   
+            
+            
+            this.setTitle(this.getTitle().trim() + "       " + loginDlg.getUsername() + "  ist erfolgreich eingeloggt.   " + now.format(df));
+        }
+        else
+        {
+            setbLogin(false); // Matthias Lüthke 01.05.2016
+            this.setTitle("AzPz " + " Kein User eingeloggt");
+        }
+    }
+    /**
+     * TODO noch beschreiben
+     */
+    private void logOut()
+    {        
+         setbLogin(false); // Matthias Lüthke 01.05.2016         
+         this.setTitle("AzPz " + " Kein User eingeloggt");        
+    }
+    
+    private void JOptionPane(azpzFrame azpzFrame, String string, String string2, int informationMessage)
+    {
+        // TODO Auto-generated method stub
+        
     }
 
     @Override
@@ -195,7 +240,21 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
         {
             System.out.println("windowStateChanged");
         }
-
     }
 
+    /**
+     * @return the bLogin
+     */
+    public boolean isbLogin()
+    {
+        return bLogin;
+    }
+
+    /**
+     * @param bLogin the bLogin to set
+     */
+    public void setbLogin(boolean bLogin)
+    {
+        this.bLogin = bLogin;
+    }  
 }
