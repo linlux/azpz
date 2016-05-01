@@ -65,9 +65,11 @@ AUTO_INCREMENT=1
 #
 # Struktur für die Tabelle `user`:
 #
+Drop Table   IF  EXISTS `user` ;
 
 CREATE TABLE IF NOT EXISTS `user` (
   `user_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `user_name` VARCHAR(30) COLLATE latin1_german1_ci NOT NULL,
   `pw_clear` VARCHAR(30)  NOT NULL,
   `pw_hash` VARCHAR(30)  NOT NULL,
   `fk_persons_ID` BIGINT(20) NOT NULL,
@@ -78,7 +80,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   `update_Date` timestamp(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
   `timestamp` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
    PRIMARY KEY (`user_ID`) USING BTREE,
-  UNIQUE KEY `user_ID` (`user_ID`) USING BTREE
+  UNIQUE KEY `user_ID` (`user_ID`) USING BTREE,
+  UNIQUE KEY `user_name` (`user_name`) USING BTREE
 ) ENGINE=InnoDB
 AUTO_INCREMENT=1  
 ;
@@ -134,3 +137,21 @@ CREATE TABLE IF NOT EXISTS `login` (
   PRIMARY KEY (`login_ID`) USING BTREE,
   UNIQUE KEY `login_ID` (`login_ID`) USING BTREE
 ) ;
+
+#
+# Data for the `persons` table  (LIMIT 0,500)
+#
+
+INSERT INTO `persons` (`persons_ID`, `name`, `firstName`, `text`, `insert_MB`, `update_MB`, `insert_Date`, `update_Date`, `timestamp`) VALUES
+  (1,'Luethke','Matthias','Test',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-01 15:55:49.931498'),
+  (2,'Labsch','Martin','Test Martin',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-01 15:56:18.429800');
+COMMIT;
+
+#
+# Data for the `user` table  (LIMIT 0,500)
+#
+
+INSERT INTO `user` (`user_id`, `pw_clear`, `pw_hash`, `user_name`, `fk_persons_ID`, `text`, `insert_MB`, `update_MB`, `insert_Date`, `update_Date`, `timestamp`) VALUES
+  (1,'start','','MLuethke',1,NULL,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-01 16:00:39.445833'),
+  (2,'start','','MLabsch',2,NULL,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-01 16:00:47.546181');
+COMMIT; 
