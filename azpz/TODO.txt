@@ -1,0 +1,10 @@
+TODO:
+-
+
+ERLEDIGT:
+urspuengliche Fenstergroesze wird wieder hergestellt
+
+Wurde das Programm maximiert beendet und entsprechend maximiert gestartet,
+hatte das Fenster nach dem Verkleinern (im Maximierten Zustand wird der Maximieren-Button 
+zum Verkleinern-Button und umgekehrt) nicht die Groesze und Postion die es vorher hatte. 
+Dies ist nun der Fall.

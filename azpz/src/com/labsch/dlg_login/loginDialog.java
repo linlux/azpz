@@ -93,53 +93,13 @@ public class loginDialog extends JDialog  implements  ActionListener
 
   }
 
-    public loginDialog(Frame parent) 
+    public loginDialog(Frame parent)
     {
-        super(parent, "Login", true);
+        super(parent, true);
         //
-        initializeComponents(parent)  ;
-    
-
-        btnLogin.addActionListener(new ActionListener()     
-        {
-
-            @Override
-	    public void actionPerformed(ActionEvent e)
-             {
-        	Object obj = e.getSource();
-        	
-        	  if (obj instanceof JButton)
-        	  {
-        	      JButton btn = (JButton) obj;
-        	            	      
-        	      if (login.authenticate(getUsername(), getPassword()))
-                      {
-                         JOptionPane.showMessageDialog(loginDialog.this,
-                                 "Moin, Moin " + getUsername() + "! Sie sind erfolgreich eingeloggt.",
-                                 "Login",
-                                 JOptionPane.INFORMATION_MESSAGE);
-                         succeeded = true;
-                         dispose();
-                     } else 
-                     {
-                         JOptionPane.showMessageDialog(loginDialog.this,
-                                 "falscher username der falsches password",
-                                 "Login",
-                                 JOptionPane.ERROR_MESSAGE);
-                         // reset username and password
-                         tfUsername.setText("");
-                         pfPassword.setText("");
-                         succeeded = false;
-                     }
-        	  }
-        	        	
-              
-            }
-        }
-        )   ;
-      
-      
+        initializeComponents(parent);
     }
+  
 
     public String getUsername() {
         return tfUsername.getText().trim();
