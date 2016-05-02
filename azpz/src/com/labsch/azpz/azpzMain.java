@@ -71,7 +71,7 @@ public class azpzMain
          */
         JMenu menuLogin = createMenuAndAddToMenuBar("Login", "menuLogin", 'L', menuBar);
 
-        /*
+        /**
          * @author Matthias Lüthke, 27.04.2016
          */
         JMenu menuLogOut = createMenuAndAddToMenuBar("Logout", "menuLogout", 'O', menuBar);
@@ -85,7 +85,7 @@ public class azpzMain
         /**
          * @author Matthias Lüthke, 27.04.2016
          */
-        createMenuItemAndAddToMenu("LogIn", "menuItemLogin", 'L', mainFrame, menuLogin);    
+        createMenuItemAndAddToMenu("LogIn", "menuItemLogin", 'L', mainFrame, menuLogin);
         createMenuItemAndAddToMenu("LogOut", "menuItemLogout", 'O', mainFrame, menuLogOut);
 
         mainFrame.setName("mainFrame");
@@ -112,7 +112,7 @@ public class azpzMain
         // adding the components to the mainFrame
         // mainFrame.add(menuBar, BorderLayout.PAGE_END);
         mainFrame.setJMenuBar(menuBar);
-        mainFrame.add(statusBar, BorderLayout.PAGE_END);
+        mainFrame.getContentPane().add(statusBar, BorderLayout.PAGE_END);
 
         mainFrame.setVisible(true);
 
@@ -183,7 +183,7 @@ public class azpzMain
      *            - for later identification e.g. listeners
      * @param mnemonic
      *            - the key to navigation via keyboard
-     * @param actionListener
+     * @param listener
      *            - will be added to the item
      * @param menu
      *            - where the menu will be added
@@ -274,9 +274,10 @@ public class azpzMain
     }
 
     /**
-     * @param mAINFRAME_WIDTH the mAINFRAME_WIDTH to set
+     * @param mAINFRAME_WIDTH
+     *            the mAINFRAME_WIDTH to set
      */
-     
+
     public static void setMAINFRAME_WIDTH(int mAINFRAME_WIDTH)
     {
         MAINFRAME_WIDTH = mAINFRAME_WIDTH;
@@ -291,9 +292,10 @@ public class azpzMain
     }
 
     /**
-     * @param mAINFRAME_HEIGHT the mAINFRAME_HEIGHT to set
+     * @param mAINFRAME_HEIGHT
+     *            the mAINFRAME_HEIGHT to set
      */
-     
+
     public static void setMAINFRAME_HEIGHT(int mAINFRAME_HEIGHT)
     {
         MAINFRAME_HEIGHT = mAINFRAME_HEIGHT;
@@ -308,9 +310,10 @@ public class azpzMain
     }
 
     /**
-     * @param mAINFRAME_X the mAINFRAME_X to set
+     * @param mAINFRAME_X
+     *            the mAINFRAME_X to set
      */
-     
+
     public static void setMAINFRAME_X(int mAINFRAME_X)
     {
         MAINFRAME_X = mAINFRAME_X;
@@ -325,9 +328,10 @@ public class azpzMain
     }
 
     /**
-     * @param mAINFRAME_Y the mAINFRAME_Y to set
+     * @param mAINFRAME_Y
+     *            the mAINFRAME_Y to set
      */
-     
+
     public static void setMAINFRAME_Y(int mAINFRAME_Y)
     {
         MAINFRAME_Y = mAINFRAME_Y;
@@ -342,9 +346,10 @@ public class azpzMain
     }
 
     /**
-     * @param mAINFRAME_MAXIMIZED_BOTH the mAINFRAME_MAXIMIZED_BOTH to set
+     * @param mAINFRAME_MAXIMIZED_BOTH
+     *            the mAINFRAME_MAXIMIZED_BOTH to set
      */
-    
+
     public static void setMAINFRAME_MAXIMIZED_BOTH(Boolean mAINFRAME_MAXIMIZED_BOTH)
     {
         MAINFRAME_MAXIMIZED_BOTH = mAINFRAME_MAXIMIZED_BOTH;
