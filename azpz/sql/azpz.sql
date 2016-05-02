@@ -1,7 +1,7 @@
 
 # Database : AZPZ
-# Überarbeitet von Matthias Lüthke am 26.04.2016
-# Überarbeitet von Matthias Lüthke am 26.04.2016
+# Erstellt von Matthias Lüthke am 26.04.2016
+# zuletzt Überarbeitet von Matthias Lüthke am 02.05.2016         # Data for the `user` table  (LIMIT 0,500)
 # Test git
 
 SET FOREIGN_KEY_CHECKS=0;   
@@ -17,12 +17,18 @@ USE `azpz`;
 #  Erste Prozedure auch als Beispiel
 DROP PROCEDURE IF EXISTS `table_exits`;
 
-CREATE   PROCEDURE `table_exits`(IN `ptable_name` VARCHAR(30), OUT `count_table` INT)
-        DETERMINISTIC
-    SELECT COUNT(*) INTO count_table   
+CREATE DEFINER = 'root'@'localhost' PROCEDURE `table_exits`(
+        IN `ptable_name` VARCHAR(30),
+        OUT `count_table` INTEGER
+    )
+    DETERMINISTIC
+    CONTAINS SQL
+    SQL SECURITY DEFINER
+    COMMENT ''
+SELECT COUNT(*) INTO count_table   
     FROM `information_schema`.`TABLES` WHERE 
-    `information_schema`.`TABLES`.`TABLE_NAME` = ptable_name; 
-
+    `information_schema`.`TABLES`.`TABLE_NAME` = ptable_name;
+    
 #
 # Struktur für die Tabelle `persons`:
 # 
@@ -70,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `user_name` VARCHAR(30) COLLATE latin1_german1_ci NOT NULL,
   `pw_clear` VARCHAR(30)  NOT NULL,
-  `pw_hash` VARCHAR(30)  NOT NULL,
+  `pw_hash` VARCHAR(30)   NULL,
   `fk_persons_ID` BIGINT(20) NOT NULL,
   `text` varchar(30) CHARACTER SET latin1   NULL,
   `insert_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
@@ -155,14 +161,17 @@ COMMIT;
 # Data for the `user` table  (LIMIT 0,500)
 #
 
+DELETE FROM user ;
+commit;
+
 INSERT INTO `user` (  `pw_clear`,  `user_name`, `fk_persons_ID`)           
       SELECT  "start",
-       CONCAT     ( p.`firstName`,  p.`Name`,  p.`persons_ID` )   ,         
+         CONCAT     ( p.`firstName`,  p.`Name`,  p.`persons_ID` )   ,         
         p.`persons_ID`     
       from persons p 
        where   persons_ID 
       not in                
       (
-       Select    fk_persons_ID  from user
-      )
+       Select    Concat(fk_persons_ID,-1)  from user
+      );
 
