@@ -51,7 +51,8 @@ public class loginDialog extends JDialog implements ActionListener, WindowListen
 
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]
-        { 3, 44, 57, 45, 65, 0 };
+         { 3, 10, 80, 20, 20, 10 };
+        
         gridBagLayout.rowHeights = new int[]
         { 20, 20, 20, 23, 0 };
         gridBagLayout.columnWeights = new double[]
