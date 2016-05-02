@@ -28,7 +28,6 @@ CREATE DEFINER = 'root'@'localhost' PROCEDURE `table_exits`(
 SELECT COUNT(*) INTO count_table   
     FROM `information_schema`.`TABLES` WHERE 
     `information_schema`.`TABLES`.`TABLE_NAME` = ptable_name;
-    
 #
 # Struktur für die Tabelle `persons`:
 # 
@@ -137,6 +136,7 @@ CREATE TABLE IF NOT EXISTS `address` (
 )  ENGINE=InnoDB
 AUTO_INCREMENT=1  ;
 
+Drop Table   IF  EXISTS `login` ;
 
 CREATE TABLE IF NOT EXISTS `login` (
   `login_ID` bigint(20) NOT NULL,
@@ -146,6 +146,53 @@ CREATE TABLE IF NOT EXISTS `login` (
   PRIMARY KEY (`login_ID`) USING BTREE,
   UNIQUE KEY `login_ID` (`login_ID`) USING BTREE
 ) ;
+
+
+Drop Table   IF  EXISTS `project_worker` ;
+
+CREATE TABLE IF NOT EXISTS `project_worker` (
+  `project_worker_ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `text` VARCHAR(30) COLLATE latin1_german1_ci NOT NULL,
+  `fk_persons_ID` BIGINT(20) NOT NULL,
+  `insert_MB` VARCHAR(30) COLLATE latin1_german1_ci DEFAULT NULL,
+  `update_MB` VARCHAR(30) COLLATE latin1_german1_ci DEFAULT NULL,
+  `insert_Date` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `update_Date` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `timestamp` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`project_worker_ID`) USING BTREE,
+  UNIQUE KEY `project_worker_ID` (`project_worker_ID`) USING BTREE
+) ENGINE=InnoDB
+AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_german1_ci'
+;
+
+CREATE DEFINER = 'root'@'localhost' TRIGGER `trgin_project_worker` BEFORE INSERT ON `project_worker`
+  FOR EACH ROW
+SET New.TEXT =
+      COALESCE(New.TEXT, CONCAT( "project_worker" , NEW.project_worker_ID ));
+      
+Drop Table   IF  EXISTS `project_head` ;
+ 
+CREATE TABLE IF NOT EXISTS `project_head` (
+  `project_head_ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(30) COLLATE latin1_german1_ci NOT NULL,
+  `text` VARCHAR(30) COLLATE latin1_german1_ci NOT NULL,
+  `fk_projectworker_id`  BIGINT(20) NOT NULL,
+  `insert_MB` VARCHAR(30) COLLATE latin1_german1_ci DEFAULT NULL,
+  `update_MB` VARCHAR(30) COLLATE latin1_german1_ci DEFAULT NULL,
+  `insert_Date` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `update_Date` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `timestamp` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  PRIMARY KEY (`project_head_ID`) USING BTREE,
+  UNIQUE KEY `project_head_ID` (`project_head_ID`) USING BTREE
+) ENGINE=InnoDB
+AUTO_INCREMENT=1  CHARACTER SET 'latin1' COLLATE 'latin1_german1_ci'
+;
+
+CREATE DEFINER = 'root'@'localhost' TRIGGER `trgin_project_head` BEFORE INSERT ON `project_head`
+  FOR EACH ROW
+SET New.TEXT =
+      COALESCE(New.TEXT, CONCAT( "PROJECT_HEAD_", NEW.project_head_ID ));     
+      
 
 
 #
@@ -170,8 +217,41 @@ INSERT INTO `user` (  `pw_clear`,  `user_name`, `fk_persons_ID`)
         p.`persons_ID`     
       from persons p 
        where   persons_ID 
-      not in                
+      in                
       (
-       Select    Concat(fk_persons_ID,-1)  from user
+       Select    `persons_ID`  from `persons`
       );
+      
+#
+# Data for the `project_worker` table  (LIMIT 0,500)
+#
 
+Commit;
+
+INSERT INTO `project_worker` ( `TEXT` )            
+SELECT  
+         CONCAT     (   p.`TEXT` )   
+   
+      from persons p 
+       where    p.`persons_ID` 
+       NOT
+       IN               
+      (
+       Select  
+        fk_persons_ID   from `project_worker`  
+      );  
+
+#
+# kurz und schmutzig
+#      
+UPDATE 
+  `project_worker`  
+SET  
+  `fk_persons_ID` = project_worker.`project_worker_ID` 
+WHERE 
+  `project_worker_ID` 
+AND fk_persons_ID IS NULL;
+
+Commit; 
+      
+      
