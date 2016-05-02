@@ -11,6 +11,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
+
 @SuppressWarnings("serial")
 public class loginDialog extends JDialog implements ActionListener, WindowListener
 {
@@ -23,7 +24,15 @@ public class loginDialog extends JDialog implements ActionListener, WindowListen
     private JButton btnCancel;
     private boolean succeeded = false;
     private Frame parentFrame;
-
+    
+    private String dbUserName ;
+    private String dbUserPW ;
+    private long  dbUser_ID = (long)-1 ;
+    private Boolean bLogin = false;
+    
+    private  login mlog;
+    
+       
     private void initDialog()
     {
         this.setModal(true);
@@ -147,8 +156,11 @@ public class loginDialog extends JDialog implements ActionListener, WindowListen
                     JOptionPane.showMessageDialog(loginDialog.this, "Bitte Passwort und Username eingeben", "Login", JOptionPane.ERROR_MESSAGE);
                     break;
                 }
+                
+                
+                login mlog = new login(getUsername(), getPassword());
 
-                if (login.authenticate(getUsername(), getPassword()))
+                if (mlog.authenticate(getUsername(), getPassword()))
                 {
                     System.out.println(" login.authenticate =  " + getUsername() + getPassword());
 

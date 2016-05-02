@@ -204,14 +204,16 @@ public class DatenbankZugriffe extends JFrame implements WindowListener, ActionL
 		
 		String connectionString, classForName;
 		String server = "localhost";
-		String dataBase = "alfatraining";
+		String dataBase = "azpz";
+		String port =  "3306";
 		
 		classForName = "com.mysql.jdbc.Driver";
 		
 		connectionString = "jdbc:mysql://" + server + ":3306/";
 		connectionString += dataBase;
 		
-		dbEnabled(DBConnection.connectToDatabase(classForName, connectionString, "root", null));
+		dbEnabled(DBConnection.connectToDatabase(classForName, server, dataBase, port ,connectionString, 
+		                                                                          "azpz", "azpz"));
 		
 		
 	}

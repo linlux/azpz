@@ -74,7 +74,7 @@ public class azpzMain
         /**
          * @author Matthias Lüthke, 27.04.2016
          */
-        JMenu menuLogOut = createMenuAndAddToMenuBar("Logout", "menuLogOut", 'O', menuBar);
+        JMenu menuLogOut = createMenuAndAddToMenuBar("Logout", "menuLogout", 'O', menuBar);
 
         // TODO Mehrsprachigkeit: Bezeichner aus Datei holen (./lang)
         // menu-entries
@@ -86,7 +86,7 @@ public class azpzMain
          * @author Matthias Lüthke, 27.04.2016
          */
         createMenuItemAndAddToMenu("LogIn", "menuItemLogin", 'L', mainFrame, menuLogin);
-        createMenuItemAndAddToMenu("LogOut", "menuItemLogOut", 'O', mainFrame, menuLogin);
+        createMenuItemAndAddToMenu("LogOut", "menuItemLogout", 'O', mainFrame, menuLogOut);
 
         mainFrame.setName("mainFrame");
         mainFrame.setTitle(titleMainFrame);
@@ -277,6 +277,7 @@ public class azpzMain
      * @param mAINFRAME_WIDTH
      *            the mAINFRAME_WIDTH to set
      */
+
     public static void setMAINFRAME_WIDTH(int mAINFRAME_WIDTH)
     {
         MAINFRAME_WIDTH = mAINFRAME_WIDTH;
@@ -294,6 +295,7 @@ public class azpzMain
      * @param mAINFRAME_HEIGHT
      *            the mAINFRAME_HEIGHT to set
      */
+
     public static void setMAINFRAME_HEIGHT(int mAINFRAME_HEIGHT)
     {
         MAINFRAME_HEIGHT = mAINFRAME_HEIGHT;
@@ -311,6 +313,7 @@ public class azpzMain
      * @param mAINFRAME_X
      *            the mAINFRAME_X to set
      */
+
     public static void setMAINFRAME_X(int mAINFRAME_X)
     {
         MAINFRAME_X = mAINFRAME_X;
@@ -328,6 +331,7 @@ public class azpzMain
      * @param mAINFRAME_Y
      *            the mAINFRAME_Y to set
      */
+
     public static void setMAINFRAME_Y(int mAINFRAME_Y)
     {
         MAINFRAME_Y = mAINFRAME_Y;
@@ -345,6 +349,7 @@ public class azpzMain
      * @param mAINFRAME_MAXIMIZED_BOTH
      *            the mAINFRAME_MAXIMIZED_BOTH to set
      */
+
     public static void setMAINFRAME_MAXIMIZED_BOTH(Boolean mAINFRAME_MAXIMIZED_BOTH)
     {
         MAINFRAME_MAXIMIZED_BOTH = mAINFRAME_MAXIMIZED_BOTH;
