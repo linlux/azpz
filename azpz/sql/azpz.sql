@@ -17,12 +17,17 @@ USE `azpz`;
 #  Erste Prozedure auch als Beispiel
 DROP PROCEDURE IF EXISTS `table_exits`;
 
-CREATE   PROCEDURE `table_exits`(IN `ptable_name` VARCHAR(30), OUT `count_table` INT)
-        DETERMINISTIC
-    SELECT COUNT(*) INTO count_table   
+CREATE DEFINER = 'root'@'localhost' PROCEDURE `table_exits`(
+        IN `ptable_name` VARCHAR(30),
+        OUT `count_table` INTEGER
+    )
+    DETERMINISTIC
+    CONTAINS SQL
+    SQL SECURITY DEFINER
+    COMMENT ''
+SELECT COUNT(*) INTO count_table   
     FROM `information_schema`.`TABLES` WHERE 
-    `information_schema`.`TABLES`.`TABLE_NAME` = ptable_name; 
-
+    `information_schema`.`TABLES`.`TABLE_NAME` = ptable_name;
 #
 # Struktur für die Tabelle `persons`:
 # 
