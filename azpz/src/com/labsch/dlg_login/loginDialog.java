@@ -42,15 +42,18 @@ public class loginDialog extends JDialog implements ActionListener, WindowListen
     private void initializeComponents(Frame parent)
     {
         parentFrame = parent;
-        this.setBounds(100, 100, 300, 200);
+        this.setBounds(100, 100, 280, 150);     
+        
+        this.setTitle("azpz   User einloggen");
+        
 
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]
-        { 30, 44, 57, 45, 65, 0 };
+        { 3, 44, 57, 45, 65, 0 };
         gridBagLayout.rowHeights = new int[]
-        { 59, 20, 20, 23, 0 };
+        { 20, 20, 20, 23, 0 };
         gridBagLayout.columnWeights = new double[]
         { 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
         gridBagLayout.rowWeights = new double[]
@@ -106,12 +109,6 @@ public class loginDialog extends JDialog implements ActionListener, WindowListen
         gbc_button.gridx = 4;
         gbc_button.gridy = 3;
         this.getContentPane().add(btnLogin, gbc_button);
-        // Vorbelegen ..
-        if (debug)
-        {
-            pfPassword.setText("start");
-            tfUsername.setText("MatthiasLuethke1");
-        }
     }
 
     public loginDialog(Frame parent)
