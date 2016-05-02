@@ -30,6 +30,8 @@ public class loginDialog extends JDialog implements ActionListener, WindowListen
     private long  dbUser_ID = (long)-1 ;
     private Boolean bLogin = false;
     
+    private String frmtitel = ("azpz:   User einloggen");
+    
     private  login mlog;
     
        
@@ -44,14 +46,15 @@ public class loginDialog extends JDialog implements ActionListener, WindowListen
         parentFrame = parent;
         this.setBounds(100, 100, 280, 150);     
         
-        this.setTitle("azpz   User einloggen");
+        this.setTitle(frmtitel);
+        this.setResizable(false);
         
 
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]
-         { 3, 10, 80, 20, 20, 10 };
+         { 3, 10, 40, 120, 5, 5 };
         
         gridBagLayout.rowHeights = new int[]
         { 20, 20, 20, 23, 0 };
@@ -107,9 +110,21 @@ public class loginDialog extends JDialog implements ActionListener, WindowListen
         gbc_btnCancel.gridy = 3;
         this.getContentPane().add(btnCancel, gbc_btnCancel);
         GridBagConstraints gbc_button = new GridBagConstraints();
+        
+        
+        gbc_button.insets = new Insets(0, 0, 0, 5);
         gbc_button.gridx = 4;
-        gbc_button.gridy = 3;
+        gbc_button.gridy = 3;       
+        
         this.getContentPane().add(btnLogin, gbc_button);
+        
+        if (debug)
+        {
+            tfUsername.setText( "MatthiasLuethke1"); 
+            pfPassword.setText("start");
+        }       
+        
+        
     }
 
     public loginDialog(Frame parent)
@@ -166,13 +181,10 @@ public class loginDialog extends JDialog implements ActionListener, WindowListen
 
                 if (mlog.authenticate(getUsername(), getPassword()))
                 {
-                    System.out.println(" login.authenticate =  " + getUsername() + getPassword());
-
-                    if (debug)
-                    {
-                        JOptionPane.showMessageDialog(loginDialog.this, "Moin, Moin " + getUsername() + "! Sie sind erfolgreich eingeloggt.", "Login",
-                                JOptionPane.INFORMATION_MESSAGE);
-                    }
+                   
+                    if (debug)                   
+                        System.out.println(" login.authenticate =  " + getUsername() + getPassword());                  
+                    
 
                     succeeded = true;
                     windowClosing(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
@@ -181,6 +193,7 @@ public class loginDialog extends JDialog implements ActionListener, WindowListen
                 {
                     JOptionPane.showMessageDialog(loginDialog.this, "username oder passwort falsch", "Login", JOptionPane.ERROR_MESSAGE);
                     // reset username and password
+                    this.setTitle(frmtitel); 
                     tfUsername.setText("");
                     pfPassword.setText("");
                     succeeded = false;

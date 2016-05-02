@@ -36,7 +36,7 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
 {
 
     private static final boolean debug = false;
-    private boolean bLogin = false; // Matthias Lüthke 01.05.2016
+    private boolean bLogin = false; // Matthias Lüthke 01.05.2016    
 
     /**
      * @author Martin Labsch, 26.04.2016
@@ -131,7 +131,7 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
     {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter df;
-        df = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm");
+        df = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:MM");
               
         loginDialog loginDlg = new loginDialog(this);
         loginDlg.setLocationRelativeTo(this);
@@ -140,12 +140,12 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
         if (loginDlg.isSucceeded())
         {
             setbLogin(true); // Matthias Lüthke 01.05.2016
-            this.setTitle(this.getTitle().trim() + "       " + loginDlg.getUsername() + "  ist erfolgreich eingeloggt.   " + now.format(df));
+            this.setTitle(this.getTitle()  + ":  " +    loginDlg.getUsername() + "  ist erfolgreich eingeloggt.   " + now.format(df));
         }
         else
         {
             setbLogin(false); // Matthias Lüthke 01.05.2016
-            this.setTitle("AzPz " + " Kein User eingeloggt");
+            this.setTitle("AzPz: " + " Kein User eingeloggt");
         }
     }
 
@@ -155,7 +155,7 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
     private void logOut()
     {
         setbLogin(false); // Matthias Lüthke 01.05.2016
-        this.setTitle("AzPz " + " Kein User eingeloggt");
+        this.setTitle("AzPz: " + " Kein User eingeloggt");
     }
 
     private void JOptionPane(azpzFrame azpzFrame, String string, String string2, int informationMessage)
