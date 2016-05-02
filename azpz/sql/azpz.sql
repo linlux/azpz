@@ -252,6 +252,5 @@ WHERE
   `project_worker_ID` 
 AND fk_persons_ID IS NULL;
 
-Commit; 
-      
+Commit;
       
