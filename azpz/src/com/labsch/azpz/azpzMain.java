@@ -112,7 +112,7 @@ public class azpzMain
         // adding the components to the mainFrame
         // mainFrame.add(menuBar, BorderLayout.PAGE_END);
         mainFrame.setJMenuBar(menuBar);
-        mainFrame.add(statusBar, BorderLayout.PAGE_END);
+        mainFrame.getContentPane().add(statusBar, BorderLayout.PAGE_END);
 
         mainFrame.setVisible(true);
 

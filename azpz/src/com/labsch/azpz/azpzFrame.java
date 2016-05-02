@@ -20,10 +20,10 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.MenuSelectionManager;
 
 import com.labsch.util.DialogHandling;
 import com.labsch.util.FileHandling;
-import com.labsch.util.FrameHandling;
 import com.labsch.util.MenuHandling;
 import com.labsch.dbUtils.DBConnection;
 import com.labsch.dlg_login.loginDialog;
@@ -54,12 +54,12 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
         if ((obj instanceof JMenuItem && ((JMenuItem) obj).getName().equals("menuItemClose")))
         {
             DialogHandling.showExitConfirmationDialog();
-        }  
+        }
         else if (obj instanceof JMenuItem && ((JMenuItem) e.getSource()).getName().equals("menuItemLogout"))
         {
             if (bLogin)
-             logOut();
-        }   
+                logOut();
+        }
         else if (obj instanceof JMenuItem && ((JMenuItem) obj).getName().equals("menuItemLogin"))
         {
             if (!bLogin)
@@ -73,15 +73,15 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
         }
         else if (obj instanceof JMenuItem && ((JMenuItem) obj).getName().equals("menuItemLogin"))
         {
-            if (!bLogin )
+            if (!bLogin)
             {
                 logIn();
             }
             else
             {
-                JOptionPane(this, "Sie sind bereits eingeloggt. ", "Login", JOptionPane.INFORMATION_MESSAGE);                
-            } 
-        }                  
+                JOptionPane(this, "Sie sind bereits eingeloggt. ", "Login", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
         else if (obj instanceof JButton && ((JButton) obj).getName().equals("appCloseOptionYes"))
         {
             FileHandling.safeActualProperties();
@@ -151,7 +151,7 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
     }
 
     /**
-      // TODO Matthias noch beschreiben    
+     * TODO Matthias noch beschreiben
      */
     private void logOut()
     {
@@ -269,8 +269,9 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
     }
 
     /**
-     * @param bLogin the bLogin to set
-     */     
+     * @param bLogin
+     *            the bLogin to set
+     */
     public void setbLogin(boolean bLogin)
     {
         this.bLogin = bLogin;
@@ -307,6 +308,8 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
                     Font font = m.getFont().deriveFont(Font.BOLD);
                     m.setFont(font);
                     m.setForeground(Color.RED);
+                    // deselect the selected element
+                    MenuSelectionManager.defaultManager().clearSelectedPath();
                 }
             }
         }
