@@ -106,6 +106,12 @@ public class loginDialog extends JDialog implements ActionListener, WindowListen
         gbc_button.gridx = 4;
         gbc_button.gridy = 3;
         this.getContentPane().add(btnLogin, gbc_button);
+        // Vorbelegen ..
+        if (debug)
+        {
+            pfPassword.setText("start");
+            tfUsername.setText("MatthiasLuethke1");
+        }
     }
 
     public loginDialog(Frame parent)

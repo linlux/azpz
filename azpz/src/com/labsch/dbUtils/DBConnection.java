@@ -12,8 +12,40 @@ public class DBConnection
 
     private static Connection dbConn;
     private static String connectionString;
+    
+//    // Matthias Lüthke 02.05.2016
+//    public   boolean connectToDatabase( DBConnection pdbConn  , String driverClassName, String server, String dataBase, String port, String connectionStringBegin, String userID,
+//            String passWord)
+//    {
+//
+//        boolean retValue = false;
+//        String connectionString;
+//        connectionString = connectionStringBegin + server + port + dataBase;
+//
+//        try
+//        {
+//         // Erstellen und Registrieren der als Zeichenkette 'classForName'
+//            // übergebenen Klasse für den DriverManager.
+//            // (statische Initialisierung).
+//            Class.forName(driverClassName).newInstance();
+//
+//            dbConn = DriverManager.getConnection(connectionString, userID, passWord);
+//            DBConnection.connectionString = connectionString;
+//            retValue = true;
+//        }
+//        catch (Exception ex)
+//        {
+//            JOptionPane.showMessageDialog(null, "Fehler beim Zugriff auf die Datenbank '" + dataBase + "':\n" + ex.getMessage(), "Fehler",
+//                    JOptionPane.ERROR_MESSAGE);
+//            dbConn = null;
+//            DBConnection.connectionString = null;
+//        }
+//
+//        return retValue;
+//
+//    }
 
-    public static boolean connectToDatabase(String driverClassName, String server, String dataBase, String port, String connectionStringBegin, String userID,
+    public static  boolean connectToDatabase(String driverClassName, String server, String dataBase, String port, String connectionStringBegin, String userID,
             String passWord)
     {
 
@@ -165,6 +197,11 @@ public class DBConnection
         }
 
         return rSet;
+    }
+
+    public static String dbtxt(String stringValue)    {
+               
+        return  Globals.dbtxt(stringValue);
     }
 
 }

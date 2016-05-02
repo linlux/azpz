@@ -305,7 +305,7 @@ public class DatenbankZugriffe extends JFrame implements WindowListener, ActionL
 		progressBar.setValue(0);
 		progressBar.setVisible(true);
 		
-		lngKey = Globals.getNextKey();
+		lngKey = Globals.getNextKeyPOSTLEITZAHLEN();
 		
 		try (Scanner scanner = new Scanner(new FileInputStream(Dateiname)))
 		{
@@ -361,8 +361,7 @@ public class DatenbankZugriffe extends JFrame implements WindowListener, ActionL
 		statusBar.setText(tempString);
 		
 		JOptionPane.showMessageDialog(this,  String.format("Es wurden %s Datensätze erfolgreich eingelesen", NumberFormat.getInstance().format(addCounter)),
-				                      "Importieren Postleitzahlen", JOptionPane.INFORMATION_MESSAGE);
-		
+				                      "Importieren Postleitzahlen", JOptionPane.INFORMATION_MESSAGE);		
 		
 	}
 	

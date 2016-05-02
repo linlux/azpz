@@ -20,7 +20,11 @@ public class Globals
 	static private Hashtable<String, String> htLAF = new Hashtable<String, String>();
 	
 	private Globals() {}
-	
+	// Matthias  Lüthke 02.05.2016 
+	public static String dbtxt(String value)
+    {
+        return  quote(value);
+    }
 	
 	public static String quote(String value)
 	{
@@ -58,10 +62,9 @@ public class Globals
 	}
 	
 	
-	public static long getNextKey()
+	public static long getNextKeyPOSTLEITZAHLEN()
 	{
-		long retValue = 0;
-		
+		long retValue = 0;		
 		
 		String SQL = "SELECT MAX(PRIMARYKEY) FROM POSTLEITZAHLEN";
 		Object obj = DBConnection.executeScalar(SQL);
