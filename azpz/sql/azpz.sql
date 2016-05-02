@@ -1,7 +1,7 @@
 
 # Database : AZPZ
-# Überarbeitet von Matthias Lüthke am 26.04.2016
-# Überarbeitet von Matthias Lüthke am 26.04.2016
+# Erstellt von Matthias Lüthke am 26.04.2016
+# zuletzt Überarbeitet von Matthias Lüthke am 02.05.2016         # Data for the `user` table  (LIMIT 0,500)
 # Test git
 
 SET FOREIGN_KEY_CHECKS=0;   
@@ -155,6 +155,9 @@ COMMIT;
 # Data for the `user` table  (LIMIT 0,500)
 #
 
+DELETE FROM user ;
+commit;
+
 INSERT INTO `user` (  `pw_clear`,  `user_name`, `fk_persons_ID`)           
       SELECT  "start",
          CONCAT     ( p.`firstName`,  p.`Name`,  p.`persons_ID` )   ,         
@@ -164,5 +167,5 @@ INSERT INTO `user` (  `pw_clear`,  `user_name`, `fk_persons_ID`)
       not in                
       (
        Select    Concat(fk_persons_ID,-1)  from user
-      )
+      );
 
