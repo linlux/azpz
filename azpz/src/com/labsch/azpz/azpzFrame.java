@@ -36,7 +36,7 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
 {
 
     private static final boolean debug = false;
-    private boolean bLogin = false; // Matthias Lüthke 01.05.2016    
+    private boolean bLogin = false; // Matthias Lüthke 01.05.2016
 
     /**
      * @author Martin Labsch, 26.04.2016
@@ -54,12 +54,35 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
         if ((obj instanceof JMenuItem && ((JMenuItem) obj).getName().equals("menuItemClose")))
         {
             DialogHandling.showExitConfirmationDialog();
-        }  
+        }
         else if (obj instanceof JMenuItem && ((JMenuItem) e.getSource()).getName().equals("menuItemLogout"))
         {
             if (bLogin)
-             logOut();
-        }   
+                logOut();
+        }
+        else if (obj instanceof JMenuItem && ((JMenuItem) obj).getName().equals("menuItemLogin"))
+        {
+            if (!bLogin)
+            {
+                logIn();
+            }
+            else
+            { 
+                int optionValue = 0; 
+               JMenuItem mi = (JMenuItem ) obj;               
+               
+              if   (mi.getActionCommand() == "Relogin")
+              { // Neu einloggen
+                  JOptionPane(this, "Wllen Sie ausloogen und wieder neu einloggen ? ", "ReLogin",  JOptionPane.YES_NO_CANCEL_OPTION);                              
+                  if (optionValue == JOptionPane.YES_OPTION)
+                  {
+                      logIn();
+                      logOut();
+                  }                 
+              }                        
+              
+            }
+        }
         else if (obj instanceof JMenuItem && ((JMenuItem) obj).getName().equals("menuItemLogin"))
         {
             if (!bLogin)
@@ -71,17 +94,6 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
                 JOptionPane(this, "Sie sind bereits eingeloggt. ", "Login", JOptionPane.INFORMATION_MESSAGE);
             }
         }
-        else if (obj instanceof JMenuItem && ((JMenuItem) obj).getName().equals("menuItemLogin"))
-        {
-            if (!bLogin )
-            {
-                logIn();
-            }
-            else
-            {
-                JOptionPane(this, "Sie sind bereits eingeloggt. ", "Login", JOptionPane.INFORMATION_MESSAGE);                
-            } 
-        }                  
         else if (obj instanceof JButton && ((JButton) obj).getName().equals("appCloseOptionYes"))
         {
             FileHandling.safeActualProperties();
@@ -132,7 +144,7 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter df;
         df = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:MM");
-              
+
         loginDialog loginDlg = new loginDialog(this);
         loginDlg.setLocationRelativeTo(this);
         loginDlg.setVisible(true);
@@ -140,17 +152,29 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
         if (loginDlg.isSucceeded())
         {
             setbLogin(true); // Matthias Lüthke 01.05.2016
-            this.setTitle(this.getTitle()  + ":  " +    loginDlg.getUsername() + "  ist erfolgreich eingeloggt.   " + now.format(df));
+            this.setTitle(this.getTitle() + ":  " + loginDlg.getUsername() + "  ist erfolgreich eingeloggt.   " + now.format(df));
         }
         else
         {
             setbLogin(false); // Matthias Lüthke 01.05.2016
             this.setTitle("AzPz: " + " Kein User eingeloggt");
         }
+
+        JMenu miLogin = MenuHandling.getAnMenuByNameFromFramesMenuBar("menuItemLogin", "mainFrame");
+        // JMenu miLogOut = MenuHandling.getAnMenuByNameFromFramesMenuBar("menuItemLogout", "mainFrame");
+
+        // TODO ML Wie kann man ein Menüeintag disablen
+        // Workaraond Menü umbennen damit Login nicht mehr möglich ist
+        if (miLogin != null)
+        {
+            miLogin.setForeground(Color.LIGHT_GRAY);
+            miLogin.setText("Neu Einloggen");        
+            miLogin.setActionCommand("ReLogin");
+        }      
     }
 
     /**
-      // TODO Matthias noch beschreiben    
+     * // TODO Matthias noch beschreiben
      */
     private void logOut()
     {
@@ -268,8 +292,9 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
     }
 
     /**
-     * @param bLogin the bLogin to set
-     */     
+     * @param bLogin
+     *            the bLogin to set
+     */
     public void setbLogin(boolean bLogin)
     {
         this.bLogin = bLogin;
