@@ -1,5 +1,3 @@
-
-
 # Database : AZPZ
 # Erstellt von Matthias Lüthke am 26.04.2016
 # zuletzt Überarbeitet von Matthias Lüthke am 02.05.2016         # Data for the `user` table  (LIMIT 0,500)
@@ -12,6 +10,22 @@ CREATE DATABASE IF NOT EXISTS azpz
     COLLATE 'latin1_general_ci';
 
 USE `azpz`;
+
+
+#
+# Löschen von Datenbankobjekten
+#
+
+DROP FUNCTION IF EXISTS `table_exits`;
+DROP PROCEDURE IF EXISTS `table_exits`;
+DROP TABLE IF EXISTS `worktime`;
+DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `projects`;
+DROP TABLE IF EXISTS `project_worker`;
+DROP TABLE IF EXISTS `project_head`;
+DROP TABLE IF EXISTS `persons`;
+DROP TABLE IF EXISTS `login`;
+DROP TABLE IF EXISTS `address`;
 
 #
 #  Prozeduren:
@@ -254,4 +268,63 @@ WHERE
 AND fk_persons_ID IS NULL;
 
 Commit;
-      
+
+     
+#
+# Data für tabelle   project_head
+#    
+   
+INSERT INTO `project_head` (`project_head_ID`, `name`, `text`, `fk_projectworker_id`, `insert_MB`, `update_MB`, `insert_Date`, `update_Date`, `timestamp`) VALUES
+  (1,'Project_1','test',1,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:10:24.184906'),
+  (2,'Project_2','test',1,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:19:44.529825'),
+  (3,'Project_3','test',1,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:19:46.898161'),
+  (4,'Project_4','test',1,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:19:50.597786'),
+  (5,'Project_5','test',1,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:19:51.814286'),
+  (6,'Project_6','test',1,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:19:52.549366');
+COMMIT;      
+
+
+
+INSERT  INTO `worktime` ( `TEXT` )   
+ 
+ Select text
+from
+  `persons`   ;
+  
+   
+  CREATE ALGORITHM=UNDEFINED DEFINER='root'@'localhost' SQL SECURITY DEFINER VIEW `v_projects`
+AS
+select
+  `ph`.`project_head_ID` AS `project_head_ID`,
+  `ph`.`name` AS `name`,
+  `ph`.`text` AS `text`,
+  `ph`.`fk_projectworker_id` AS `fk_projectworker_id`,
+  `ph`.`insert_MB` AS `insert_MB`,
+  `ph`.`update_MB` AS `update_MB`,
+  `ph`.`insert_Date` AS `insert_Date`,
+  `ph`.`update_Date` AS `update_Date`,
+  `ph`.`timestamp` AS `timestamp`,
+  `w`.`text` AS `Project_worker_name`,
+  `p`.`text` AS `Project_name`,
+  `wt`.`timediff` AS `timediff`
+from
+  (((`projects` `p`
+  join `project_head` `ph`)
+  join `project_worker` `w`)
+  join `worktime` `wt`)
+where
+  ((`p`.`projects_ID` = `ph`.`fk_projectworker_id`) and
+  (`w`.`fk_projects_ID` = `p`.`projects_ID`) and
+  (`p`.`projects_ID` = `wt`.`fk_persons_ID`));            
+  
+  
+  INSERT INTO `worktime` (`worktime_ID`, `start`, `end`, `text`, `insert_MB`, `update_MB`, `insert_Date`, `update_Date`, `timestamp`, `fk_persons_ID`, `timediff`) VALUES
+  (1,'0000-00-00 00:00:00.000000','2016-05-01 20:56:38.000000','test',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 04:56:38.133405',1,NULL),
+  (2,'0000-00-00 00:00:00.000000','2016-05-01 21:09:50.000000','Test',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:09:50.761627',1,NULL),
+  (3,'0000-00-00 00:00:00.000000','2016-05-01 21:09:50.000000','Test Martin',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:09:50.761627',1,NULL),
+  (5,'0000-00-00 00:00:00.000000','2016-05-01 21:14:09.000000','Test',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:14:09.376318',1,NULL),
+  (6,'0000-00-00 00:00:00.000000','2016-05-01 21:14:09.000000','Test Martin',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:14:09.376318',1,NULL),
+  (8,'0000-00-00 00:00:00.000000','2016-05-01 21:14:28.000000','Test',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:14:28.323604',2,NULL),
+  (9,'0000-00-00 00:00:00.000000','2016-05-01 21:14:28.000000','Test Martin',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:14:28.323604',2,44),
+  (11,NULL,'2016-05-01 21:15:27.000000','Jetzt',NULL,NULL,NULL,NULL,'2016-05-03 05:15:27.859186',2,33);
+COMMIT;
