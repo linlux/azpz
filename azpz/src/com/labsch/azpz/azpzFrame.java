@@ -398,7 +398,7 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
         {
             if (DBConnection.connectToDatabase())
             {
-                JMenu m = MenuHandling.getAnMenuByNameFromFramesMenuBar("menuConnect", "mainFrame");
+                JMenu m = MenuHandling.getAnMenuByName("menuConnect", "mainFrame");
                 // JMenuItem mi = MenuHandling.getAnMenuItemByNameFromFramesMenuBar("menuConnect", "mainFrame");
                 if (m != null)
                 {
@@ -433,9 +433,9 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
 
         if (obj != null && ((JMenu) obj).getName().equals("menuProjects"))
         {
-            
+            System.out.println("Do something");
         }
-            
+
         if (debug)
         {
             System.out.println("menuSelected");

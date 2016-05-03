@@ -16,7 +16,7 @@ public class MenuHandling
      * @param frameName
      * @return null or the JMenu if exists.
      */
-    public static JMenu getAnMenuByNameFromFramesMenuBar(String menuName, String frameName)
+    public static JMenu getAnMenuByName(String menuName, String frameName)
     {
         JMenu m = null;
         azpzFrame frame = (azpzFrame) FrameHandling.getAnAzpzFrameByName(frameName);

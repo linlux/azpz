@@ -6,6 +6,7 @@ package com.labsch.azpz;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import javax.swing.JMenu;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import com.labsch.util.FrameHandling;
 import com.labsch.util.MenuHandling;
@@ -18,16 +19,8 @@ public class Projects
 {
     static void initProjects()
     {
-        JMenu m = MenuHandling.getAnMenuByNameFromFramesMenuBar("menuProjects", "mainFrame");
+        JMenu m = MenuHandling.getAnMenuByName("menuProjects", "mainFrame");
         m.setEnabled(true);
-
-        /**
-         * Hier sollte jetzt das Projects-Menu automatisch selektiert werden, was aber noch nicht funktioniert.
-         */
-        // MenuSelectionManager selMan = MenuSelectionManager.defaultManager();
-        // MenuElement elems[] =
-        // { new JMenuBar(), m };
-        // selMan.setSelectedPath(elems);
 
         String SQL = "SELECT `projects_ID`, `start`, `text` FROM projects ";
 
@@ -73,7 +66,19 @@ public class Projects
 
                 JTable jt = new JTable(records, headers);
 
-                mf.getContentPane().add(jt);
+                JScrollPane scrollPane = new JScrollPane(jt);
+                jt.setFillsViewportHeight(true);
+
+                mf.getContentPane().add(scrollPane);
+
+                /**
+                 * Hier sollte jetzt das Projects-Menu automatisch selektiert werden, was aber noch nicht funktioniert.
+                 */
+                // JPopupMenu popup = new JPopupMenu("Popup");
+                // JMenu menuB = MenuHandling.getAnMenuByName("menuProjects", "mainFrame");
+                // popup.add(menuB);
+                // MenuSelectionManager.defaultManager().setSelectedPath(new MenuElement[]
+                // { popup, menuB });
 
             }
             catch (Exception e)
