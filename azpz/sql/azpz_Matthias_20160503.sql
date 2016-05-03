@@ -1,7 +1,7 @@
 
 # Database : azpz
 # Erstellt von Matthias Lüthke am 26.04.2016
-# zuletzt Überarbeitet von Matthias Lüthke am 03.05.2016  13:27  
+# zuletzt Überarbeitet von Matthias Lüthke am 03.05.2016  14:04  
 
 
 # Rechte für `azpz`@`%`
@@ -679,6 +679,8 @@ where
   Commit;      
   
 #
-# Wenn gezeigt wird  MySQL lieferte ein leeres Resultat zurück (d.h. null Datensätze).  ist es OK
+# Wenn gezeigt wird  # Datensätze: 10  ist es OK
 #   
-   
+ 
+ 
+ CHECK TABLE `address`, `login`, `persons`, `projects`, `project_head`, `project_worker`, `user`, `v_projects`, `worktime`, `worktime_alt`  
