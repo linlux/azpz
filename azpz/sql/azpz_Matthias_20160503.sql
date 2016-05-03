@@ -1,32 +1,28 @@
-# SQL Manager Lite for MySQL 5.5.3.46984
-# ---------------------------------------
-# Host     : localhost
-# Port     : 3306
+
 # Database : azpz
+# Erstellt von Matthias Lüthke am 26.04.2016
+# zuletzt Überarbeitet von Matthias Lüthke am 03.05.2016  13:27  
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES latin1 */;
+# Rechte für `azpz`@`%`
 
-SET FOREIGN_KEY_CHECKS=0;
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, FILE, INDEX, ALTER, CREATE TEMPORARY TABLES, EXECUTE, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, EVENT, TRIGGER ON *.* TO 'AZPZ'@'%' IDENTIFIED BY PASSWORD '*67ADA74BF02D77B2DC4BF6694FB15A8339D558EB';
 
-DROP DATABASE IF EXISTS `azpz`;
+GRANT ALL PRIVILEGES ON `azpz`.* TO 'azpz'@'%';
 
-CREATE DATABASE `azpz`
+
+CREATE DATABASE IF NOT EXISTS azpz
     CHARACTER SET 'latin1'
-    COLLATE 'latin1_german1_ci';
+    COLLATE 'latin1_general_ci';
 
-USE `azpz`;
+USE `azpz`;           
 
 #
 # Löschen von Datenbankobjekten
 #
 
-DROP VIEW IF EXISTS `v_projects`;
+DROP FUNCTION IF EXISTS `table_exits`;
 DROP PROCEDURE IF EXISTS `table_exits`;
-DROP TABLE IF EXISTS `worktime_new`;
 DROP TABLE IF EXISTS `worktime`;
 DROP TABLE IF EXISTS `user`;
 DROP TABLE IF EXISTS `projects`;
@@ -35,211 +31,286 @@ DROP TABLE IF EXISTS `project_head`;
 DROP TABLE IF EXISTS `persons`;
 DROP TABLE IF EXISTS `login`;
 DROP TABLE IF EXISTS `address`;
+DROP VIEW IF EXISTS `v_projects` ;  
+DROP PROCEDURE IF EXISTS `v_projects` ;  
+
 
 #
-# Struktur für die Tabelle `address`: 
-#
-
-CREATE TABLE `address` (
-  `address_ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `address1` VARCHAR(100) COLLATE latin1_general_ci DEFAULT NULL,
-  `address2` VARCHAR(100) COLLATE latin1_general_ci DEFAULT NULL,
-  `address3` VARCHAR(100) COLLATE latin1_general_ci DEFAULT NULL,
-  `city` VARCHAR(30) COLLATE latin1_general_ci DEFAULT NULL,
-  `plz` VARCHAR(10) COLLATE latin1_general_ci DEFAULT NULL,
-  `Country_short` VARCHAR(2) COLLATE latin1_general_ci DEFAULT NULL,
-  `Country` VARCHAR(30) COLLATE latin1_general_ci NOT NULL,
-  `fk_persons_ID` BIGINT(20) NOT NULL,
-  `text` VARCHAR(30) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `insert_MB` VARCHAR(30) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `update_MB` VARCHAR(30) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `insert_Date` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `update_Date` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `timestamp` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (`address_ID`) USING BTREE,
-  UNIQUE KEY `address_ID` (`address_ID`) USING BTREE
-) ENGINE=InnoDB
-AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_german1_ci';
-
-#
-# Struktur für die Tabelle `login`: 
-#
-
-CREATE TABLE `login` (
-  `login_ID` BIGINT(20) NOT NULL,
-  `fk_user_ID` BIGINT(20) NOT NULL,
-  `text` VARCHAR(30) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `timestamp` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (`login_ID`) USING BTREE,
-  UNIQUE KEY `login_ID` (`login_ID`) USING BTREE
-) ENGINE=InnoDB
-CHARACTER SET 'latin1' COLLATE 'latin1_german1_ci';
-
-#
-# Struktur für die Tabelle `persons`: 
-#
-
-CREATE TABLE `persons` (
-  `persons_ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(30) COLLATE latin1_german1_ci NOT NULL,
-  `firstName` VARCHAR(30) COLLATE latin1_german1_ci DEFAULT NULL,
-  `text` VARCHAR(30) COLLATE latin1_german1_ci NOT NULL,
-  `insert_MB` VARCHAR(30) COLLATE latin1_german1_ci DEFAULT NULL,
-  `update_MB` VARCHAR(30) COLLATE latin1_german1_ci DEFAULT NULL,
-  `insert_Date` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `update_Date` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`persons_ID`) USING BTREE,
-  UNIQUE KEY `persons_ID` (`persons_ID`) USING BTREE
-) ENGINE=InnoDB
-AUTO_INCREMENT=3 CHARACTER SET 'latin1' COLLATE 'latin1_german1_ci';
-
-#
-# Struktur für die Tabelle `project_head`: 
-#
-
-CREATE TABLE `project_head` (
-  `project_head_ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(30) COLLATE latin1_german1_ci NOT NULL,
-  `text` VARCHAR(30) COLLATE latin1_german1_ci NOT NULL,
-  `fk_projectworker_id` BIGINT(20) NOT NULL,
-  `insert_MB` VARCHAR(30) COLLATE latin1_german1_ci DEFAULT NULL,
-  `update_MB` VARCHAR(30) COLLATE latin1_german1_ci DEFAULT NULL,
-  `insert_Date` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `update_Date` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `timestamp` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (`project_head_ID`) USING BTREE,
-  UNIQUE KEY `project_head_ID` (`project_head_ID`) USING BTREE
-) ENGINE=InnoDB
-AUTO_INCREMENT=7 CHARACTER SET 'latin1' COLLATE 'latin1_german1_ci';
-
-#
-# Struktur für die Tabelle `project_worker`: 
-#
-
-CREATE TABLE `project_worker` (
-  `project_worker_ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `text` VARCHAR(30) COLLATE latin1_german1_ci NOT NULL,
-  `fk_persons_ID` BIGINT(20) NOT NULL,
-  `fk_projects_ID` BIGINT(20) DEFAULT NULL,
-  `insert_MB` VARCHAR(30) COLLATE latin1_german1_ci DEFAULT NULL,
-  `update_MB` VARCHAR(30) COLLATE latin1_german1_ci DEFAULT NULL,
-  `insert_Date` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `update_Date` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `timestamp` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  PRIMARY KEY (`project_worker_ID`) USING BTREE,
-  UNIQUE KEY `project_worker_ID` (`project_worker_ID`) USING BTREE
-) ENGINE=InnoDB
-AUTO_INCREMENT=4 CHARACTER SET 'latin1' COLLATE 'latin1_german1_ci';
-
-#
-# Struktur für die Tabelle `projects`: 
-#
-
-CREATE TABLE `projects` (
-  `projects_ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `start` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `end` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `text` VARCHAR(30) COLLATE latin1_german1_ci DEFAULT NULL,
-  `insert_MB` VARCHAR(30) COLLATE latin1_german1_ci DEFAULT NULL,
-  `update_MB` VARCHAR(30) COLLATE latin1_german1_ci DEFAULT NULL,
-  `insert_Date` TIMESTAMP(6) NULL DEFAULT NULL,
-  `update_Date` TIMESTAMP(6) NULL DEFAULT NULL,
-  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`projects_ID`) USING BTREE,
-  UNIQUE KEY `projects_ID` (`projects_ID`) USING BTREE
-) ENGINE=InnoDB
-AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_german1_ci';
-
-#
-# Struktur für die Tabelle `user`: 
-#
-
-CREATE TABLE `user` (
-  `user_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `user_name` VARCHAR(30) COLLATE latin1_german1_ci NOT NULL,
-  `pw_clear` VARCHAR(30) COLLATE latin1_german1_ci NOT NULL,
-  `pw_hash` VARCHAR(30) COLLATE latin1_german1_ci DEFAULT NULL,
-  `fk_persons_ID` BIGINT(20) NOT NULL,
-  `text` VARCHAR(30) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `insert_MB` VARCHAR(30) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `update_MB` VARCHAR(30) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `insert_Date` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `update_Date` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`user_id`) USING BTREE,
-  UNIQUE KEY `user_ID` (`user_id`) USING BTREE,
-  UNIQUE KEY `user_name` (`user_name`) USING BTREE
-) ENGINE=InnoDB
-AUTO_INCREMENT=4 CHARACTER SET 'latin1' COLLATE 'latin1_german1_ci';
-
-#
-# Struktur für die Tabelle `worktime`: 
-#
-
-CREATE TABLE `worktime` (
-  `worktime_ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `start` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `end` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `text` VARCHAR(30) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `insert_MB` VARCHAR(30) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `update_MB` VARCHAR(30) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `insert_Date` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `update_Date` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `timestamp` TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  `fk_persons_ID` BIGINT(20) DEFAULT NULL,
-  `timediff` BIGINT(20) DEFAULT NULL,
-  PRIMARY KEY (`worktime_ID`) USING BTREE,
-  UNIQUE KEY `worktime_ID` (`worktime_ID`) USING BTREE
-) ENGINE=InnoDB
-AUTO_INCREMENT=12 CHARACTER SET 'latin1' COLLATE 'latin1_german1_ci';
-
-#
-# Struktur für die Tabelle `worktime_new`: 
-#
-
-CREATE TABLE `worktime_new` (
-  `worktime_ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `start` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `end` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `text` VARCHAR(30) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `insert_MB` VARCHAR(30) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `update_MB` VARCHAR(30) COLLATE latin1_swedish_ci DEFAULT NULL,
-  `insert_Date` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `update_Date` TIMESTAMP(6) NULL DEFAULT '0000-00-00 00:00:00.000000',
-  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `fk_persons_ID` BIGINT(20) DEFAULT NULL,
-  PRIMARY KEY (`worktime_ID`) USING BTREE,
-  UNIQUE KEY `worktime_ID_new` (`worktime_ID`) USING BTREE
-) ENGINE=InnoDB
-AUTO_INCREMENT=1 CHARACTER SET 'latin1' COLLATE 'latin1_german1_ci';
-
-#
-# Definition für die Prozedur`: 
-#
-
-DELIMITER $$
-
-CREATE PROCEDURE `table_exits`(
+#  Prozeduren:
+#  Erste Prozedure auch als Beispiel
+CREATE  PROCEDURE `table_exits`(
         IN `ptable_name` VARCHAR(30),
         OUT `count_table` INTEGER
     )
     DETERMINISTIC
-    CONTAINS SQL
-    SQL SECURITY DEFINER
+    CONTAINS SQL     
     COMMENT ''
 SELECT COUNT(*) INTO count_table   
     FROM `information_schema`.`TABLES` WHERE 
-    `information_schema`.`TABLES`.`TABLE_NAME` = ptable_name$$
-
-DELIMITER ;
+    `information_schema`.`TABLES`.`TABLE_NAME` = ptable_name;    
 
 #
-# Definition für die Sicht`v_projects`:
+# Struktur für die Tabelle `persons`:
+# 
+     CREATE TABLE IF NOT EXISTS `persons` (
+    `persons_ID` bigint (20) NOT  NULL AUTO_INCREMENT,
+    `name` VARCHAR(30)  NOT NULL,
+    `firstName` VARCHAR(30)  DEFAULT NULL,
+    `text` varchar(30)  NOT NULL,
+    `insert_MB` varchar(30)  DEFAULT NULL,
+    `update_MB` varchar(30)  DEFAULT NULL,
+    `insert_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+    `update_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+    `timestamp` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`persons_ID`) USING BTREE,
+    UNIQUE KEY `persons_ID` (`persons_ID`) USING BTREE
+  ) ENGINE=InnoDB    AUTO_INCREMENT=1; 
+
+
+#
+# Struktur für die Tabelle `projects`:  
+#
+
+CREATE TABLE IF NOT EXISTS `projects` (
+  `projects_ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `start` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `end` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `text` varchar(30)  DEFAULT NULL,
+  `insert_MB` varchar(30)  DEFAULT NULL,
+  `update_MB` varchar(30)  DEFAULT NULL,
+  `insert_Date` timestamp NULL DEFAULT NULL,
+  `update_Date` timestamp NULL DEFAULT NULL,
+  `timestamp` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`projects_ID`) USING BTREE,
+  UNIQUE KEY `projects_ID` (`projects_ID`) USING BTREE
+) ENGINE=InnoDB
+AUTO_INCREMENT=1  
+;
+
+#
+# Struktur für die Tabelle `user`:
+#
+Drop Table   IF  EXISTS `user` ;
+
+CREATE TABLE IF NOT EXISTS `user` (
+  `user_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `user_name` VARCHAR(30)    NOT NULL,
+  `pw_clear` VARCHAR(30)  NOT NULL,
+  `pw_hash` VARCHAR(30)   NULL,
+  `fk_persons_ID` BIGINT(20) NOT NULL,
+  `text` varchar(30) CHARACTER SET latin1   NULL,
+  `insert_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
+  `update_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
+  `insert_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `update_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `timestamp` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   PRIMARY KEY (`user_ID`) USING BTREE,
+  UNIQUE KEY `user_ID` (`user_ID`) USING BTREE,
+  UNIQUE KEY `user_name` (`user_name`) USING BTREE
+) ENGINE=InnoDB
+
+AUTO_INCREMENT=1  
+;
+
+
+
+# Struktur für die Tabelle `worktime`:
+#
+# Struktur für die Tabelle `worktime`:
+#
+
+CREATE TABLE IF NOT EXISTS `worktime` (
+  `worktime_ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `start` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `end` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `timediff` BIGINT(20) DEFAULT NULL,  
+  `text` varchar(30) CHARACTER SET latin1   NULL,
+  `insert_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
+  `update_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
+  `insert_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `update_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fk_persons_ID` BIGINT(20) DEFAULT NULL,
+  PRIMARY KEY (`worktime_ID`) USING BTREE,
+  UNIQUE KEY `worktime_ID` (`worktime_ID`) USING BTREE
+) ENGINE=InnoDB
+AUTO_INCREMENT=1  
+;
+
+CREATE TABLE IF NOT EXISTS `address` (
+  `address_ID` bigint(20)  NOT NULL AUTO_INCREMENT,
+  `address1` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
+  `address2` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
+  `address3` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
+  `city` varchar(30) COLLATE latin1_general_ci DEFAULT NULL,
+  `plz` varchar(10) COLLATE latin1_general_ci DEFAULT NULL,
+  `Country_short` varchar(2) COLLATE latin1_general_ci DEFAULT NULL,
+  `Country` varchar(30) COLLATE latin1_general_ci NOT NULL,
+  `fk_persons_ID` bigint(20) NOT NULL,
+  `text` varchar(30) CHARACTER SET latin1   NULL,
+  `insert_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
+  `update_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
+  `insert_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `update_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`address_ID`) USING BTREE,
+  UNIQUE KEY `address_ID` (`address_ID`) USING BTREE
+)  ENGINE=InnoDB
+AUTO_INCREMENT=1  ;
+
+Drop Table   IF  EXISTS `login` ;
+
+CREATE TABLE IF NOT EXISTS `login` (
+  `login_ID` bigint(20) NOT NULL,
+  `fk_user_ID` bigint(20) NOT NULL,
+  `text` varchar(30) CHARACTER SET latin1   NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+  PRIMARY KEY (`login_ID`) USING BTREE,
+  UNIQUE KEY `login_ID` (`login_ID`) USING BTREE
+) ;
+
+
+Drop Table   IF  EXISTS `project_worker` ;
+
+CREATE TABLE  `project_worker` (
+  `project_worker_ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `text` VARCHAR(30)    NOT NULL,
+  `fk_persons_ID` bigint(20) NOT NULL,
+  `fk_projects_ID` bigint(20) NOT NULL,      
+  `insert_MB` VARCHAR(30)    DEFAULT NULL,
+  `update_MB` VARCHAR(30)    DEFAULT NULL,
+  `insert_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `update_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP  ,  
+  PRIMARY KEY (`project_worker_ID`) USING BTREE,
+  UNIQUE KEY `project_worker_ID` (`project_worker_ID`) USING BTREE
+) ENGINE=InnoDB
+AUTO_INCREMENT=1  ;
+
+CREATE   TRIGGER `trgin_project_worker` BEFORE INSERT ON `project_worker`
+  FOR EACH ROW
+SET New.TEXT =
+      COALESCE(New.TEXT, CONCAT( "project_worker" , NEW.project_worker_ID ));
+      
+Drop Table   IF  EXISTS `project_head` ;
  
+CREATE TABLE IF NOT EXISTS `project_head` (
+  `project_head_ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(30)    NOT NULL,
+  `text` VARCHAR(30)    NOT NULL,
+  `fk_projectworker_id`  BIGINT(20) NOT NULL,
+  `insert_MB` VARCHAR(30)    DEFAULT NULL,
+  `update_MB` VARCHAR(30)    DEFAULT NULL,
+  `insert_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `update_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,     
+  PRIMARY KEY (`project_head_ID`) USING BTREE,
+  UNIQUE KEY `project_head_ID` (`project_head_ID`) USING BTREE 
+) ENGINE=InnoDB
+AUTO_INCREMENT=1    
+;
+
+CREATE   TRIGGER `trgin_project_head` BEFORE INSERT ON `project_head`
+  FOR EACH ROW
+SET New.TEXT =
+      COALESCE(New.TEXT, CONCAT( "PROJECT_HEAD_", NEW.project_head_ID ));     
+      
+Commit;
+
+#
+# the persons 
 #
 
-CREATE ALGORITHM=UNDEFINED VIEW `v_projects`
+INSERT INTO `persons` ( `name`, `firstName`, `text`, `insert_MB`, `update_MB`, `insert_Date`, `update_Date`, `timestamp`) VALUES
+  ('Luethke','Matthias','Test',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-01 15:55:49.931498'),
+  ('Labsch','Martin','Test Martin',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-01 15:56:18.429800');
+COMMIT;
+
+#
+# Data for the user_table  
+#
+
+DELETE FROM user ;
+commit;
+
+INSERT INTO `user` (  `pw_clear`,  `user_name`, `fk_persons_ID`)           
+      SELECT  "start",
+         CONCAT     ( p.`firstName`,  p.`Name`,  p.`persons_ID` )   ,         
+        p.`persons_ID`     
+      from persons p 
+       where   persons_ID 
+      in                
+      (
+       Select    `persons_ID`  from `persons`
+      );
+      
+#
+# Data for the `project_worker` table  (LIMIT 0,500)
+#
+
+Commit;
+
+INSERT INTO `project_worker` ( `TEXT` )            
+SELECT  
+         CONCAT     (   p.`TEXT` )   
+   
+      from persons p 
+       where    p.`persons_ID` 
+       NOT
+       IN               
+      (
+       Select  
+        fk_persons_ID   from `project_worker`  
+      );  
+
+#
+# kurz und schmutzig
+#      
+UPDATE 
+  `project_worker`  
+SET  
+  `fk_persons_ID` = project_worker.`project_worker_ID` 
+WHERE 
+  `project_worker_ID` 
+AND fk_persons_ID IS NULL;
+
+Commit;    
+     
+#
+#  für tabelle   project_head
+#    
+   
+INSERT INTO `project_head` ( `name`, `text`, `fk_projectworker_id`, `insert_MB`, `update_MB`, `insert_Date`, `update_Date`, `timestamp`) VALUES
+  ('Project_1','test a',1,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:10:24.184906'),
+  ('Project_2','test b',1,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:19:44.529825'),
+  ('Project_3','test c',1,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:19:46.898161'),
+  ('Project_4','test d',2,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:19:50.597786'),
+  ('Project_5','test f',2,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:19:51.814286'),
+  ('Project_6','test',2,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-04 02:19:52.549366');
+COMMIT;     
+
+
+INSERT  INTO `worktime` ( `TEXT` )    
+ Select text
+ from
+  `persons`   ; 
+  
+  COMMIT;   
+  
+  
+  INSERT INTO `worktime` ( `start`, `end`, `text`, `insert_MB`, `update_MB`, `insert_Date`, `update_Date`, `timestamp`, `fk_persons_ID`, `timediff`) VALUES
+  ('0000-00-00 00:00:00.000000','2016-05-01 20:56:38.000000','Mein Projekt 1',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 04:56:38.133405',1,NULL),
+  ('0000-00-00 00:00:00.000000','2016-05-01 21:09:50.000000','Mein Projekt 2',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:09:50.761627',1,NULL),
+  ('0000-00-00 00:00:00.000000','2016-05-01 21:09:50.000000','Mein Projekt  Martin',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:09:50.761627',1,NULL),
+  ('0000-00-00 00:00:00.000000','2016-05-01 21:14:09.000000','Mein Projekt 3',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:14:09.376318',1,NULL),
+  ('0000-00-00 00:00:00.000000','2016-05-01 21:14:09.000000','Mein Projekt  Martin 4',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:14:09.376318',1,NULL),
+  ('0000-00-00 00:00:00.000000','2016-05-01 21:14:28.000000','Mein Projekt 5',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:14:28.323604',2,NULL),
+  ('0000-00-00 00:00:00.000000','2016-05-01 21:14:28.000000','Mein Projekt  Martin 6',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:14:28.323604',2,44),
+  (NULL,'2016-05-01 21:15:27.000000','Mein Projekt Oh Mann',NULL,NULL,NULL,NULL,'2016-05-03 05:15:27.859186',2,33);
+COMMIT;
+
+  
+  CREATE ALGORITHM=UNDEFINED  SQL SECURITY DEFINER VIEW `v_projects`
 AS
 select
   `ph`.`project_head_ID` AS `project_head_ID`,
@@ -262,91 +333,352 @@ from
 where
   ((`p`.`projects_ID` = `ph`.`fk_projectworker_id`) and
   (`w`.`fk_projects_ID` = `p`.`projects_ID`) and
-  (`p`.`projects_ID` = `wt`.`fk_persons_ID`));
+  (`p`.`projects_ID` = `wt`.`fk_persons_ID`));   
+  
+ Commit;  
+  
+ INSERT INTO `projects` (   `text`   )       
+  Select  CONCAT ( 'Mein Projekt _' ,   `text`   )   from `worktime`    ;    
+  Commit;       
+# Database : AZPZ
+# Erstellt von Matthias Lüthke am 26.04.2016
+# zuletzt Überarbeitet von Matthias Lüthke am 03.05.2016  13:12    
+
+SET FOREIGN_KEY_CHECKS=0;   
+
+CREATE DATABASE IF NOT EXISTS azpz
+    CHARACTER SET 'latin1'
+    COLLATE 'latin1_general_ci';
+
+USE `azpz`;           
 
 #
-# Data for the `persons` table  (LIMIT 0,500)
+# Löschen von Datenbankobjekten
 #
 
-INSERT INTO `persons` (`persons_ID`, `name`, `firstName`, `text`, `insert_MB`, `update_MB`, `insert_Date`, `update_Date`, `timestamp`) VALUES
-  (1,'Luethke','Matthias','Test',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-01 15:55:49'),
-  (2,'Labsch','Martin','Test Martin',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-01 15:56:18');
+DROP FUNCTION IF EXISTS `table_exits`;
+DROP PROCEDURE IF EXISTS `table_exits`;
+DROP TABLE IF EXISTS `worktime`;
+DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `projects`;
+DROP TABLE IF EXISTS `project_worker`;
+DROP TABLE IF EXISTS `project_head`;
+DROP TABLE IF EXISTS `persons`;
+DROP TABLE IF EXISTS `login`;
+DROP TABLE IF EXISTS `address`;
+DROP VIEW IF EXISTS `v_projects` ;  
+DROP PROCEDURE IF EXISTS `v_projects` ;  
+
+
+#
+#  Prozeduren:
+#  Erste Prozedure auch als Beispiel
+CREATE  PROCEDURE `table_exits`(
+        IN `ptable_name` VARCHAR(30),
+        OUT `count_table` INTEGER
+    )
+    DETERMINISTIC
+    CONTAINS SQL     
+    COMMENT ''
+SELECT COUNT(*) INTO count_table   
+    FROM `information_schema`.`TABLES` WHERE 
+    `information_schema`.`TABLES`.`TABLE_NAME` = ptable_name;    
+
+#
+# Struktur für die Tabelle `persons`:
+# 
+     CREATE TABLE IF NOT EXISTS `persons` (
+    `persons_ID` bigint (20) NOT  NULL AUTO_INCREMENT,
+    `name` VARCHAR(30)  NOT NULL,
+    `firstName` VARCHAR(30)  DEFAULT NULL,
+    `text` varchar(30)  NOT NULL,
+    `insert_MB` varchar(30)  DEFAULT NULL,
+    `update_MB` varchar(30)  DEFAULT NULL,
+    `insert_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+    `update_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+    `timestamp` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`persons_ID`) USING BTREE,
+    UNIQUE KEY `persons_ID` (`persons_ID`) USING BTREE
+  ) ENGINE=InnoDB    AUTO_INCREMENT=1; 
+
+
+#
+# Struktur für die Tabelle `projects`:  
+#
+
+CREATE TABLE IF NOT EXISTS `projects` (
+  `projects_ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `start` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `end` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `text` varchar(30)  DEFAULT NULL,
+  `insert_MB` varchar(30)  DEFAULT NULL,
+  `update_MB` varchar(30)  DEFAULT NULL,
+  `insert_Date` timestamp NULL DEFAULT NULL,
+  `update_Date` timestamp NULL DEFAULT NULL,
+  `timestamp` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`projects_ID`) USING BTREE,
+  UNIQUE KEY `projects_ID` (`projects_ID`) USING BTREE
+) ENGINE=InnoDB
+AUTO_INCREMENT=1  
+;
+
+#
+# Struktur für die Tabelle `user`:
+#
+Drop Table   IF  EXISTS `user` ;
+
+CREATE TABLE IF NOT EXISTS `user` (
+  `user_id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `user_name` VARCHAR(30)    NOT NULL,
+  `pw_clear` VARCHAR(30)  NOT NULL,
+  `pw_hash` VARCHAR(30)   NULL,
+  `fk_persons_ID` BIGINT(20) NOT NULL,
+  `text` varchar(30) CHARACTER SET latin1   NULL,
+  `insert_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
+  `update_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
+  `insert_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `update_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `timestamp` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   PRIMARY KEY (`user_ID`) USING BTREE,
+  UNIQUE KEY `user_ID` (`user_ID`) USING BTREE,
+  UNIQUE KEY `user_name` (`user_name`) USING BTREE
+) ENGINE=InnoDB
+
+AUTO_INCREMENT=1  
+;
+
+
+
+# Struktur für die Tabelle `worktime`:
+#
+# Struktur für die Tabelle `worktime`:
+#
+
+CREATE TABLE IF NOT EXISTS `worktime` (
+  `worktime_ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `start` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `end` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `timediff` BIGINT(20) DEFAULT NULL,  
+  `text` varchar(30) CHARACTER SET latin1   NULL,
+  `insert_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
+  `update_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
+  `insert_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `update_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fk_persons_ID` BIGINT(20) DEFAULT NULL,
+  PRIMARY KEY (`worktime_ID`) USING BTREE,
+  UNIQUE KEY `worktime_ID` (`worktime_ID`) USING BTREE
+) ENGINE=InnoDB
+AUTO_INCREMENT=1  
+;
+
+CREATE TABLE IF NOT EXISTS `address` (
+  `address_ID` bigint(20)  NOT NULL AUTO_INCREMENT,
+  `address1` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
+  `address2` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
+  `address3` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
+  `city` varchar(30) COLLATE latin1_general_ci DEFAULT NULL,
+  `plz` varchar(10) COLLATE latin1_general_ci DEFAULT NULL,
+  `Country_short` varchar(2) COLLATE latin1_general_ci DEFAULT NULL,
+  `Country` varchar(30) COLLATE latin1_general_ci NOT NULL,
+  `fk_persons_ID` bigint(20) NOT NULL,
+  `text` varchar(30) CHARACTER SET latin1   NULL,
+  `insert_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
+  `update_MB` varchar(30) CHARACTER SET latin1  DEFAULT NULL,
+  `insert_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `update_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`address_ID`) USING BTREE,
+  UNIQUE KEY `address_ID` (`address_ID`) USING BTREE
+)  ENGINE=InnoDB
+AUTO_INCREMENT=1  ;
+
+Drop Table   IF  EXISTS `login` ;
+
+CREATE TABLE IF NOT EXISTS `login` (
+  `login_ID` bigint(20) NOT NULL,
+  `fk_user_ID` bigint(20) NOT NULL,
+  `text` varchar(30) CHARACTER SET latin1   NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+  PRIMARY KEY (`login_ID`) USING BTREE,
+  UNIQUE KEY `login_ID` (`login_ID`) USING BTREE
+) ;
+
+
+Drop Table   IF  EXISTS `project_worker` ;
+
+CREATE TABLE  `project_worker` (
+  `project_worker_ID` bigint(20) NOT NULL AUTO_INCREMENT,
+  `text` VARCHAR(30)    NOT NULL,
+  `fk_persons_ID` bigint(20) NOT NULL,
+  `fk_projects_ID` bigint(20) NOT NULL,      
+  `insert_MB` VARCHAR(30)    DEFAULT NULL,
+  `update_MB` VARCHAR(30)    DEFAULT NULL,
+  `insert_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `update_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP  ,  
+  PRIMARY KEY (`project_worker_ID`) USING BTREE,
+  UNIQUE KEY `project_worker_ID` (`project_worker_ID`) USING BTREE
+) ENGINE=InnoDB
+AUTO_INCREMENT=1  ;
+
+CREATE   TRIGGER `trgin_project_worker` BEFORE INSERT ON `project_worker`
+  FOR EACH ROW
+SET New.TEXT =
+      COALESCE(New.TEXT, CONCAT( "project_worker" , NEW.project_worker_ID ));
+      
+Drop Table   IF  EXISTS `project_head` ;
+ 
+CREATE TABLE IF NOT EXISTS `project_head` (
+  `project_head_ID` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(30)    NOT NULL,
+  `text` VARCHAR(30)    NOT NULL,
+  `fk_projectworker_id`  BIGINT(20) NOT NULL,
+  `insert_MB` VARCHAR(30)    DEFAULT NULL,
+  `update_MB` VARCHAR(30)    DEFAULT NULL,
+  `insert_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `update_Date` timestamp NULL DEFAULT '0000-00-00 00:00:00.000000',
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,     
+  PRIMARY KEY (`project_head_ID`) USING BTREE,
+  UNIQUE KEY `project_head_ID` (`project_head_ID`) USING BTREE 
+) ENGINE=InnoDB
+AUTO_INCREMENT=1    
+;
+
+CREATE   TRIGGER `trgin_project_head` BEFORE INSERT ON `project_head`
+  FOR EACH ROW
+SET New.TEXT =
+      COALESCE(New.TEXT, CONCAT( "PROJECT_HEAD_", NEW.project_head_ID ));     
+      
+Commit;
+
+#
+# the persons 
+#
+
+INSERT INTO `persons` ( `name`, `firstName`, `text`, `insert_MB`, `update_MB`, `insert_Date`, `update_Date`, `timestamp`) VALUES
+  ('Luethke','Matthias','Test',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-01 15:55:49.931498'),
+  ('Labsch','Martin','Test Martin',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-01 15:56:18.429800');
 COMMIT;
 
 #
-# Data for the `project_head` table  (LIMIT 0,500)
+# Data for the user_table  
 #
 
-INSERT INTO `project_head` (`project_head_ID`, `name`, `text`, `fk_projectworker_id`, `insert_MB`, `update_MB`, `insert_Date`, `update_Date`, `timestamp`) VALUES
-  (1,'Project_1','test',1,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:10:24.184906'),
-  (2,'Project_2','test',1,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:19:44.529825'),
-  (3,'Project_3','test',1,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:19:46.898161'),
-  (4,'Project_4','test',1,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:19:50.597786'),
-  (5,'Project_5','test',1,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:19:51.814286'),
-  (6,'Project_6','test',1,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:19:52.549366');
-COMMIT;
+DELETE FROM user ;
+commit;
 
+INSERT INTO `user` (  `pw_clear`,  `user_name`, `fk_persons_ID`)           
+      SELECT  "start",
+         CONCAT     ( p.`firstName`,  p.`Name`,  p.`persons_ID` )   ,         
+        p.`persons_ID`     
+      from persons p 
+       where   persons_ID 
+      in                
+      (
+       Select    `persons_ID`  from `persons`
+      );
+      
 #
 # Data for the `project_worker` table  (LIMIT 0,500)
 #
 
-INSERT INTO `project_worker` (`project_worker_ID`, `text`, `fk_persons_ID`, `fk_projects_ID`, `insert_MB`, `update_MB`, `insert_Date`, `update_Date`, `timestamp`) VALUES
-  (1,'Test',0,NULL,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:48:51.060473'),
-  (2,'Test Martin',0,NULL,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:48:51.060473');
+Commit;
+
+INSERT INTO `project_worker` ( `TEXT` )            
+SELECT  
+         CONCAT     (   p.`TEXT` )   
+   
+      from persons p 
+       where    p.`persons_ID` 
+       NOT
+       IN               
+      (
+       Select  
+        fk_persons_ID   from `project_worker`  
+      );  
+
+#
+# kurz und schmutzig
+#      
+UPDATE 
+  `project_worker`  
+SET  
+  `fk_persons_ID` = project_worker.`project_worker_ID` 
+WHERE 
+  `project_worker_ID` 
+AND fk_persons_ID IS NULL;
+
+Commit;    
+     
+#
+#  für tabelle   project_head
+#    
+   
+INSERT INTO `project_head` ( `name`, `text`, `fk_projectworker_id`, `insert_MB`, `update_MB`, `insert_Date`, `update_Date`, `timestamp`) VALUES
+  ('Project_1','test a',1,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:10:24.184906'),
+  ('Project_2','test b',1,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:19:44.529825'),
+  ('Project_3','test c',1,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:19:46.898161'),
+  ('Project_4','test d',2,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:19:50.597786'),
+  ('Project_5','test f',2,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:19:51.814286'),
+  ('Project_6','test',2,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-04 02:19:52.549366');
+COMMIT;     
+
+
+INSERT  INTO `worktime` ( `TEXT` )    
+ Select text
+ from
+  `persons`   ; 
+  
+  COMMIT;   
+  
+  
+  INSERT INTO `worktime` ( `start`, `end`, `text`, `insert_MB`, `update_MB`, `insert_Date`, `update_Date`, `timestamp`, `fk_persons_ID`, `timediff`) VALUES
+  ('0000-00-00 00:00:00.000000','2016-05-01 20:56:38.000000','Mein Projekt 1',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 04:56:38.133405',1,NULL),
+  ('0000-00-00 00:00:00.000000','2016-05-01 21:09:50.000000','Mein Projekt 2',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:09:50.761627',1,NULL),
+  ('0000-00-00 00:00:00.000000','2016-05-01 21:09:50.000000','Mein Projekt  Martin',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:09:50.761627',1,NULL),
+  ('0000-00-00 00:00:00.000000','2016-05-01 21:14:09.000000','Mein Projekt 3',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:14:09.376318',1,NULL),
+  ('0000-00-00 00:00:00.000000','2016-05-01 21:14:09.000000','Mein Projekt  Martin 4',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:14:09.376318',1,NULL),
+  ('0000-00-00 00:00:00.000000','2016-05-01 21:14:28.000000','Mein Projekt 5',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:14:28.323604',2,NULL),
+  ('0000-00-00 00:00:00.000000','2016-05-01 21:14:28.000000','Mein Projekt  Martin 6',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:14:28.323604',2,44),
+  (NULL,'2016-05-01 21:15:27.000000','Mein Projekt Oh Mann',NULL,NULL,NULL,NULL,'2016-05-03 05:15:27.859186',2,33);
 COMMIT;
 
+
+ 
+
+  CREATE ALGORITHM=UNDEFINED  SQL SECURITY DEFINER VIEW `v_projects`
+AS
+select
+  `ph`.`project_head_ID` AS `project_head_ID`,
+  `ph`.`name` AS `name`,
+  `ph`.`text` AS `text`,
+  `ph`.`fk_projectworker_id` AS `fk_projectworker_id`,
+  `ph`.`insert_MB` AS `insert_MB`,
+  `ph`.`update_MB` AS `update_MB`,
+  `ph`.`insert_Date` AS `insert_Date`,
+  `ph`.`update_Date` AS `update_Date`,
+  `ph`.`timestamp` AS `timestamp`,
+  `w`.`text` AS `Project_worker_name`,
+  `p`.`text` AS `Project_name`,
+  `wt`.`timediff` AS `timediff`
+from
+  (((`projects` `p`
+  join `project_head` `ph`)
+  join `project_worker` `w`)
+  join `worktime` `wt`)
+where
+  ((`p`.`projects_ID` = `ph`.`fk_projectworker_id`) and
+  (`w`.`fk_projects_ID` = `p`.`projects_ID`) and
+  (`p`.`projects_ID` = `wt`.`fk_persons_ID`));   
+  
+ Commit;  
+  
+ INSERT INTO `projects` (   `text`   )       
+  Select  CONCAT ( 'Mein Projekt _' ,   `text`   )   from `worktime`    ;    
+  Commit;      
+  
 #
-# Data for the `user` table  (LIMIT 0,500)
-#
-
-INSERT INTO `user` (`user_id`, `user_name`, `pw_clear`, `pw_hash`, `fk_persons_ID`, `text`, `insert_MB`, `update_MB`, `insert_Date`, `update_Date`, `timestamp`) VALUES
-  (1,'MatthiasLuethke1','start',NULL,1,NULL,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:48:51'),
-  (2,'MartinLabsch2','start',NULL,2,NULL,NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 02:48:51');
-COMMIT;
-
-#
-# Data for the `worktime` table  (LIMIT 0,500)
-#
-
-INSERT INTO `worktime` (`worktime_ID`, `start`, `end`, `text`, `insert_MB`, `update_MB`, `insert_Date`, `update_Date`, `timestamp`, `fk_persons_ID`, `timediff`) VALUES
-  (1,'0000-00-00 00:00:00.000000','2016-05-01 20:56:38.000000','test',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 04:56:38.133405',1,NULL),
-  (2,'0000-00-00 00:00:00.000000','2016-05-01 21:09:50.000000','Test',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:09:50.761627',1,NULL),
-  (3,'0000-00-00 00:00:00.000000','2016-05-01 21:09:50.000000','Test Martin',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:09:50.761627',1,NULL),
-  (5,'0000-00-00 00:00:00.000000','2016-05-01 21:14:09.000000','Test',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:14:09.376318',1,NULL),
-  (6,'0000-00-00 00:00:00.000000','2016-05-01 21:14:09.000000','Test Martin',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:14:09.376318',1,NULL),
-  (8,'0000-00-00 00:00:00.000000','2016-05-01 21:14:28.000000','Test',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:14:28.323604',2,55),
-  (9,'0000-00-00 00:00:00.000000','2016-05-01 21:14:28.000000','Test Martin',NULL,NULL,'0000-00-00 00:00:00.000000','0000-00-00 00:00:00.000000','2016-05-03 05:14:28.323604',2,44),
-  (11,NULL,'2016-05-01 21:15:27.000000','Jetzt',NULL,NULL,NULL,NULL,'2016-05-03 05:15:27.859186',1,66);
-COMMIT;
-
-
-
-DELIMITER $$
-
-CREATE DEFINER = 'root'@'localhost' TRIGGER `trgin_project_head` BEFORE INSERT ON `project_head`
-  FOR EACH ROW
-SET New.TEXT =
-      COALESCE(New.TEXT, CONCAT( "PROJECT_HEAD_", NEW.project_head_ID ))$$
-
-DELIMITER ;
-
-DELIMITER $$
-
-CREATE DEFINER = 'root'@'localhost' TRIGGER `trgin_project_worker` BEFORE INSERT ON `project_worker`
-  FOR EACH ROW
-SET New.TEXT =
-      COALESCE(New.TEXT, CONCAT( "project_worker" , NEW.project_worker_ID ))$$
-
-DELIMITER ;
-
-DELIMITER $$
-
-CREATE DEFINER = 'root'@'localhost' TRIGGER `trgin_worktime` BEFORE INSERT ON `worktime`
-  FOR EACH ROW
-SET New.END     =      DATE_ADD( CURRENT_TIMESTAMP,  INTERVAL '-1 8' DAY_HOUR)$$
-
-DELIMITER ;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+# Wenn gezeigt wird  MySQL lieferte ein leeres Resultat zurück (d.h. null Datensätze).  ist es OK
+#   
+   
