@@ -78,7 +78,9 @@ public class azpzMain
 
         // TODO Mehrsprachigkeit: Bezeichner aus Datei holen (./lang)
         // menu-entries
-        createMenuAndAddToMenuBar("Verbinden", "menuItemConnect", 'V', mainFrame, menuBar);
+        createMenuAndAddToMenuBar("Verbinden", "menuConnect", 'V', mainFrame, menuBar);
+        JMenu menuProjects = (JMenu) createMenuAndAddToMenuBar("Projekte", "menuProjects", 'P', mainFrame, menuBar);
+        menuProjects.setEnabled(false);
 
         // createMenuItemAndAddToMenu("Öffnen", "menuItemOpen", 'F', mainFrame, menuFile);
         createMenuItemAndAddToMenu("Beenden", "menuItemClose", 'E', mainFrame, menuFile);
@@ -196,6 +198,7 @@ public class azpzMain
         m.setMnemonic(mnemonic);
         m.addActionListener(listener);
         m.addMouseListener(listener);
+        m.addMenuListener(listener);
 
         menu.add(m);
 

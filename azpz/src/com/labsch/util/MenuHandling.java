@@ -1,12 +1,8 @@
 package com.labsch.util;
 
-import java.awt.Component;
-import java.awt.Frame;
-
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-
 import com.labsch.azpz.azpzFrame;
 
 public class MenuHandling
@@ -97,5 +93,12 @@ public class MenuHandling
         }
 
         return mi;
+    }
+
+    void getMenuElementPath()
+    {
+//        MenuElement elem[] = MenuSelectionManager.defaultManager().set
+        
+//        MenuSelectionManager.defaultManager().setSelectedPath(arg0);
     }
 }
