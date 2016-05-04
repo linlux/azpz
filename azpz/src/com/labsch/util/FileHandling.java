@@ -68,6 +68,10 @@ public class FileHandling
         {
             retValue = dir.mkdir();
         }
+        else
+        {
+            retValue = true;
+        }
 
         return retValue;
 
