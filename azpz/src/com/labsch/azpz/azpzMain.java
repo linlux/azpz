@@ -78,7 +78,9 @@ public class azpzMain
 
         // TODO Mehrsprachigkeit: Bezeichner aus Datei holen (./lang)
         // menu-entries
-        createMenuAndAddToMenuBar("Verbinden", "menuItemConnect", 'V', mainFrame, menuBar);
+        createMenuAndAddToMenuBar("Verbinden", "menuConnect", 'V', mainFrame, menuBar);
+        JMenu menuProjects = (JMenu) createMenuAndAddToMenuBar("Projekte", "menuProjects", 'P', mainFrame, menuBar);
+        menuProjects.setEnabled(false);
 
         // createMenuItemAndAddToMenu("Öffnen", "menuItemOpen", 'F', mainFrame, menuFile);
         createMenuItemAndAddToMenu("Beenden", "menuItemClose", 'E', mainFrame, menuFile);
@@ -102,6 +104,7 @@ public class azpzMain
         mainFrame.setExtendedState(MAINFRAME_MAXIMIZED_BOTH ? Frame.MAXIMIZED_BOTH : mainFrame.getExtendedState());
         // mainFrame.setLocationRelativeTo(null);
         mainFrame.setLocation(MAINFRAME_X, MAINFRAME_Y);
+        mainFrame.addComponentListener(mainFrame);
 
         JLabel statusBarLabel = new JLabel("statusbar");
         statusBarLabel.setName("statusBarLabel");
@@ -196,12 +199,13 @@ public class azpzMain
         m.setMnemonic(mnemonic);
         m.addActionListener(listener);
         m.addMouseListener(listener);
+        m.addMenuListener(listener);
 
         menu.add(m);
 
         if (debug)
         {
-            System.out.println(m.getComponentZOrder(m));
+            System.out.println("getComponentZOrder(m): " + m.getComponentZOrder(m));
         }
 
         return m;
@@ -237,8 +241,8 @@ public class azpzMain
 
             if (!prop.isEmpty())
             {
-                azpzMain.MAINFRAME_HEIGHT = null != prop.getProperty("MAIN_FRAME_HEIGHT") ? new Integer(prop.getProperty("MAIN_FRAME_HEIGHT")) : 800;
-                azpzMain.MAINFRAME_WIDTH = null != prop.getProperty("MAIN_FRAME_WIDTH") ? new Integer(prop.getProperty("MAIN_FRAME_WIDTH")) : 800;
+                azpzMain.MAINFRAME_HEIGHT = null != prop.getProperty("MAINFRAME_HEIGHT") ? new Integer(prop.getProperty("MAINFRAME_HEIGHT")) : 800;
+                azpzMain.MAINFRAME_WIDTH = null != prop.getProperty("MAINFRAME_WIDTH") ? new Integer(prop.getProperty("MAINFRAME_WIDTH")) : 800;
                 azpzMain.MAINFRAME_X = null != prop.getProperty("MAINFRAME_X") ? new Integer(prop.getProperty("MAINFRAME_X")) : 0;
                 azpzMain.MAINFRAME_Y = null != prop.getProperty("MAINFRAME_Y") ? new Integer(prop.getProperty("MAINFRAME_Y")) : 0;
                 azpzMain.MAINFRAME_MAXIMIZED_BOTH = null != prop.getProperty("MAXIMIZED") ? new Boolean((prop.getProperty("MAXIMIZED"))) : false;

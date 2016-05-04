@@ -44,6 +44,46 @@ public class DBConnection
 
     }
 
+    public static boolean connectToDatabase()
+    {
+
+        String driverClassName = "com.mysql.jdbc.Driver";
+
+        String server = "localhost";
+        String dataBase = "azpz";
+        String port = ":3306/";
+        String connectionStringBegin = "jdbc:mysql://";
+
+        String userID = "root";
+        String passWord = null;
+        
+        boolean retValue = false;
+        String connectionString;
+        connectionString = connectionStringBegin + server + port + dataBase;
+
+        try
+        {
+            // Erstellen und Registrieren der als Zeichenkette 'classForName'
+            // übergebenen Klasse für den DriverManager.
+            // (statische Initialisierung).
+            Class.forName(driverClassName).newInstance();
+
+            dbConn = DriverManager.getConnection(connectionString, userID, passWord);
+            DBConnection.connectionString = connectionString;
+            retValue = true;
+        }
+        catch (Exception ex)
+        {
+            JOptionPane.showMessageDialog(null, "Fehler beim Zugriff auf die Datenbank '" + dataBase + "':\n" + ex.getMessage(), "Fehler",
+                    JOptionPane.ERROR_MESSAGE);
+            dbConn = null;
+            DBConnection.connectionString = null;
+        }
+
+        return retValue;
+
+    }
+
     public static void closeConnection()
     {
 

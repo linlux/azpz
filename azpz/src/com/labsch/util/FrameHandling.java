@@ -3,6 +3,7 @@ package com.labsch.util;
 import java.awt.Frame;
 
 import com.labsch.azpz.azpzFrame;
+import com.labsch.azpz.azpzMain;
 
 /**
  * 
@@ -37,5 +38,19 @@ public class FrameHandling
         }
 
         return frame;
+    }
+
+    /**
+     * write actual size and position of Frame into frame-class-variables
+     * @author Martin Labsch, 04.05.2016
+     */
+    public static void setActualState(String frameName)
+    {
+        azpzFrame af = (azpzFrame) getAnAzpzFrameByName(frameName);
+        
+        azpzMain.setMAINFRAME_HEIGHT(af.getHeight());
+        azpzMain.setMAINFRAME_WIDTH(af.getWidth());
+        azpzMain.setMAINFRAME_X(af.getX());
+        azpzMain.setMAINFRAME_Y(af.getY());
     }
 }
