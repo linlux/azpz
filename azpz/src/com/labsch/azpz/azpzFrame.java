@@ -6,6 +6,8 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
@@ -20,13 +22,13 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.MenuElement;
 import javax.swing.MenuSelectionManager;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
 import com.labsch.util.DialogHandling;
 import com.labsch.util.FileHandling;
+import com.labsch.util.FrameHandling;
 import com.labsch.util.MenuHandling;
 import com.labsch.dbUtils.DBConnection;
 import com.labsch.dlg_login.loginDialog;
@@ -35,7 +37,7 @@ import com.labsch.dlg_login.loginDialog;
  * @author Martin Labsch, 26.04.2016
  */
 @SuppressWarnings("serial")
-public class azpzFrame extends JFrame implements ActionListener, WindowListener, WindowStateListener, MouseListener, MenuListener
+public class azpzFrame extends JFrame implements ActionListener, WindowListener, WindowStateListener, MouseListener, MenuListener, ComponentListener
 {
 
     private static final boolean debug = false;
@@ -402,7 +404,6 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
                 // JMenuItem mi = MenuHandling.getAnMenuItemByNameFromFramesMenuBar("menuConnect", "mainFrame");
                 if (m != null)
                 {
-
                     m.setText("Verbunden");
                     Font font = m.getFont().deriveFont(Font.BOLD);
                     m.setFont(font);
@@ -411,34 +412,81 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
                     MenuSelectionManager.defaultManager().clearSelectedPath();
                     Projects.initProjects();
                 }
-
-            }
-            else
-            {
-                System.out.println(MenuSelectionManager.defaultManager().getSelectedPath());
-                MenuElement[] elems = MenuSelectionManager.defaultManager().getSelectedPath();
-
-                if (elems.length > 0)
-                {
-                    for (int i = 0; i < elems.length; i++)
-                    {
-                        elems[i].getSubElements();
-                    }
-                }
-
-                System.out.println();
-
             }
         }
 
         if (obj != null && ((JMenu) obj).getName().equals("menuProjects"))
         {
-            System.out.println("Do something");
+//            System.out.println("Do something");
         }
 
         if (debug)
         {
             System.out.println("menuSelected");
+        }
+
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent e)
+    {
+        if (debug)
+        {
+            System.out.println("componentHidden");
+        }
+
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent e)
+    {
+        Object obj = e.getSource();
+
+        if (obj instanceof azpzFrame)
+        {
+            azpzFrame af = (azpzFrame) obj;
+
+            if (af.getExtendedState() == azpzFrame.NORMAL)
+            {
+                FrameHandling.setActualState("mainFrame");
+            }
+        }
+
+        if (debug)
+        {
+            System.out.println("componentMoved");
+        }
+
+    }
+
+    @Override
+    public void componentResized(ComponentEvent e)
+    {
+        Object obj = e.getSource();
+
+        if (obj instanceof azpzFrame)
+        {
+            azpzFrame af = (azpzFrame) obj;
+
+            if (af.getExtendedState() == azpzFrame.NORMAL)
+            {
+                FrameHandling.setActualState("mainFrame");
+            }
+        }
+
+        if (debug)
+        {
+            System.out.println("componentResized");
+        }
+
+    }
+
+    @Override
+    public void componentShown(ComponentEvent e)
+    {
+        if (debug)
+        {
+            System.out.println("componentShown");
         }
 
     }

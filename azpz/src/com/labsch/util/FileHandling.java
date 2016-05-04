@@ -88,8 +88,8 @@ public class FileHandling
 
         HashMap<String, String> props = new HashMap<String, String>();
 
-        props.put("MAIN_FRAME_WIDTH", "800");
-        props.put("MAIN_FRAME_HEIGHT", "600");
+        props.put("MAINFRAME_WIDTH", "800");
+        props.put("MAINFRAME_HEIGHT", "600");
         props.put("MAINFRAME_X", "0");
         props.put("MAINFRAME_Y", "0");
         props.put("MAXIMIZED", "false");
@@ -196,20 +196,10 @@ public class FileHandling
         HashMap<String, String> props = new HashMap<String, String>();
         boolean isMaximizedBoth = ((JFrame) mainFrame).getExtendedState() == Frame.MAXIMIZED_BOTH ? true : false;
 
-        if (isMaximizedBoth)
-        {
-            props.put("MAIN_FRAME_WIDTH", Integer.toString(azpzMain.getMAINFRAME_WIDTH()));
-            props.put("MAIN_FRAME_HEIGHT", Integer.toString(azpzMain.getMAINFRAME_HEIGHT()));
+            props.put("MAINFRAME_WIDTH", Integer.toString(azpzMain.getMAINFRAME_WIDTH()));
+            props.put("MAINFRAME_HEIGHT", Integer.toString(azpzMain.getMAINFRAME_HEIGHT()));
             props.put("MAINFRAME_X", Integer.toString(azpzMain.getMAINFRAME_X()));
             props.put("MAINFRAME_Y", Integer.toString(azpzMain.getMAINFRAME_Y()));
-        }
-        else
-        {
-            props.put("MAIN_FRAME_WIDTH", Integer.toString(mainFrame.getWidth()));
-            props.put("MAIN_FRAME_HEIGHT", Integer.toString(mainFrame.getHeight()));
-            props.put("MAINFRAME_X", Integer.toString(mainFrame.getX()));
-            props.put("MAINFRAME_Y", Integer.toString(mainFrame.getY()));
-        }
 
         props.put("MAXIMIZED", isMaximizedBoth ? "true" : "false");
         props.put("language", "fr");
