@@ -27,22 +27,20 @@ public class azpzMain
 
     private static final boolean debug = false;
 
-    private static int MAINFRAME_WIDTH = 800;
-    private static int MAINFRAME_HEIGHT = 600;
-    private static int MAINFRAME_X;
-    private static int MAINFRAME_Y;
+    private static int MAINFRAME_WIDTH = 800,
+            MAINFRAME_HEIGHT = 600,
+            MAINFRAME_X,
+            MAINFRAME_Y;
     private static Boolean MAINFRAME_MAXIMIZED_BOTH;
-    private static String APP_LANG;
 
-    private static String appRootDir = FileHandling.getAppPath();
+    private static String appRootDir = FileHandling.getAppPath(),
+            settingsFilePath = "settings",
+            settingsFileName = "settings.properties",
+            titleMainFrame = "AzPz",
+            APP_LANG;
 
-    private static String settingsFilePath = "settings";
-    private static String settingsFileName = "settings.properties";
-
-    private static ImageIcon mainFrameIcon = appRootDir != null ? new ImageIcon(appRootDir + "\\pic\\Hourglass-icon-48pxl.png") : null;
-    private static ImageIcon mainFrameIcon2 = appRootDir != null ? new ImageIcon(appRootDir + "\\pic\\Hourglass-icon-pxl.png") : null;
-
-    private static String titleMainFrame = "AzPz";
+    private static ImageIcon mainFrameIcon = appRootDir != null ? new ImageIcon(appRootDir + "\\pic\\Hourglass-icon-48pxl.png") : null,
+            mainFrameIcon2 = appRootDir != null ? new ImageIcon(appRootDir + "\\pic\\Hourglass-icon-pxl.png") : null;
 
     /**
      * @author Martin Labsch, 26.04.2016
