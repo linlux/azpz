@@ -37,7 +37,14 @@ import com.labsch.dlg_login.loginDialog;
  * @author Martin Labsch, 26.04.2016
  */
 @SuppressWarnings("serial")
-public class azpzFrame extends JFrame implements ActionListener, WindowListener, WindowStateListener, MouseListener, MenuListener, ComponentListener
+public class azpzFrame
+        extends JFrame 
+        implements ActionListener,
+        WindowListener,
+        WindowStateListener,
+        MouseListener,
+        MenuListener,
+        ComponentListener
 {
 
     private static final boolean debug = false;
@@ -417,7 +424,7 @@ public class azpzFrame extends JFrame implements ActionListener, WindowListener,
 
         if (obj != null && ((JMenu) obj).getName().equals("menuProjects"))
         {
-//            System.out.println("Do something");
+            // System.out.println("Do something");
         }
 
         if (debug)
